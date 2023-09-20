@@ -118,7 +118,7 @@
                                                                                                             color: #fff; /* White text color on a dark background */
                                                                                                         }
                                                                                                     }
-                     }                                     @media screen and (max-width: 1024px) {                     .bigbar-h1 .mz_wysiwyg {
+                                                        @media screen and (max-width: 1024px) {                     .bigbar-h1 .mz_wysiwyg {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 700;
                                                                                                             letter-spacing : -0.015em;
@@ -129,26 +129,6 @@
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 300;
                                                                         }
-                                                                        @media screen and (min-width: 751px) {
-                                                                            .mobile-logo {
-                                                                                display: none;
-                                                                            }
-                                                                        }
-                                                                        
-                                                                        /* Show the image only on screens with a maximum width of 750px (mobile) */
-                                                                        @media screen and (max-width: 750px) {
-                                                                            .mobile-logo {
-                                                                                display: block;
-                                                                                background-image: url('R2G LOGO.png'); /* Replace with your image path */
-                                                                                background-repeat: no-repeat;
-                                                                                background-size: cover; /* Adjust as needed */
-                                                                                background-position: center; /* Adjust as needed */
-                                                                                width: 100%; /* Ensure the image covers the entire navbar */
-                                                                                height: 100px; /* Adjust the height as needed */
-                                                                                padding: 20px; /* Add padding to ensure text doesn't overlap with the background image */
-                                                                            }
-                                                                        }
-                                                                        
                                                         @media screen and (max-width: 750px) {                     .bigbar-h2 .mz_wysiwyg {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 300;
@@ -179,6 +159,21 @@
                                                                                                             letter-spacing : -0.015em;
                                                                                                             text-transform : uppercase;
                                                                         }
+                                                                        .background-image {
+                                                                            background-image: url('galaxy.jpg'); /* Replace 'galaxy.jpg' with your image path */
+                                                                            background-repeat: no-repeat;
+                                                                            background-attachment: fixed; /* Keeps the background fixed when scrolling */
+                                                                            background-position: center center; /* Center the image horizontally and vertically */
+                                                                            background-size: cover; /* Cover the entire container without cropping */
+                                                                        }
+                                                                        
+                                                                        /* Media query for screens with a maximum width of 768px (typical mobile devices) */
+                                                                        @media (max-width: 768px) {
+                                                                            .background-image {
+                                                                                background-size: auto; /* Use the image's intrinsic size on mobile */
+                                                                            }
+                                                                        }
+                                                                        
                                                         @media screen and (max-width: 1024px) {                     #menu > ul > li > a {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 400;
@@ -223,7 +218,8 @@
         </script>
 
     </head>
-    <body class="design-boxed gallery-max-3 transparent-header footer-center                                    " lang="en">
+    <body class="design-boxed gallery-max-3 transparent-header footer-center background-image">
+
 
         
       <div id="bigbar" class="is_behind">
@@ -259,7 +255,6 @@
 </div></div>
                 
 <nav class="mz_component mz_menu" id="menu">
-    <img src="R2G LOGO.png" alt="Logo" class="moze-img-center mobile-logo">
     <ul>
         <li class="selected"><a href="/home.html">HOME</a></li>
         <li><a href="/auction.html">TOURNAMENT GUIDE</a></li>
