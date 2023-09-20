@@ -130,15 +130,25 @@
                                                                                                             font-weight : 300;
                                                                         }
                                                                         @media screen and (min-width: 751px) {
-                                                                            #mobile-logo {
+                                                                            .mobile-logo {
                                                                                 display: none;
                                                                             }
                                                                         }
-                                                                        #mobile-logo {
-                                                                            width: 100px; /* Set the width of the image */
-                                                                            height: auto; /* Maintain the aspect ratio */
-                                                                            margin-right: 10px; /* Adjust the margin as needed */
+                                                                        
+                                                                        /* Show the image only on screens with a maximum width of 750px (mobile) */
+                                                                        @media screen and (max-width: 750px) {
+                                                                            .mobile-logo {
+                                                                                display: block;
+                                                                                background-image: url('R2G LOGO.png'); /* Replace with your image path */
+                                                                                background-repeat: no-repeat;
+                                                                                background-size: cover; /* Adjust as needed */
+                                                                                background-position: center; /* Adjust as needed */
+                                                                                width: 100%; /* Ensure the image covers the entire navbar */
+                                                                                height: 100px; /* Adjust the height as needed */
+                                                                                padding: 20px; /* Add padding to ensure text doesn't overlap with the background image */
+                                                                            }
                                                                         }
+                                                                        
                                                         @media screen and (max-width: 750px) {                     .bigbar-h2 .mz_wysiwyg {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 300;
@@ -249,7 +259,7 @@
 </div></div>
                 
 <nav class="mz_component mz_menu" id="menu">
-    <img src="R2G LOGO.png" alt="Logo" class="moze-img-center" id="mobile-logo">
+    <img src="R2G LOGO.png" alt="Logo" class="moze-img-center mobile-logo">
     <ul>
         <li class="selected"><a href="/home.html">HOME</a></li>
         <li><a href="/auction.html">TOURNAMENT GUIDE</a></li>
