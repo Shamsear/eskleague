@@ -166,6 +166,18 @@
                                                                             font-weight: bold; /* Optionally, make the text bold */
                                                                             margin-right: 5px; /* Add some space between "Ans:" and text */
                                                                         }
+                                                                        .custom-bullet-q::before {
+                                                                            content: "Q:"; /* Use a custom bullet character */
+                                                                            color: red;
+                                                                            font-weight: bold;
+                                                                            margin-right: 5px;
+                                                                        }
+                                                                        .custom-bullet-ag::before {
+                                                                            content: "♤"; /* Use a custom bullet character */
+                                                                            color: red;
+                                                                            font-weight: bold;
+                                                                            margin-right: 5px;
+                                                                        }
                         
                                                                               .moze-form input, .moze-form select, .moze-form textarea {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
@@ -192,7 +204,13 @@
                                                                             font-family: 'Open Sans', Arial, Helvetica, sans-serif;
                                                                             font-size: 19px;
                                                                             color: white;
+                                                                            line-height: 1.0;
                                                                         }
+                                                                        .hidden-text {
+                                                                            opacity: 0;
+                                                                        }
+                                                                        
+                                                                        
                                                                                                                             #menu > ul > li > a {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 400;
@@ -297,15 +315,24 @@
                             <h1 class="moze-center" style="font-size: 28px;"><b>TOURNAMENT GUIDE</b></h1>
                                 <ul>
                                 <li><b class="custom-bullet-q" style="font-size: 20px;color:white">How to play career mode ?</b></li>
-                                <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">Buy players through auction and use these players only to make the squad to compete in R2G.</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
+                                <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">Buy players through auction and use these players only to make the squad to compete in R2G.</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
                                 <li><b class="custom-bullet-q" style="font-size: 20px;color:white">How to buy players through auction ?</b></li>
-                                <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">Each franchise have clubs coins as their bank balance.They can use this amount to bid and buy 5☆ and 4☆ players during player auction.</b></li>  
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
+                                <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">Each franchise have clubs coins as their bank balance.They can use this amount to bid and buy 5☆ and 4☆ players during player auction.</b></li>  
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
                                 <li><b class="custom-bullet-q" style="font-size: 20px;color:white">How do each franchise gets their club coins ?</b></li>
-                                <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">Whenever a new franchise is registered they are rewarded with a total of 800+200 club coins. Each club will also get club coins by their performance in each match  but this coins will only add during the season end.</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
+                                <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">Whenever a new franchise is registered they are rewarded with a total of 800+200 club coins. Each club will also get club coins by their performance in each match  but this coins will only add during the season end.</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
                                 <li><b class="custom-bullet-q" style="font-size: 20px;color:white">What are the other use Or purpose of club coins ?</b></li>
-                                <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">Club coins can be used during the transfer market and also club coins are used to pay the player salary.</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
+                                <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">Club coins can be used during the transfer market and also club coins are used to pay the player salary.</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
                                 <li><b class="custom-bullet-q" style="font-size: 20px;color:white">Do we lose players if their salary is not paid ?</b></li>
-                                <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">No, we won't lose player. The franchise will only lose player when his contract comes to an end.At that time only he will be free agent. If salary is not paid, the player can't be used for upcoming matches.</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
+                                <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">No, we won't lose player. The franchise will only lose player when his contract comes to an end.At that time only he will be free agent. If salary is not paid, the player <b style="color: red;">can't</b> be used for upcoming matches.</b></li>
                             </ul>
                             <h1 class="moze-center" style="font-size: 28px;"><b>AUCTION GUIDE</b></h1>
                             <p><img src="WhatsApp_Image_2023-09-20_at_12.40.17-removebg-preview.png" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
@@ -315,33 +342,35 @@
                             <p></p>
                             <ul>
                                 <li><b class="custom-bullet-q" style="font-size: 20px;color:white">When will be the transfer window for R2G ?</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
                                 <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">There will be two Transfer window for a season.The transfer window time will be given accordingly and during that time sale, swap and loan for a player can be done.</b></li>
-                                <li><b class="custom-bullet-q" style="font-size: 20px;color:white">When will be the transfer window for R2G ?</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
+                                <li><b class="custom-bullet-q" style="font-size: 20px;color:white">When will be the transfer window for R2G ?</b></li><p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
                                 <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">There will be two Transfer window for a season.The transfer window time will be given accordingly and during that time sale, swap and loan for a player can be done.</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
                                 <li><b class="custom-bullet-q" style="font-size: 20px;color:white">What is the value conditions for transfer window ?</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
                                 <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">Transfers and deals worth 250 max can be done including loan deals.</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
                                 <li><b class="custom-bullet-q" style="font-size: 20px;color:white">How does loan transfer work ?</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
                                 <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">The loan amount is determined between the base price and auctioned price.</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
                                 <li><b class="custom-bullet-q" style="font-size: 20px;color:white">Is free transfer allowed ?</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
                                 <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">No, free transfer is not allowed, but one can sale the player for interested club coins.</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
                                 <li><b class="custom-bullet-q" style="font-size: 20px;color:white">ONE</b></li>
+                                <p class="hidden-text"><b style="font-size: 20px;color:white;">ho</b></p>
                                 <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">TWO</b></li>
-                                <li><b class="custom-bullet-q" style="font-size: 20px;color:white">THREE</b></li>
-                                <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">FOUR</b></li>
-                                <li><b class="custom-bullet-q" style="font-size: 20px;color:white">FIVE</b></li>
-                                <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">SIX</b></li>
-                                <li><b class="custom-bullet-q" style="font-size: 20px;color:white">SEVEN</b></li>
-                                <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">EIGHT</b></li>
-                                <li><b class="custom-bullet-q" style="font-size: 20px;color:white">NINE</b></li>
-                                <li><b class="custom-bullet-ans" style="font-size: 20px;color:white">TEN</b></li>
                             </ul>
                             <h1 class="moze-center" style="font-size: 28px;">&nbsp;<b>MATCH GUIDE</b></h1>
                             <p></p>
                             <ul>
-                                <li><b style="font-size: 20px;color:white">CAN ONLY USE PLAYERS BOUGHT FROM PLAYER AUCTION, IF NOT AVAILABLE CAN USE 1<span style="text-align: left; float: none;">☆ OR 2<span style="text-align: left; float: none;">☆ PLAYERS</span></span></b></li>
-                                <li><b style="font-size: 20px;color:white">MATCH TIME:- 6 MINUTES</b></li>
-                                <li><b style="font-size: 20px;color:white">PENALTY AND EXTRA TIME SHOULD BE OFF</b></li>
-                                <li><b style="font-size: 20px;color:white">RANDOM CONDITION&nbsp;</b></li>
+                                <li><b class="custom-bullet-ag" style="font-size: 20px;color:white">CAN ONLY USE PLAYERS BOUGHT FROM PLAYER AUCTION, IF NOT AVAILABLE CAN USE 1<span style="text-align: left; float: none;">☆ OR 2<span style="text-align: left; float: none;">☆ PLAYERS</span></span></b></li>
+                                <li><b class="custom-bullet-ag" style="font-size: 20px;color:white">MATCH TIME:- 6 MINUTES</b></li>
+                                <li><b class="custom-bullet-ag" style="font-size: 20px;color:white">PENALTY AND EXTRA TIME SHOULD BE OFF</b></li>
+                                <li><b class="custom-bullet-ag" style="font-size: 20px;color:white">RANDOM CONDITION&nbsp;</b></li>
                             </ul>
                             <p class="moze-center"><br></p>
                             <p></p>
