@@ -9,6 +9,8 @@
 
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
         <link href="https://dss4hwpyv4qfp.cloudfront.net/designs/_shared/fonts/?family=Roboto+Condensed:300,400,700|Open+Sans:300,regular,italic,700&subset=latin,latin-ext,cyrillic" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://dss4hwpyv4qfp.cloudfront.net/designs/_shared/css/layout-shared.css?v=2.0384" type="text/css" />
@@ -127,15 +129,44 @@
                                                                             color: red;
                                                                         }
                                                                         h1, h2, h3 {
-                                                                            text-decoration: underline; /* Add an underline */
-                                                                            text-decoration-color: white; /* Set the underline color to white */
+                                                                            background-color: white;
+                                                                            padding: 15px;
+                                                                            margin-bottom: 20px;
+                                                                            border-radius: 5px;
+                                                                            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                                                                            margin: 24px;
                                                                         }
                                                                     
                                                         @media screen and (max-width: 750px) {                     .bigbar-h2 .mz_wysiwyg {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 300;
                                                                         }
-                     }                                                                                                         .moze-form input, .moze-form select, .moze-form textarea {
+                     }                                                   /* Style for <ul> (unordered list) */
+                                                                        ul {
+                                                                            list-style: none; /* Remove default list bullets */
+                                                                            padding-left: 20px; /* Add left padding for content spacing */
+                                                                        }
+                                                                        .mz_editable ul li {
+                                                                            list-style-type: none;
+                                                                        }
+                                                                        
+                                                                        /* Style for the first list item */
+                                                                        .custom-bullet-q::before {
+                                                                            content: "Q"; /* Use "Q" as a custom bullet */
+                                                                            color: red; /* Set the text color to red */
+                                                                            font-weight: bold; /* Optionally, make the letter bold */
+                                                                            margin-right: 5px; /* Add some space between "Q" and text */
+                                                                        }
+                                                                        
+                                                                        /* Style for the second list item */
+                                                                        .custom-bullet-ans::before {
+                                                                            content: "Ans:"; /* Use "Ans:" as a custom bullet */
+                                                                            color: red; /* Set the text color to red */
+                                                                            font-weight: bold; /* Optionally, make the text bold */
+                                                                            margin-right: 5px; /* Add some space between "Ans:" and text */
+                                                                        }
+                        
+                                                                              .moze-form input, .moze-form select, .moze-form textarea {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                         }
                                                                         
@@ -155,6 +186,11 @@
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 300;
                                                                                                             letter-spacing : -0.01em;
+                                                                        }
+                                                                        .mz_editable {
+                                                                            font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+                                                                            font-size: 19px;
+                                                                            color: white;
                                                                         }
                                                                                                                             #menu > ul > li > a {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
@@ -258,10 +294,11 @@
                         <div class="moze-wysiwyg-editor">
                             <p style="font-size: 20px;">&nbsp;</p>
                             <h1 class="moze-center" style="font-size: 28px;"><b>TOURNAMENT GUIDE</b></h1>
-                            <ul style="list-style-type: none;">
-                                <li><b style="font-size: 20px; color: white;"><span class="custom-bullet">Q</span> How to play career mode ?</b></li>
-                                <li><b style="font-size: 20px; color: white;"><span class="custom-bullet">Ans :</span>Buy players through auction and use these players only to make the squad to compete in R2G.</b></li>
-                                <li><b style="font-size: 20px; color: white;"><span class="custom-bullet">Q</span>How to buy players through auction ?</b></li>  
+                                <ul>
+                                <b class="custom-bullet-q"><How style="font-size: 20px;color:white">How Career Mode should be played?</b></li>
+                                <b class="custom-bullet-ans"><Career style="font-size: 20px;color:white">Career Mode should be played only using squad players bought from auction</b></li>
+                                    <!-- Add other list items here -->
+                                <li><b style="font-size: 20px;color:white">S</b></li>  
                                 <li><b style="font-size: 20px;color:white">S</b></li>
                                 <li><b style="font-size: 20px;color:white">F</b></li>
                                 <li><b style="font-size: 20px;color:white">S</b></li>

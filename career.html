@@ -88,6 +88,7 @@
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 700;
                                                                                                             letter-spacing : 0;
+                                                                                                            font-size: xx-large;
                                                                         }
                                                                             #sidebar h2 {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
@@ -106,17 +107,9 @@
                                                                                                             font-style : normal;
                                                                                                                                               font-size: calc(5.6rem * 0.855);
                                                                                                        }
-                                                                                                       .black-box {
-                                                                                                        background-color: #000000;
-                                                                                                        color: #ffffff;
-                                                                                                        padding: 10px;
-                                                                                                        border-radius: 10px;
-                                                                                                        margin: 10px;
-                                                                                                    }
+                                                                                                    
                                                                                                     /* Center the text inside the black box */
-                                                                                                    .black-box h1 {
-                                                                                                        text-align: center;
-                                                                                                    }
+                                                                                                   
                                                         @media screen and (max-width: 750px) {                     .bigbar-h1 .mz_wysiwyg {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 700;
@@ -174,6 +167,54 @@
                                                                                                             font-weight : 400;
                                                                                                             letter-spacing : -0.015em;
                                                                                                             text-transform : uppercase;
+                                                                        }
+                                                                        .season-heading {
+                                                                            padding: 0px; /* You can adjust the value as needed */
+                                                                            margin-top: 0px; /* Adjust the margin-top value as needed */
+                                                                        }
+                                                                        
+                                                                        
+                                                                        .season-heading h1.moze-center {
+                                                                            text-align: center;
+                                                                            margin-top: 10px; /* Add or adjust the top margin as needed */
+                                                                            margin-bottom: 0; /* Reduce or remove the bottom margin */
+                                                                        }
+                                                                        /* Style the centered box */
+                                                                        .centered-box {
+                                                                            display: flex;
+                                                                            justify-content: center;
+                                                                            align-items: center;
+                                                                            height: 10vh;
+                                                                        }
+
+                                                                        /* Style the black box */
+                                                                        .black-box {
+                                                                            background-color: black;
+                                                                            text-align: center;
+                                                                            padding: 10px; /* Adjust the padding as needed */
+                                                                        }
+
+                                                                        /* Style the "CLUBS" heading inside the black box */
+                                                                        .black-box h1 {
+                                                                            color: white; /* Set the text color to white or any color you prefer */
+                                                                            font-size: 2rem; /* Adjust the font size as needed */
+                                                                        }
+
+                                                                        /* Make the heading responsive for different screens */
+                                                                        @media screen and (min-width: 768px) {
+                                                                            .black-box h1 {
+                                                                                font-size: 3rem; /* Adjust the font size for larger screens */
+                                                                            }
+                                                                        }
+
+                                                                        h2 {
+                                                                            text-decoration: underline; /* Add an underline */
+                                                                            text-decoration-color: white; /* Set the underline color to white */
+                                                                        }
+                                                                        .textbox {
+                                                                            padding: 0.7em 0;
+                                                                            box-sizing: border-box;
+                                                                            min-width: 300px;
                                                                         }
                                                         @media screen and (max-width: 1024px) {                     #menu > ul > li > a {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
@@ -274,15 +315,6 @@
 
     
 
-    <div class="container">
-        <div class="textbox ">
-            <div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
-            </div>
-</div>
-            
-        </div>
-    </div>
-
             <div class="section-bigimg-colorizer section-bg-none" style="opacity: 0; display: block"></div>
     
 </div>                                                                        
@@ -299,219 +331,164 @@
             <div class="mz_component mz_wysiwyg mz_editable">
                 <div class="moze-wysiwyg-editor">
                     <!-- Black box containing the heading -->
-                    <div class="black-box">
-                        <h1 class="moze-center">CLUBS</h1>
+                    <div class="centered-box">
+                        <div class="black-box">
+                            <h1 class="moze-center">CLUBS</h1>
+                        </div>
+                    </div>
             </div>
-</div>
-                            </div>
         </div>
+        <div class="container">
+            <div class="textbox season-heading">
+                <div class="mz_component mz_wysiwyg mz_editable">
+                    <div class="moze-wysiwyg-editor">
+                        <h2 class="moze-center" style="fontsize:10px ">SEASON 1</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
         <div class="gridrow">
             <div class="column-12-12">
                 <div class="mz_component mz_gallery">
     <ul class="moze-gallery pictures">
                     <li >
-                                <img src="team1.jpg" alt="">
-                                                    <a class="moze-gallery-overlay" href="team1.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
+                                <img src="1.jpg" alt="">
+                                                    <a class="moze-gallery-overlay" href="1.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
                         <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="2.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="2.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="3.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="3.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="4.jpg" alt="">
+                        <a class="moze-gallery-overlay" href=".4jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="5.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="5.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="6.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="6.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="7.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="7.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="8.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="8.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="9.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="9.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="10.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="10.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="11.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="11.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="12.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="12.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="13.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="13.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="14.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="14.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="15.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="15.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="16.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="16.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="17.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="17.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="18.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="18.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="19.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="19.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="20.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="20.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
                     <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
+                        <img src="21.jpg" alt="">
+                        <a class="moze-gallery-overlay" href="21.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
 <div class="title"><span></span></div>
                     </a>
                             </li>
-                    <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
-<div class="title"><span></span></div>
-                    </a>
-                            </li>
-                    <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
-<div class="title"><span></span></div>
-                    </a>
-                            </li>
-                    <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
-<div class="title"><span></span></div>
-                    </a>
-                            </li>
-                    <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
-<div class="title"><span></span></div>
-                    </a>
-                            </li>
-                    <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
-<div class="title"><span></span></div>
-                    </a>
-                            </li>
-                    <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
-<div class="title"><span></span></div>
-                    </a>
-                            </li>
-                    <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
-<div class="title"><span></span></div>
-                    </a>
-                            </li>
-                    <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
-<div class="title"><span></span></div>
-                    </a>
-                            </li>
-                    <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
-<div class="title"><span></span></div>
-                    </a>
-                            </li>
-                    <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
-<div class="title"><span></span></div>
-                    </a>
-                            </li>
-                    <li >
-                        <img data-src="black.png" alt="">
-                        <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
-<div class="title"><span></span></div>
-                    </a>
-                            </li>
-                    <li >
-                                <img data-src="black.png" alt="">
-                                                    <a class="moze-gallery-overlay" href="black.png" data-fancybox="gallery_77174911" data-caption="" title="">
-                        <div class="title"><span></span></div>
-                    </a>
-                            </li>
-            </ul>
-
-
-<br style="clear: both">
+                            
+                        </ul>
+                    
+            
+            
+            
+            
+            
 
 
 </div>
