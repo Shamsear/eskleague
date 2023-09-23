@@ -1,11 +1,10 @@
-l
 <!doctype html>
 
 <html lang="en">
 
     <head>
 
-        <title>CAREER MODES</title>
+        <title>ESKIMOS_R2G</title>
 
 
 
@@ -56,7 +55,7 @@ l
                                                                                                                                                 .moze-form .moze-formbutton, .moze-button, .moze-button-large, ul.moze-gallery li, #submenu li:hover > a, #submenu li.selected > a { background-color :  #000000  }
                                                                             .moze-button-large.btn-alt-light { border-color :  #000000  }
                                                                             .moze-button-large.btn-white, .moze-button.btn-alt, .moze-button-large.btn-alt { color :  #000000  }
-                                                                                                                                                .mz_editable h1, .mz_editable h1.moze-megatitle, .mz_editable h1 a { color :  darkblue  }
+                                                                                                                                                .mz_editable h1, .mz_editable h1.moze-megatitle, .mz_editable h1 a { color :  #000000  }
                                                                                                                             .mz_editable h2, .sidebox h2 { color :  #000000  }
                                                                                                                             .mz_editable h3 { color :  #000000  }
                                                                                                                             .section-bg-1 { background-color :  #000000  }
@@ -113,26 +112,30 @@ l
                                                                                                             font-style : normal;
                                                                                                                                               font-size: calc(45px * 0.855);
                                                                                                        }
-                     }                                     @media screen and (max-width: 1024px) {                     .bigbar-h1 .mz_wysiwyg {
-                                                                                font-family : Montserrat, Arial, Helvetica, sans-serif;
-                                                                                                            font-weight : 700;
-                                                                                                            letter-spacing : -0.015em;
-                                                                                                            font-style : normal;
-                                                                                                                                              font-size: 32PX;
-                                                                                                       }
-                                                                                                       #top:not(.inner) {
+                                                                                                      
+                                                                                                        /* Optionally, adjust the text color for better visibility on the background */
+                                                                                                        header#top a {
+                                                                                                            color: #fff; /* White text color on a dark background */
+                                                                                                        }
+                                                                                                    }
+                                                                                                    #top:not(.inner) {
                                                                                                         position: relative;
-                                                                                                        min-height: 40%;
+                                                                                                        min-height: 100%;
                                                                                                         display: flex;
                                                                                                         justify-content: center;
                                                                                                         align-items: center;
                                                                                                     }
-                                                                                                
+                                                        @media screen and (max-width: 1024px) {                     .bigbar-h1 .mz_wysiwyg {
+                                                                                                            font-family: ui-serif;
+                                                                                                            font-weight : 700;
+                                                                                                            letter-spacing : -0.015em;
+                                                                                                            font-style : normal;
+                                                                                                                                              font-size: calc(67px * 0.855);
+                                                                                                       }
                      }                                                                                                         .bigbar-h2 .mz_wysiwyg {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 300;
                                                                         }
-                                                                    
                                                         @media screen and (max-width: 750px) {                     .bigbar-h2 .mz_wysiwyg {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 300;
@@ -163,104 +166,39 @@ l
                                                                                                             letter-spacing : -0.015em;
                                                                                                             text-transform : uppercase;
                                                                         }
-                                                                        .white-box {
-                                                                            background-color: white;
-                                                                            padding: 10px;
-                                                                            margin: 9px;
-                                                                            border: 2px solid black;
-                                                                            width: 323px; /* Adjust the width as per your preference */
-                                                                            text-align: center;
-                                                                            margin-left: 45px;
-                                                                        }
-                                                                        
-                                                                        .mz_editable ul li {
-                                                                            list-style-type: none;
-                                                                        }
-                                                                        ul {
-                                                                            list-style-type: none; /* Remove the default bullets */
-                                                                            display: block;
-                                                                            list-style-type: disc;
-                                                                            margin-block-start: 1em;
-                                                                            margin-block-end: 1em;
-                                                                            margin-inline-start: 0px;
-                                                                            margin-inline-end: 0px;
-                                                                            padding-inline-start: 20px;
-                                                                        }
-                                                                        .container1 {
-                                                                            display: flex;
-                                                                        }
-                                                                
-                                                                        .column {
-                                                                            flex: 1;
-                                                                            margin: 10px;
-                                                                        }
-                                                                
-                                                                        .column p {
-                                                                            margin: 0;
-                                                                        }
-                                                                    
-                                                                        ul li {
-                                                                            font-size: 20px;
-                                                                            color: white;
-                                                                            margin-bottom: 10px; /* Add some spacing between list items */
-                                                                        }
-                                                                    
-                                                                        .custom-bullet-q::before {
-                                                                            content: "♤"; /* Use a custom bullet character */
-                                                                            color: red;
-                                                                            font-weight: bold;
-                                                                            margin-right: 5px;
-                                                                        }
-                                                                        @media (max-width: 768px) {
-                                                                            .white-box {
-                                                                                margin: auto; /* Adjust the margin for smaller screens */
-                                                                            }
-                                                                        }
-                                                                        @media (max-width: 768px) {
-                                                                            .white-box1 {
-                                                                                margin: auto; /* Adjust the margin for smaller screens */
-                                                                            }
-                                                                        }
-                                                                        @media (max-width: 480px) {
-                                                                            .white-box {
-                                                                                margin: auto; /* Adjust the margin for even smaller screens */
-                                                                            }
-                                                                        }
-                                                                        @media (max-width: 480px) {
-                                                                            .white-box1 {
-                                                                                margin: auto; /* Adjust the margin for even smaller screens */
-                                                                            }
-                                                                        }
-                                                                        #menu {
-                                                                            background-image: none; /* Remove any background image by default */
-                                                                        }
-                                                                    
-                                                                        @media screen and (max-width: 750px) {
+
+                                                                            /* Default style for the navigation bar */
                                                                             #menu {
-                                                                                background-image: url('logo11.png'); /* Add the background image */
-                                                                                background-repeat: no-repeat;
+                                                                                background-image: none; /* Remove any background image by default */
+                                                                            }
+                                                                        
+                                                                            /* Media query for screens with a maximum width of 750px */
+                                                                            @media screen and (max-width: 750px) {
+                                                                                #menu {
+                                                                                    background-image: url('logo11.png'); /* Add the background image */
+                                                                                    background-repeat: no-repeat;
                                                                                     background-position: center calc(95% - 10px); /* Adjust the vertical position (e.g., move it up by 10px) */
                                                                                     background-size: 65%; /* Adjust the size as needed (50% is an example) */
                                                                                     text-align: center; /* Center the text content horizontally */
                                                                                     padding: 20px; /* Add padding for spacing */
                                                                                 }
                                                                             }
-
-
-                                                                    
-                                                                        .hidden-text {
-                                                                            opacity: 0;
+                                                                        
+                                                                        .background-image {
+                                                                            background-image: url('logo.jpg'); /* Replace 'galaxy.jpg' with your image path */
+                                                                            background-repeat: no-repeat;
+                                                                            background-attachment: fixed; /* Keeps the background fixed when scrolling */
+                                                                            background-position: center center; /* Center the image horizontally and vertically */
+                                                                            background-size: cover; /* Cover the entire container without cropping */
                                                                         }
-                                                                    
-                                                                        .white-box1 {
-                                                                            background-color: white;
-                                                                            padding: 10px;
-                                                                            margin: 9px;
-                                                                            border: 2px solid black;
-                                                                            width: 154px;
-                                                                            text-align: center;
-                                                                            margin-left: 105px;
+                                                                        
+                                                                        /* Media query for screens with a maximum width of 768px (typical mobile devices) */
+                                                                        @media (max-width: 768px) {
+                                                                            .background-image {
+                                                                                background-size: auto; /* Use the image's intrinsic size on mobile */
+                                                                            }
                                                                         }
+                                                                        
                                                         @media screen and (max-width: 1024px) {                     #menu > ul > li > a {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 400;
@@ -305,101 +243,203 @@ l
         </script>
 
     </head>
+    <body class="design-boxed gallery-max-3 transparent-header footer-center background-image">
 
-    <body class="design-boxed gallery-max-3 transparent-header footer-center                                    " lang="en">
 
         
-                    <div id="bigbar" class="inner is_behind">
-                <div class="mz_component mz_banner">            <div class="moze-banner slide" style="background-image: url('guide.jpg'); background-position: 49% 46%" data-pid="1998807"></div>
+      <div id="bigbar" class="is_behind">
+  <div class="mz_component mz_banner">             <div class="moze-banner slide" style="background-image: url('logo.jpg'); background-position: 49% 46%" data-pid="1998807"></div>
     
-
-<a class="moze-banner-slide-left" href="javascript:void(0);"></a>
+  <a class="moze-banner-slide-left" href="javascript:void(0);"></a>
 <a class="moze-banner-slide-right" href="javascript:void(0);"></a>
 
 </div>
-                <div id="bigbar-colorizer"></div>
-            </div>
-            <header id="top" class="frontpage over-bigbar legacy-sticky-menu">
-                <div id="header">
-                    <div id="header-side">
-                        
-                    </div>
-                    <div id="title">
-                        <a href="/"><div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
-                    ESKIMOS R2G
-            </div>
-            </div></a>
-                    </div>
-                </div>
-                            </div>
-            <div id="bigbar-container">
-                <div id="bigbar-overlay">
-                    <div id="bigbar-centerpiece">
-                        <div class="bigbar-h1"><div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
-                            CAREER TOURNAMENTS
-                    </div>
-                    </div></div>
-                              
-                    </div></div>
-                                        
-                        <nav class="mz_component mz_menu" id="menu">
-                            <ul>
-                                <li class="selected"><a href="/home.html">HOME</a></li>
-                                <li><a href="/auction.html">TOURNAMENT GUIDE</a></li>
-                                <li><a href="/career.html">REGISTERED CLUBS</a></li>
-                                <li><a href="https://1drv.ms/x/s!Al82cgGcN1PEpnyCiAJNS9YXQpGQ?e=rI7oce">AUCTION DATA</a></li>
-                                <li><a href="https://1drv.ms/x/s!Al82cgGcN1PEpn6612xvHz2ksboe?e=4fx0yz">MANAGER'S DATA</a></li>
-                                <li><a href="/mode.html">CAREER MODES</a></li>
-                                <li><a href="/trophy.html">TROPHY CABINET</a></li>
-                            </ul>
-                        </nav>
-                        <div class="gridrow section-content" >
-                            <div class="column-12-12" >
-                                <div class="mz_component mz_wysiwyg mz_editable" data-cid="91437914" data-name="d945602f2bc479596a51f22ac3fbd947_content_1x1" data-type="wysiwyg" data-premium="" data-role="editor" data-toolbar="1" style="margin-left: 20px;">
-                                    <div class="moze-wysiwyg-editor">
-                                        <p style="font-size: 20px;">&nbsp;</p>
-                                            <div class="white-box">
-                                                <h1 class="moze-center" style="font-size: 28px;">ELITE DIVISION</h1>
-                                            </div>
-                                        <p><img src="elite.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
-                                        <ul>
-                                            <li><b class="custom-bullet-q"style="font-size: 20px;color:blue"> This is the highest Division.</b></li>
-                                            <li><b class="custom-bullet-q" style="font-size: 20px;color:darkblue"> Last 2 Teams will be Demoted.</b></li>
-                                            <li><b class="custom-bullet-q" style="font-size: 20px;color:white"> Rewards will be distributed for League Golden Boot and Golden Glove.</b></li>  
-                                        </ul>
-                                        <div class="white-box">
-                                            <h1 class="moze-center" style="font-size: 28px;">DIVISION ONE</h1>
-                                        </div>
-                                        <p><img src="division 1.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
-                                        <ul>
-                                            <li><b class="custom-bullet-q" style="font-size: 20px;color:white"> This is the highest Division.</b></li>
-                                            <li><b class="custom-bullet-q" style="font-size: 20px;color:white"> Last 2 Teams will be Demoted.</b></li>
-                                            <li><b class="custom-bullet-q" style="font-size: 20px;color:white"> Rewards will be distributed for League Golden Boot and Golden Glove.</b></li>  
-                                        </ul>
-                                        <div class="white-box">
-                                            <h1 class="moze-center" style="font-size: 28px;">DIVISION two</h1>
-                                        </div>
-                                        <p><img src="divison2.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
-                                        <ul>
-                                            <li><b class="custom-bullet-q" style="font-size: 20px;color:white"> This is the highest Division.</b></li>
-                                            <li><b class="custom-bullet-q" style="font-size: 20px;color:white"> Last 2 Teams will be Demoted.</b></li>
-                                            <li><b class="custom-bullet-q" style="font-size: 20px;color:white"> Rewards will be distributed for League Golden Boot and Golden Glove.</b></li>  
-                                        </ul>
-                                        <div class="white-box">
-                                            <h1 class="moze-center" style="font-size: 28px;">UEFA LEAGUE</h1>
-                                        </div>
-                                        <p><img src="uefa.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
-                                        <h2 class="moze-center" style="font-size: 28px; color: white; text-decoration: underline; text-decoration-color: white;">QUALIFICATION</h2>
-                                        <p><img src="DETAILS.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
-                                        <div class="white-box">
-                                            <h1 class="moze-center" style="font-size: 28px;">DIVISION two</h1>
-                                        </div>
-                                        <p><img src="divison2.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
-                                        <ul>
-                                            <li><b class="custom-bullet-q" style="font-size: 20px;color:white"> This is the highest Division.</b></li>
-                                            <li><b class="custom-bullet-q" style="font-size: 20px;color:white"> Last 2 Teams will be Demoted.</b></li>
-                                            <li><b class="custom-bullet-q" style="font-size: 20px;color:white"> Rewards will be distributed for League Golden Boot and Golden Glove.</b></li>  
-                                        </ul>
-                                        
-                                        
-                                        
+<div id="bigbar-colorizer"></div>
+</div>
+<header id="top" class="frontpage over-bigbar legacy-sticky-menu">
+    <div id="header">
+        <div id="header-side">
+            
+        </div>
+        <div id="title">
+            <a href="home.html"><div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
+        <img><div><br></div><div><img src="logo11.png" style="width: 189px;" class="moze-img-center">
+</div>
+</div>
+</div></a>
+        </div>
+    </div>
+    <div id="bigbar-container">
+        <div id="bigbar-overlay">
+            <div id="bigbar-centerpiece">
+                <div class="bigbar-h1"><div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
+        ESKIMOS R2G
+</div>
+</div></div>
+          
+</div></div>
+                
+<nav class="mz_component mz_menu" id="menu">
+    <ul>
+        <li class="selected"><a href="/home.html">HOME</a></li>
+        <li><a href="/auction.html">TOURNAMENT GUIDE</a></li>
+        <li><a href="/career.html">REGISTERED CLUBS</a></li>
+        <li><a href="https://1drv.ms/x/s!Al82cgGcN1PEpnyCiAJNS9YXQpGQ?e=rI7oce">AUCTION DATA</a></li>
+        <li><a href="https://1drv.ms/x/s!Al82cgGcN1PEpn6612xvHz2ksboe?e=4fx0yz">MANAGER'S DATA</a></li>
+        <li><a href="/mode.html">CAREER TOURNAMENTS</a></li>
+        <li><a href="/trophy.html">TROPHY CABINET</a></li>
+    </ul>
+</nav>
+<a id="bigbar-down" href="#belowfold">&nbsp;</a>
+</div>
+</div>
+</div>
+</header>
+
+<div id="belowfold">
+<div id="wrap">
+        
+
+
+
+<div class="mz_component mz_grid" data-cid="56963099" data-pid="8800872">
+
+
+
+                                        <div class=
+"
+section section-customizable section-bigimg
+section-align-center
+section-text-color-none
+section-height-l
+section-width-l
+section-nobox        "
+
+data-row-id="9908609"
+data-row-slice="banner"
+data-row-slice-variant="banner-text-center"
+data-transparent-text-box="1">
+
+
+
+<div class="container">
+<div class="textbox ">
+<div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
+</div>
+</div>
+<div class="mz_component mz_inlinebuttons mz_editable"><div class="moze-wysiwyg-editor ">
+<a
+class="moze-button-large"
+href="career.html"
+target="_self"                                            >​REGISTERED CLUBS</a>
+</div></div>
+</div>
+</div>
+
+<div class="section-bigimg-container " data-inlinepicture-url-target="88949444" style="background-image: url('https://site-1782874.mozfiles.com/files/1782874/inlinepictures/medium/Purple%20Minimalist%20Esport%20Tournament%20YouTube%20Thumbnail%20%20%282343%20%C3%97%201000%20px%29%20%284686%20%C3%97%202000%20px%29.jpg');"></div>
+
+<div class="section-bigimg-colorizer section-bg-none" style="opacity: 0; display: block"></div>
+
+</div>                                            <div class=
+"
+section section-customizable section-bigimg
+section-align-center
+section-text-color-none
+section-height-l
+section-width-s
+section-nobox        "
+
+data-row-id="9147652"
+data-row-slice="banner"
+data-row-slice-variant="banner-text-center"
+data-transparent-text-box="1">
+
+
+
+<div class="container">
+<div class="textbox ">
+<div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
+</div>
+</div>
+<div class="mz_component mz_inlinebuttons mz_editable"><div class="moze-wysiwyg-editor ">
+<a
+class="moze-button-large"
+href="https://1drv.ms/x/s!Al82cgGcN1PEpnyCiAJNS9YXQpGQ?e=rI7oce"
+target="_self"                                            >AUCTION DATA​</a>
+</div></div>
+</div>
+</div>
+
+<div class="section-bigimg-container " data-inlinepicture-url-target="77179980" style="background-image: url('galaxy11.jpg');"></div>
+
+<div class="section-bigimg-colorizer section-bg-3" style="opacity: 0; display: block"></div>
+
+</div>                                            <div class=
+"
+section section-customizable section-bigimg
+section-align-center
+section-text-color-none
+section-height-l
+section-width-s
+section-nobox        "
+
+data-row-id="9865977"
+data-row-slice="banner"
+data-row-slice-variant="banner-text-center"
+data-transparent-text-box="1">
+
+
+
+<div class="container">
+<div class="textbox ">
+<div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
+</div>
+</div>
+<div class="mz_component mz_inlinebuttons mz_editable"><div class="moze-wysiwyg-editor ">
+<a
+class="moze-button-large"
+href="https://1drv.ms/x/s!Al82cgGcN1PEpn6612xvHz2ksboe?e=4fx0yz"
+target="_self"                                            >​MANAGER'S DATA</a>
+</div></div>
+</div>
+</div>
+
+<div class="section-bigimg-container " data-inlinepicture-url-target="88291845" style="background-image: url('WhatsApp Image 2023-09-20 at 18.18.53.jpg');"></div>
+
+<div class="section-bigimg-colorizer section-bg-none" style="opacity: 0; display: block"></div>
+
+</div>                                            <div class=
+"
+section section-customizable section-bigimg
+section-align-center
+section-text-color-1
+section-height-l
+section-width-s
+section-nobox        "
+
+data-row-id="9866143"
+data-row-slice="banner"
+data-row-slice-variant="banner-text-center"
+data-transparent-text-box="1">
+
+
+
+<div class="container">
+<div class="textbox ">
+<div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
+</div>
+</div>
+<div class="mz_component mz_inlinebuttons mz_editable"><div class="moze-wysiwyg-editor ">
+<a
+class="moze-button-large btn-alt-dark"
+href="modes.html"
+target="_self"                                            >​CAREER MODES</a>
+</div></div>
+</div>
+</div>
+
+<div class="section-bigimg-container " data-inlinepicture-url-target="88294440" style="background-image: url('trophy11.jpg');"></div>
+
+<div class="section-bigimg-colorizer section-bg-3" style="opacity: 0; display: block"></div>
+
+</div>                                            
