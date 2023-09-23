@@ -215,6 +215,20 @@
                                                                             text-decoration: underline; /* Add an underline */
                                                                             text-decoration-color: white; /* Set the underline color to white */
                                                                         }
+                                                                        #menu {
+                                                                            background-image: none; /* Remove any background image by default */
+                                                                        }
+                                                                    
+                                                                        @media screen and (max-width: 750px) {
+                                                                            #menu {
+                                                                                background-image: url('logo11.png'); /* Add the background image */
+                                                                                background-repeat: no-repeat;
+                                                                                background-position: center center;
+                                                                                background-size: contain; /* Adjust this based on your design preferences */
+                                                                                text-align: center; /* Center the text content horizontally */
+                                                                                padding: 20px; /* Add padding for spacing */
+                                                                            }
+                                                                        }
                                                                         .textbox {
                                                                             padding: 0.7em 0;
                                                                             box-sizing: border-box;

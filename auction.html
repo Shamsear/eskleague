@@ -206,6 +206,20 @@
                                                                             color: white;
                                                                             line-height: 1.0;
                                                                         }
+                                                                        #menu {
+                                                                            background-image: none; /* Remove any background image by default */
+                                                                        }
+                                                                    
+                                                                        @media screen and (max-width: 750px) {
+                                                                            #menu {
+                                                                                background-image: url('logo11.png'); /* Add the background image */
+                                                                                background-repeat: no-repeat;
+                                                                                background-position: center center;
+                                                                                background-size: contain; /* Adjust this based on your design preferences */
+                                                                                text-align: center; /* Center the text content horizontally */
+                                                                                padding: 20px; /* Add padding for spacing */
+                                                                            }
+                                                                        }
                                                                         mz_editable p2 {
                                                                             margin: 20px 0px;
                                                                         }

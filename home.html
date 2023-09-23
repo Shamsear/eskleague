@@ -4,7 +4,7 @@
 
     <head>
 
-        <title>ESKIMOS</title>
+        <title>ESKIMOS_R2G</title>
 
 
 
@@ -159,8 +159,25 @@
                                                                                                             letter-spacing : -0.015em;
                                                                                                             text-transform : uppercase;
                                                                         }
+
+                                                                            /* Default style for the navigation bar */
+                                                                            #menu {
+                                                                                background-image: none; /* Remove any background image by default */
+                                                                            }
+                                                                        
+                                                                            @media screen and (max-width: 750px) {
+                                                                                #menu {
+                                                                                    background-image: url('logo11.png'); /* Add the background image */
+                                                                                    background-repeat: no-repeat;
+                                                                                    background-position: center center;
+                                                                                    background-size: contain; /* Adjust this based on your design preferences */
+                                                                                    text-align: center; /* Center the text content horizontally */
+                                                                                    padding: 20px; /* Add padding for spacing */
+                                                                                }
+                                                                            }
+                                                                        
                                                                         .background-image {
-                                                                            background-image: url('galaxy.jpg'); /* Replace 'galaxy.jpg' with your image path */
+                                                                            background-image: url('logo.jpg'); /* Replace 'galaxy.jpg' with your image path */
                                                                             background-repeat: no-repeat;
                                                                             background-attachment: fixed; /* Keeps the background fixed when scrolling */
                                                                             background-position: center center; /* Center the image horizontally and vertically */
@@ -223,7 +240,7 @@
 
         
       <div id="bigbar" class="is_behind">
-  <div class="mz_component mz_banner">             <div class="moze-banner slide" style="background-image: url('https://site-2099462.mozfiles.com/files/2099462/banners/91428386/main_logo1.jpg?1998807'); background-position: 49% 46%" data-pid="1998807"></div>
+  <div class="mz_component mz_banner">             <div class="moze-banner slide" style="background-image: url('logo.jpg'); background-position: 49% 46%" data-pid="1998807"></div>
     
   <a class="moze-banner-slide-left" href="javascript:void(0);"></a>
 <a class="moze-banner-slide-right" href="javascript:void(0);"></a>
@@ -238,7 +255,7 @@
         </div>
         <div id="title">
             <a href="home.html"><div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
-        <img><div><br></div><div><img src="R2G LOGO.png" style="width: 189px;" class="moze-img-center">
+        <img><div><br></div><div><img src="logo11.png" style="width: 189px;" class="moze-img-center">
 </div>
 </div>
 </div></a>
