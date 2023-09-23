@@ -225,6 +225,23 @@
                                                                               background-size: contain; 
                                                                             }
                                                                           }
+                                                                          #top:not(.inner) {
+                                                                            position: relative;
+                                                                            min-height: 50%;
+                                                                            display: flex;
+                                                                            justify-content: center;
+                                                                            align-items: center;
+                                                                        }@media screen and (max-width: 750px) {
+                                                                            #menu {
+                                                                                background-image: url('logo11.png'); /* Add the background image */
+                                                                                background-repeat: no-repeat;
+                                                                                background-position: center bottom; /* Adjust the vertical position to 'bottom' */
+                                                                                background-size: 30%; /* Adjust the size as needed (50% is an example) */
+                                                                                text-align: center; /* Center the text content horizontally */
+                                                                                padding: 20px; /* Add padding for spacing */
+                                                                            }
+                                                                        }
+                                                                    
                                                                           #menu {
                                                                             background-image: none; /* Remove any background image by default */
                                                                         }
@@ -304,21 +321,28 @@
 </div>
                 <div id="bigbar-colorizer"></div>
             </div>
-            <header id="top" class="inner over-bigbar legacy-sticky-menu">
+            <header id="top" class="frontpage over-bigbar legacy-sticky-menu">
                 <div id="header">
                     <div id="header-side">
                         
                     </div>
+                    <div id="title">
+                        <a href="/"><div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
+                    ESKIMOS R2G
+            </div>
+            </div></a>
+                    </div>
                 </div>
-                <div id="bigbar-container">
-                    <div id="bigbar-overlay">
-                        <div id="bigbar-centerpiece">
-                            <div class="bigbar-h1"><div class="mz_component mz_wysiwyg mz_editable"><div class="moze-wysiwyg-editor" >
-                                ESKIMOS R2G
-                        </div>
-                        </div></div>
-                                  
-                        </div></div>
+                            </div>
+            <div id="bigbar-container">
+                <div id="bigbar-overlay">
+                    <div id="bigbar-centerpiece">
+                        <div class="bigbar-h1"><div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
+                            TROPHY CABINET
+                    </div>
+                    </div></div>
+                              
+                    </div></div>
                                         
                         <nav class="mz_component mz_menu" id="menu">
                             <ul>
