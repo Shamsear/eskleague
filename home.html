@@ -136,6 +136,7 @@
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 300;
                                                                         }
+                                                                        
                                                         @media screen and (max-width: 750px) {                     .bigbar-h2 .mz_wysiwyg {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 300;
@@ -167,23 +168,9 @@
                                                                                                             text-transform : uppercase;
                                                                         }
 
-                                                                            /* Default style for the navigation bar */
-                                                                            #menu {
-                                                                                background-image: none; /* Remove any background image by default */
-                                                                            }
+                                                                            
                                                                         
-                                                                            /* Media query for screens with a maximum width of 750px */
-                                                                            @media screen and (max-width: 750px) {
-                                                                                #menu {
-                                                                                    background-image: url('logo11.png'); /* Add the background image */
-                                                                                    background-repeat: no-repeat;
-                                                                                    background-position: center calc(95% - 10px); /* Adjust the vertical position (e.g., move it up by 10px) */
-                                                                                    background-size: 65%; /* Adjust the size as needed (50% is an example) */
-                                                                                    text-align: center; /* Center the text content horizontally */
-                                                                                    padding: 20px; /* Add padding for spacing */
-                                                                                }
-                                                                            }
-                                                                        
+
                                                                         .background-image {
                                                                             background-image: url('logo.jpg'); /* Replace 'galaxy.jpg' with your image path */
                                                                             background-repeat: no-repeat;
@@ -199,6 +186,12 @@
                                                                             }
                                                                         }
                                                                         
+                                                                        /* Hide the navigation bar for screens with a maximum width of 768px */
+@media (max-width: 768px) {
+    nav.mz_menu {
+        display: none;
+    }
+}
                                                         @media screen and (max-width: 1024px) {                     #menu > ul > li > a {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 400;
