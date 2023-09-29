@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Player Directory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 20px 0;
+        }
+
+        /* Player Cards Styles */
+        #player-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between; /* Distribute columns evenly */
+            padding: 10px;
+        }
+
+        .player-card {
+            width: calc(50% - 10px); /* Adjusted width for two columns in a row */
+            margin: 5px; /* Add margin between columns */
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .player-card:hover {
+            transform: scale(1.05);
+        }
+
+        .player-image {
+            width: 100%;
+            height: auto;
+            max-height: 200px;
+            margin: 0 auto 10px;
+            overflow: hidden;
+        }
+
+        .player-card-image {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+        }
+
+        .player-card h3 {
+            margin: 10px 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        /* Slide-in Popup Styles */
+        .popup-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #fff;
+            z-index: 1;
+            opacity: 0;
+            overflow: auto;
+            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        .popup-container.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .popup-header {
+            cursor: grab; /* Change cursor on header to indicate draggable */
+        }
+
+        .popup-content {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content both horizontally and vertically */
+            justify-content: center;
+        }
+
+        .popup-image {
+            max-width: 150px;
+            max-height: 300px;
+            height: auto;
+            border-radius: 0;
+            width: auto;
+        }
+
+        .popup-content h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .popup-content p {
+            color: #666;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .close-button:hover {
+            color: #333;
+        }
+
+        /* Media Query for Larger Screens */
+        @media screen and (min-width: 768px) {
+            #player-list {
+                justify-content: center;
+            }
+
+            .player-card {
+                width: calc(45% - 10px); /* Adjusted width for two columns in a row with some spacing */
+            }
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="search-input" placeholder="Search players...">
+    <h1>Player Directory</h1>
+
+    <div id="player-list">
+        <!-- Player 1 card -->
+        <div class="player-card" onclick="showPlayerDetails(1)">
+            <div class="player-image">
+                <img src="casilas.jpg" alt="Player 1" class="player-card-image">
+            </div>
+            <h3>Player 1</h3>
+            <p>Player 1 details...</p>
+        </div>
+
+        <!-- Player 2 card -->
+        <div class="player-card" onclick="showPlayerDetails(2)">
+            <div class="player-image">
+                <img src="oliver.jpeg" alt="Player 2" class="player-card-image">
+            </div>
+            <h3>Player 2</h3>
+            <p>Player 2 details...</p>
+        </div>
+        
+        <!-- Player 3 card -->
+        <div class="player-card" onclick="showPlayerDetails(3)">
+            <div class="player-image">
+                <img src="oliver.jpeg" alt="Player 3" class="player-card-image">
+            </div>
+            <h3>Player 3</h3>
+            <p>Player 3 details...</p>
+        </div>
+
+        <!-- Player 4 card -->
+        <div class="player-card" onclick="showPlayerDetails(4)">
+            <div class="player-image">
+                <img src="example.jpg" alt="Player 4" class="player-card-image">
+            </div>
+            <h3>Player 4</h3>
+            <p>Player 4 details...</p>
+        </div>
+
+        <!-- Add more player cards here... -->
+    </div>
+
+    <div class="popup-container" id="player-details">
+        <div class="popup-header" onmousedown="startDrag(event)">
+            <!-- Header content (You can add a title or drag indicator here) -->
+        </div>
+        <div class="popup-content" id="popup-content">
+            <span class="close-button" onclick="hidePlayerDetails()">&times;</span>
+            <h2 id="details-name"></h2>
+            <div class="player-image">
+                <img id="details-photo" src="" alt="" class="popup-image">
+            </div>
+            <p id="details-season"></p> <!-- Updated -->
+            <p id="details-team"></p> <!-- Updated -->
+            <p id="details-value"></p> <!-- Updated -->
+            <p id="details-matchcount"></p> <!-- Updated -->
+        </div>
+    </div>
+
+    <script>
+        // Define an array of player objects with their information
+        var players = [
+            {
+                name: "Player 1",
+                photoUrl: "casilas.jpg",
+                info: "Player 1 details...",
+                value: "Value 1",
+                contract: "Contract 1",
+                team: "Team 1",
+            },
+            {
+                name: "Player 2",
+                photoUrl: "oliver.jpeg",
+                info: "Player 2 details...",
+                value: "Value 2",
+                contract: "Contract 2",
+                team: "Team 2",
+            },
+            {
+                name: "Player 3",
+                photoUrl: "oliver.jpeg",
+                info: "Player 3 details...",
+                value: "Value 3",
+                contract: "Contract 3",
+                team: "Team 3",
+            },
+            {
+                name: "Player 4",
+                photoUrl: "example.jpg",
+                info: "Player 4 details...",
+                value: "Value 4",
+                contract: "Contract 4",
+                team: "Team 4",
+            },
+            // Add more players here...
+        ];
+
+        // Function to show player details
+        function showPlayerDetails(playerId) {
+            var detailsContainer = document.getElementById("player-details");
+            var detailsPhoto = document.getElementById("details-photo");
+            var detailsName = document.getElementById("details-name");
+            var detailsSeason = document.getElementById("details-season"); // Updated
+            var detailsTeam = document.getElementById("details-team"); // Updated
+            var detailsValue = document.getElementById("details-value"); // Updated
+            var detailsMatchCount = document.getElementById("details-matchcount"); // Updated
+            var closeButton = document.querySelector(".close-button");
+            var body = document.body;
+
+            // Remove the close button event listener to prevent multiple bindings
+            closeButton.removeEventListener("click", hidePlayerDetails);
+
+            // Check if the player card is already open
+            if (!detailsContainer.classList.contains("active")) {
+                var player = players[playerId - 1];
+
+                // Populate the popup with player details
+                detailsPhoto.src = player.photoUrl;
+                detailsName.textContent = player.name;
+                detailsSeason.textContent = "Season: " + player.info; // Updated
+                detailsTeam.textContent = "Team: " + player.team; // Updated
+                detailsValue.textContent = "Value: " + player.value; // Updated
+                detailsMatchCount.textContent = "Match Count: " + player.contract; // Updated
+
+                // Show the player details container
+                detailsContainer.classList.add("active");
+
+                // Disable body scrolling
+                body.style.overflow = "hidden";
+
+                // Add an event listener to the close button to enable reopening
+                closeButton.addEventListener("click", hidePlayerDetails);
+            }
+        }
+
+// Function to hide player details
+function hidePlayerDetails() {
+    var detailsContainer = document.getElementById("player-details");
+    var body = document.body;
+
+    // Clear the content of the popup immediately
+    var detailsPhoto = document.getElementById("details-photo");
+    var detailsName = document.getElementById("details-name");
+    var detailsSeason = document.getElementById("details-season");
+    var detailsTeam = document.getElementById("details-team");
+    var detailsValue = document.getElementById("details-value");
+    var detailsMatchCount = document.getElementById("details-matchcount");
+
+    detailsPhoto.src = "";
+    detailsName.textContent = "";
+    detailsSeason.textContent = "";
+    detailsTeam.textContent = "";
+    detailsValue.textContent = "";
+    detailsMatchCount.textContent = "";
+
+    // Hide the player details container immediately
+    detailsContainer.classList.remove("active");
+
+    // Enable body scrolling immediately
+    body.style.overflow = "auto";
+}
+
+
+        // Rest of your JavaScript code...
+
+        var isDragging = false;
+        var initialMouseY = 0;
+        var initialPopupY = 0;
+
+        // Function to start dragging the popup
+        function startDrag(event) {
+            isDragging = true;
+            initialMouseY = event.clientY;
+            var popup = document.getElementById("player-details");
+            initialPopupY = parseFloat(getComputedStyle(popup).getPropertyValue("top"));
+
+            // Prevent text selection while dragging
+            document.body.style.userSelect = "none";
+
+            // Add grab cursor
+            document.querySelector(".popup-header").style.cursor = "grabbing";
+
+            // Add mousemove and mouseup event listeners to track drag
+            document.addEventListener("mousemove", dragPopup);
+            document.addEventListener("mouseup", stopDrag);
+        }
+
+        // Function to drag the popup
+        function dragPopup(event) {
+            if (!isDragging) return;
+            var deltaY = event.clientY - initialMouseY;
+            var popup = document.getElementById("player-details");
+            popup.style.top = initialPopupY + deltaY + "px";
+        }
+
+        // Function to stop dragging the popup
+        function stopDrag() {
+            isDragging = false;
+            document.body.style.userSelect = "auto"; // Re-enable text selection
+            document.querySelector(".popup-header").style.cursor = "grab"; // Restore grab cursor
+            document.removeEventListener("mousemove", dragPopup);
+            document.removeEventListener("mouseup", stopDrag);
+        }
+
+        // Function to filter and update the player list based on the search input
+        function filterPlayers() {
+            var searchInput = document.getElementById("search-input");
+            var filter = searchInput.value.toLowerCase();
+            var playerList = document.getElementById("player-list");
+            playerList.innerHTML = ""; // Clear the current player list
+
+            for (var i = 0; i < players.length; i++) {
+                var playerName = players[i].name.toLowerCase();
+
+                if (playerName.indexOf(filter) > -1) {
+                    var card = generatePlayerCard(players[i], true); // Pass true to indicate a search result card
+                    playerList.appendChild(card); // Append the player card
+                }
+            }
+        }
+
+        // Function to generate player cards
+        function generatePlayerCard(player) {
+            var card = document.createElement("div");
+            card.classList.add("player-card");
+
+            var playerImage = document.createElement("div");
+            playerImage.classList.add("player-image");
+            var img = document.createElement("img");
+            img.src = player.photoUrl;
+            img.alt = player.name;
+            img.classList.add("player-card-image");
+            playerImage.appendChild(img);
+
+            var playerName = document.createElement("h3");
+            playerName.textContent = player.name;
+            playerName.classList.add("player-card-name");
+
+            var playerInfo = document.createElement("p");
+            playerInfo.textContent = player.info;
+
+            card.appendChild(playerImage);
+            card.appendChild(playerName);
+            card.appendChild(playerInfo);
+
+            return card;
+        }
+
+        // Add an event listener to the search input for real-time filtering
+        var searchInput = document.getElementById("search-input");
+        searchInput.addEventListener("input", filterPlayers);
+
+    </script>
+</body>
+</html>
