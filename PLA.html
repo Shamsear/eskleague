@@ -22,52 +22,49 @@
             margin: 20px 0;
         }
 
-        /* Player Cards Styles */
-        #player-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between; /* Distribute columns evenly */
-            padding: 10px;
-        }
+         /* Global Styles */
+    /* ... (existing styles) ... */
 
-        .player-card {
-            width: calc(50% - 10px); /* Adjusted width for two columns in a row */
-            margin: 5px; /* Add margin between columns */
-            border-radius: 12px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-        }
+    /* List View Styles */
+    #player-list {
+        display: block;
+    }
 
-        .player-card:hover {
-            transform: scale(1.05);
-        }
+.player-card {
+    width: 290px; /* Expand the width by 20px (10px left + 10px right) */
+    margin: 4px 0;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 6px;
+    border-radius: 5px;
+}
 
-        .player-image {
-            width: 100%;
-            height: auto;
-            max-height: 200px;
-            margin: 0 auto 10px;
-            overflow: hidden;
-        }
+.player-image {
+    max-width: 60px; /* Set the width of the player image */
+    height: auto;
+    margin-right: 10px;
+}
 
-        .player-card-image {
-            width: 100%;
-            max-height: 200px;
-            object-fit: cover;
-        }
+.player-image img {
+    max-width: 100%; /* Ensure the image doesn't exceed the container width */
+    height: auto;
+}
 
-        .player-card h3 {
-            margin: 10px 0;
-            font-size: 1.2rem;
-            color: #333;
-        }
+.player-card h3 {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+    flex-grow: 1; /* Allow the player name to expand and fill the available space */
+}
+
+
+.player-card p {
+    margin: 3px 0;
+    font-size: 0.8rem;
+    color: #666;
+}
+
 
         /* Slide-in Popup Styles */
         .popup-container {
@@ -104,12 +101,13 @@
         }
 
         .popup-image {
-            max-width: 150px;
-            max-height: 300px;
+            max-width: 120px; /* Set the maximum width for the popup image */
+            max-height: 120px; /* Set the maximum height for the popup image */
             height: auto;
             border-radius: 0;
             width: auto;
         }
+
 
         .popup-content h2 {
             margin: 0;
@@ -145,51 +143,118 @@
                 width: calc(45% - 10px); /* Adjusted width for two columns in a row with some spacing */
             }
         }
+
+        /* Slides Styles */
+        .slide {
+            display: none;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slider-controls {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .slide-button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 5px;
+        }
+
+        .slide-button.active {
+            background-color: #666;
+        }
+
+        /* Adjust spacing for the separate lines in the popup */
+        .slide p {
+            margin: 5px 0; /* Add less vertical margin */
+        }
+
+        /* Table Styles */
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            white-space: nowrap; /* Prevent text from wrapping to a new line */
+            overflow: hidden; /* Hide overflow content */
+            text-overflow: ellipsis; /* Display ellipsis for text that overflows */
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+
+        /* Adjust the width of the "Team" column */
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 30%; /* Adjust the percentage as needed */
+        }
+
+        /* Narrower columns */
+        th:nth-child(1),
+        td:nth-child(1),
+        th:nth-child(3),
+        td:nth-child(3),
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 15%; /* Adjust the percentage as needed */
+        }
     </style>
 </head>
 <body>
     <input type="text" id="search-input" placeholder="Search players...">
     <h1>Player Directory</h1>
 
-    <div id="player-list">
-        <!-- Player 1 card -->
-        <div class="player-card" onclick="showPlayerDetails(1)">
-            <div class="player-image">
-                <img src="casilas.jpg" alt="Player 1" class="player-card-image">
-            </div>
-            <h3>Player 1</h3>
-            <p>Player 1 details...</p>
+<!-- Updated Messi card -->
+<div class="player-card" onclick="showPlayerDetails(1)">
+    <div class="player-image">
+        <img src="messi.jpg" alt="Messi" class="player-card-image">
+    </div>
+    <h2>MESSI</h2>
         </div>
-
-        <!-- Player 2 card -->
+    
+        <!-- Casilas card -->
         <div class="player-card" onclick="showPlayerDetails(2)">
             <div class="player-image">
-                <img src="oliver.jpeg" alt="Player 2" class="player-card-image">
+                <img src="casilas.jpg" alt="Casilas" class="player-card-image">
             </div>
-            <h3>Player 2</h3>
-            <p>Player 2 details...</p>
-        </div>
-        
-        <!-- Player 3 card -->
+            <h2>CASILAS</h2>
+                </div>
+    
+        <!-- Ramos card -->
         <div class="player-card" onclick="showPlayerDetails(3)">
             <div class="player-image">
-                <img src="oliver.jpeg" alt="Player 3" class="player-card-image">
+                <img src="ramos.jpg" alt="Ramos" class="player-card-image">
             </div>
-            <h3>Player 3</h3>
-            <p>Player 3 details...</p>
-        </div>
-
+            <h2>RAMOS</h2>
+                </div>
+    
         <!-- Player 4 card -->
         <div class="player-card" onclick="showPlayerDetails(4)">
             <div class="player-image">
                 <img src="example.jpg" alt="Player 4" class="player-card-image">
             </div>
-            <h3>Player 4</h3>
-            <p>Player 4 details...</p>
-        </div>
-
+            <h2>Player 4</h2>
+                </div>
         <!-- Add more player cards here... -->
     </div>
+    
+    
 
     <div class="popup-container" id="player-details">
         <div class="popup-header" onmousedown="startDrag(event)">
@@ -197,128 +262,228 @@
         </div>
         <div class="popup-content" id="popup-content">
             <span class="close-button" onclick="hidePlayerDetails()">&times;</span>
-            <h2 id="details-name"></h2>
-            <div class="player-image">
+            
+            <!-- Player name -->
+            <h2 id="details-name" style="margin-top: 0;"></h2>
+
+            <div class="popup-image">
                 <img id="details-photo" src="" alt="" class="popup-image">
             </div>
-            <p id="details-season"></p> <!-- Updated -->
-            <p id="details-team"></p> <!-- Updated -->
-            <p id="details-value"></p> <!-- Updated -->
-            <p id="details-matchcount"></p> <!-- Updated -->
+
+            <h4 id="player-team-value">Team: Manchester United | Value: 10CC</h4> <!-- Team name and value -->
+            
+            <!-- Slide 1: Career -->
+            <div class="slide active" id="slide1">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Season</th>
+                            <th>Team</th>
+                            <th>Value</th>
+                            <th>Apps</th>
+                        </tr>
+                    </thead>
+                    <tbody id="career-table">
+                        <!-- Career data will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="slider-controls">
+                <button class="slide-button active" onclick="showSlide(1)">Career</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // Define an array of player objects with their information
+        // Define an array of player objects with their career statistics
         var players = [
             {
-                name: "Player 1",
+                name: "Messi",
+                photoUrl: "messi.jpg",
+                info: "Goalkeeper",
+                team: "Manchester United", // Added team name
+                value: "10CC", // Added value
+                career: [
+                    {
+                        season: "1",
+                        team: "Manchester United",
+                        value: "10CC",
+                        apps: 20
+                    },
+                    {
+                        season: "2",
+                        team: "FC Bayern Munich",
+                        value: "9CC",
+                        apps: 25
+                    }
+                    // Add more career data here...
+                ]
+            },
+            {
+                name: "Casilas",
                 photoUrl: "casilas.jpg",
-                info: "Player 1 details...",
-                value: "Value 1",
-                contract: "Contract 1",
-                team: "Team 1",
+                info: "Forward",
+                team: "Gokulam Kerala FC", // Added team name
+                value: "$15 million", // Added value
+                career: [
+                    {
+                        season: "2020-2021",
+                        team: "Gokulam Kerala FC",
+                        value: "$15 million",
+                        apps: 30
+                    },
+                    {
+                        season: "2019-2020",
+                        team: "Mohun Bagan SC",
+                        value: "$14 million",
+                        apps: 28
+                    }
+                    // Add more career data here...
+                ]
             },
             {
-                name: "Player 2",
-                photoUrl: "oliver.jpeg",
-                info: "Player 2 details...",
-                value: "Value 2",
-                contract: "Contract 2",
-                team: "Team 2",
-            },
-            {
-                name: "Player 3",
-                photoUrl: "oliver.jpeg",
-                info: "Player 3 details...",
-                value: "Value 3",
-                contract: "Contract 3",
-                team: "Team 3",
+                name: "Ramos",
+                photoUrl: "ramos.jpg",
+                info: "Midfielder",
+                team: "Team P", // Added team name
+                value: "$20 million", // Added value
+                career: [
+                    {
+                        season: "2020-2021",
+                        team: "Team P",
+                        value: "$20 million",
+                        apps: 35
+                    },
+                    {
+                        season: "2019-2020",
+                        team: "Team Q",
+                        value: "$18 million",
+                        apps: 32
+                    }
+                    // Add more career data here...
+                ]
             },
             {
                 name: "Player 4",
                 photoUrl: "example.jpg",
-                info: "Player 4 details...",
-                value: "Value 4",
-                contract: "Contract 4",
-                team: "Team 4",
-            },
+                info: "Defender",
+                team: "Team M", // Added team name
+                value: "$25 million", // Added value
+                career: [
+                    {
+                        season: "2020-2021",
+                        team: "Team M",
+                        value: "$25 million",
+                        apps: 28
+                    },
+                    {
+                        season: "2019-2020",
+                        team: "Team N",
+                        value: "$23 million",
+                        apps: 30
+                    }
+                    // Add more career data here...
+                ]
+            }
             // Add more players here...
         ];
 
         // Function to show player details
-        function showPlayerDetails(playerId) {
-            var detailsContainer = document.getElementById("player-details");
-            var detailsPhoto = document.getElementById("details-photo");
-            var detailsName = document.getElementById("details-name");
-            var detailsSeason = document.getElementById("details-season"); // Updated
-            var detailsTeam = document.getElementById("details-team"); // Updated
-            var detailsValue = document.getElementById("details-value"); // Updated
-            var detailsMatchCount = document.getElementById("details-matchcount"); // Updated
-            var closeButton = document.querySelector(".close-button");
-            var body = document.body;
-
-            // Remove the close button event listener to prevent multiple bindings
-            closeButton.removeEventListener("click", hidePlayerDetails);
-
-            // Check if the player card is already open
-            if (!detailsContainer.classList.contains("active")) {
-                var player = players[playerId - 1];
-
-                // Populate the popup with player details
-                detailsPhoto.src = player.photoUrl;
-                detailsName.textContent = player.name;
-                detailsSeason.textContent = "Season: " + player.info; // Updated
-                detailsTeam.textContent = "Team: " + player.team; // Updated
-                detailsValue.textContent = "Value: " + player.value; // Updated
-                detailsMatchCount.textContent = "Match Count: " + player.contract; // Updated
-
-                // Show the player details container
-                detailsContainer.classList.add("active");
-
-                // Disable body scrolling
-                body.style.overflow = "hidden";
-
-                // Add an event listener to the close button to enable reopening
-                closeButton.addEventListener("click", hidePlayerDetails);
-            }
-        }
-
-// Function to hide player details
-function hidePlayerDetails() {
+function showPlayerDetails(playerId) {
     var detailsContainer = document.getElementById("player-details");
-    var body = document.body;
-
-    // Clear the content of the popup immediately
     var detailsPhoto = document.getElementById("details-photo");
     var detailsName = document.getElementById("details-name");
-    var detailsSeason = document.getElementById("details-season");
-    var detailsTeam = document.getElementById("details-team");
-    var detailsValue = document.getElementById("details-value");
-    var detailsMatchCount = document.getElementById("details-matchcount");
+    var detailsTeamValue = document.getElementById("player-team-value"); // Added team name and value element
+    var careerTable = document.getElementById("career-table");
+    var body = document.body;
 
-    detailsPhoto.src = "";
-    detailsName.textContent = "";
-    detailsSeason.textContent = "";
-    detailsTeam.textContent = "";
-    detailsValue.textContent = "";
-    detailsMatchCount.textContent = "";
+    // Check if the player card is already open
+    if (!detailsContainer.classList.contains("active")) {
+        var player = players[playerId - 1];
 
-    // Hide the player details container immediately
-    detailsContainer.classList.remove("active");
+        // Populate the popup with player details
+        detailsName.textContent = player.name; // Set player name
+        detailsPhoto.src = player.photoUrl; // Set player photo
 
-    // Enable body scrolling immediately
-    body.style.overflow = "auto";
+        // Populate team name and value
+        detailsTeamValue.innerHTML = `<strong>Team:</strong> ${player.team} | <strong>Value:</strong> ${player.value}`;
+
+        // Populate the career table
+        var careerTableHTML = "";
+        player.career.forEach(function (seasonData) {
+            careerTableHTML += `
+                <tr>
+                    <td>${seasonData.season}</td>
+                    <td>${seasonData.team}</td>
+                    <td>${seasonData.value}</td>
+                    <td>${seasonData.apps}</td>
+                </tr>
+            `;
+        });
+        careerTable.innerHTML = careerTableHTML;
+
+        // Show the "Career" slide by default
+        showSlide(1);
+
+        // Show the player details container
+        detailsContainer.classList.add("active");
+
+        // Disable body scrolling
+        body.style.overflow = "hidden";
+
+        // Add an event listener to the close button to enable reopening
+        var closeButton = document.querySelector(".close-button");
+        closeButton.addEventListener("click", function () {
+            hidePlayerDetails();
+            // Remove the event listener to allow reopening
+            closeButton.removeEventListener("click", hidePlayerDetails);
+        });
+    }
 }
 
 
-        // Rest of your JavaScript code...
+        // Function to show a specific slide
+        function showSlide(slideNumber) {
+            var slides = document.querySelectorAll(".slide");
+            var slideButtons = document.querySelectorAll(".slide-button");
 
+            // Hide all slides and deactivate buttons
+            slides.forEach(function (slide) {
+                slide.style.display = "none";
+            });
+            slideButtons.forEach(function (button) {
+                button.classList.remove("active");
+            });
+
+            // Show the selected slide and activate the corresponding button
+            slides[slideNumber - 1].style.display = "block";
+            slideButtons[slideNumber - 1].classList.add("active");
+        }
+
+        // Function to hide player details
+        function hidePlayerDetails() {
+            var detailsContainer = document.getElementById("player-details");
+            var body = document.body;
+
+            // Hide the player details container by removing the 'active' class
+            detailsContainer.classList.remove("active");
+
+            // Clear the content of the popup
+            document.getElementById("details-photo").src = "";
+            document.getElementById("details-name").textContent = "";
+            document.getElementById("player-team-value").textContent = ""; // Clear team name and value
+            document.querySelector("#career-table").innerHTML = "";
+
+            // Enable body scrolling
+            body.style.overflow = "auto";
+        }
+
+        // Function to start dragging the popup
         var isDragging = false;
         var initialMouseY = 0;
         var initialPopupY = 0;
 
-        // Function to start dragging the popup
         function startDrag(event) {
             isDragging = true;
             initialMouseY = event.clientY;
