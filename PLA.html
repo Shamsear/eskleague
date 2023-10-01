@@ -286,6 +286,24 @@
         <button class="sort-button" onclick="sortPlayersByPosition()">Sort by Position</button>
     </div>
 
+    <!-- Position Filter -->
+    <div class="position-filter">
+        <label for="position-filter">Filter by Position:</label>
+        <select id="position-filter" onchange="filterByPosition()">
+            <option value="all" selected>Show All Positions</option>
+            <option value="GK">GK</option>
+            <option value="CB">CB</option>
+            <option value="LB">LB</option>
+            <option value="RB">RB</option>
+            <option value="DMF">DMF</option>
+            <option value="CMF">CMF</option>
+            <option value="AMF">AMF</option>
+            <option value="LW">LW</option>
+            <option value="RW">RW</option>
+            <option value="ST">ST</option>
+        </select>
+    </div>
+
     <!-- Player Cards -->
     <div id="player-list">
         <!-- Player cards will be added here dynamically -->
@@ -337,7 +355,7 @@
        {
            name: "CASILLAS",
            photoUrl: "CASILAS.png",
-           info: "Goalkeeper",
+           info: "GK",
            team: "Free Agent",
            value: "$70cc",
            career: [
@@ -352,7 +370,7 @@
          {
            name: "O. KAHN",
            photoUrl: "KAHN.png",
-           info: "Goalkeeper",
+           info: "GK",
            team: "Free Agent",
            value: "$70cc",
            career: [
@@ -367,7 +385,7 @@
          {
            name: "P. SCHMEICHEL",
            photoUrl: "SCHE.PNG",
-           info: "Goalkeeper",
+           info: "GK",
            team: "Free Agent",
            value: "$70cc",
            career: [
@@ -382,7 +400,7 @@
          {
            name: "P. ĆECH",
            photoUrl: "CECH.png",
-           info: "Goalkeeper",
+           info: "GK",
            team: "Free Agent",
            value: "$70cc",
            career: [
@@ -397,7 +415,7 @@
          {
            name: "JULIO CESAR",
            photoUrl: "Cesar.png",
-           info: "Goalkeeper",
+           info: "GK",
            team: "Free Agent",
            value: "$70cc",
            career: [
@@ -412,7 +430,7 @@
          {
            name: "DIDA",
            photoUrl: "DIDA.png",
-           info: "Goalkeeper",
+           info: "GK",
            team: "Free Agent",
            value: "$70cc",
            career: [
@@ -427,7 +445,7 @@
          {
            name: "D. SEAMAN",
            photoUrl: "Q.png",
-           info: "Goalkeeper",
+           info: "GK",
            team: "Free Agent",
            value: "$70cc",
            career: [
@@ -442,7 +460,7 @@
          {
             name: "Y. KAWAGUCHI",
             photoUrl: "Q.png",
-            info: "Goalkeeper",
+            info: "GK",
             team: "Free Agent",
             value: "$70cc",
             career: [
@@ -457,7 +475,7 @@
           {
             name: "VITOR BAIA",
             photoUrl: "VITOR BAIA.png",
-            info: "Goalkeeper",
+            info: "GK",
             team: "Free Agent",
             value: "$70cc",
             career: [
@@ -472,7 +490,7 @@
          {
            name: "G. OCHOA",
            photoUrl: "OCHOA.png",
-           info: "Goalkeeper",
+           info: "GK",
            team: "Free Agent",
            value: "$70cc",
            career: [
@@ -487,7 +505,7 @@
          {
            name: "T. COURTOIS",
            photoUrl: "COURTOUIS.png",
-           info: "Goalkeeper",
+           info: "GK",
            team: "Free Agent",
            value: "$30cc",
            career: [
@@ -502,7 +520,7 @@
          {
            name: "M. NUEUR",
            photoUrl: "NEUER.png",
-           info: "Goalkeeper",
+           info: "GK",
            team: "Free Agent",
            value: "$30cc",
            career: [
@@ -517,7 +535,7 @@
          {
            name: "J. OBLAK",
            photoUrl: "OBLAK.png",
-           info: "Goalkeeper",
+           info: "GK",
            team: "Free Agent",
            value: "$30cc",
            career: [
@@ -532,7 +550,7 @@
          {
            name: "TER STEGEN",
            photoUrl: "STEGAN.png",
-           info: "Goalkeeper",
+           info: "GK",
            team: "Free Agent",
            value: "$30cc",
            career: [
@@ -547,7 +565,7 @@
          {
            name: "ALISSON",
            photoUrl: "ALISSON.png",
-           info: "Goalkeeper",
+           info: "GK",
            team: "Free Agent",
            value: "$30cc",
            career: [
@@ -562,7 +580,7 @@
          {
            name: "Y. SOMMER",
            photoUrl: "SOMMER.png",
-           info: "Goalkeeper",
+           info: "GK",
            team: "Free Agent",
            value: "$30cc",
            career: [
@@ -577,7 +595,7 @@
          {
            name: "EDERSON MORAES",
            photoUrl: "EDERSON.png",
-           info: "Goalkeeper",
+           info: "GK",
            team: "Free Agent",
            value: "$30cc",
            career: [
@@ -592,7 +610,7 @@
          {
            name: "M. MAIGNAN",
            photoUrl: "MAIGNAN.png",
-           info: "Goalkeeper",
+           info: "GK",
            team: "Free Agent",
            value: "$30cc",
            career: [
@@ -607,7 +625,7 @@
          {
                    name: "G. DONNARUMMA",
                    photoUrl: "DONNARUMMA.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$30cc",
                    career: [
@@ -623,7 +641,7 @@
                {
                    name: "K. TRAPP",
                    photoUrl: "TRAP.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$30cc",
                    career: [
@@ -639,7 +657,7 @@
                {
                    name: "W. SZCZESNY",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -655,7 +673,7 @@
                {
                    name: "Y.BOUNOU",
                    photoUrl: "BOUNOU.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$30cc",
                    career: [
@@ -671,7 +689,7 @@
                {
                    name: "K. CASTEELS",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -687,7 +705,7 @@
                {
                    name: "UNAI SIMON",
                    photoUrl: "SIMON.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$30cc",
                    career: [
@@ -703,7 +721,7 @@
                {
                    name: "G. KOBEL",
                    photoUrl: "KOBEL.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$30cc",
                    career: [
@@ -719,7 +737,7 @@
                {
                    name: "H. LLORIS",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -735,7 +753,7 @@
                {
                    name: "RUI PATRICIO",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -751,7 +769,7 @@
                {
                    name: "P. GULASCI",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -767,7 +785,7 @@
                {
                    name: "K. NAVAS",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -783,7 +801,7 @@
                {
                    name: "DAVID DE GEA",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -799,7 +817,7 @@
                {
                    name: "ANTHONY LOPES",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -815,7 +833,7 @@
                {
                    name: "L. HRADECKY",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -831,7 +849,7 @@
                {
                    name: "B. SAMBA",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -847,7 +865,7 @@
                {
                    name: "JOSE SA",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -863,7 +881,7 @@
                {
                    name: "E. MARTINEZ",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -879,7 +897,7 @@
                {
                    name: "N. POPE",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -895,7 +913,7 @@
                {
                    name: "A. ONANA",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -911,7 +929,7 @@
                {
                    name: "ALEX REMIRO",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -927,7 +945,7 @@
                {
                    name: "A. RAMSDALE",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -943,7 +961,7 @@
                {
                    name: "G. VICARIO",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -959,7 +977,7 @@
                {
                    name: "DIOGO COSTA",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$30cc",
                    career: [
@@ -975,7 +993,7 @@
                {
                    name: "D. OSPINA",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -991,7 +1009,7 @@
                {
                    name: "M. PERIN",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1007,7 +1025,7 @@
                {
                    name: "KEPA",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1023,7 +1041,7 @@
                {
                    name: "J. PICKFORD",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1039,7 +1057,7 @@
                {
                    name: "J. MUSSO",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1055,7 +1073,7 @@
                {
                    name: "PAU LOPEZ",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1071,7 +1089,7 @@
                {
                    name: "DAVID RAYA",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1087,7 +1105,7 @@
                {
                    name: "A. MERET",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1103,7 +1121,7 @@
                {
                    name: "E. MENDY",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1119,7 +1137,7 @@
                {
                    name: "ROBERT SANCHEZ",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1135,7 +1153,7 @@
                {
                    name: "BENTO",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1151,7 +1169,7 @@
                {
                    name: "K. SCHMEICHEL",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1167,7 +1185,7 @@
                {
                    name: "L. FABIANSKI",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1183,7 +1201,7 @@
                {
                    name: "M. DMITROVIC",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1199,7 +1217,7 @@
                {
                    name: "B. LENO",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1215,7 +1233,7 @@
                {
                    name: "RUI SILVA",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1231,7 +1249,7 @@
                {
                    name: "WEVERTON",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1247,7 +1265,7 @@
                {
                    name: "I. PROVEDEL",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1263,7 +1281,7 @@
                {
                    name: "P. RAJKOVIC",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1279,7 +1297,7 @@
                {
                    name: "DAVID SORIA",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1295,7 +1313,7 @@
                {
                    name: "O. VLACHODIMOS",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1311,7 +1329,7 @@
                {
                    name: "D. HENDERSON",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1327,7 +1345,7 @@
                {
                    name: "D. LIVAKOVIC",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1343,7 +1361,7 @@
                {
                    name: "LUCAS PERRI",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1359,7 +1377,7 @@
                {
                    name: "A. TRUBIN",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1375,7 +1393,7 @@
                {
                    name: "G. MAMARDASHVILI",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1391,7 +1409,7 @@
                {
                    name: "A. LAFONT",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -1407,7 +1425,7 @@
                {
                    name: "M. CARNESECCHI",
                    photoUrl: "Q.png", // Add the correct image file path
-                   info: "Goalkeeper",
+                   info: "GK",
                    team: "Free Agent",
                    value: "$20cc",
                    career: [
@@ -5804,7 +5822,7 @@ document.getElementById("search-input").addEventListener("keyup", function () {
     }
 });
 var customPositionOrder = [
-    "Goalkeeper",
+    "GK",
     "CB",
     "LB",
     "RB",
@@ -5862,7 +5880,31 @@ function sortPlayersByPosition() {
     // Generate and append sorted player cards
     generatePlayerCards();
 }
+        // Function to filter players by position
+        function filterByPosition() {
+            var selectedPosition = document.getElementById("position-filter").value;
+            var playerList = document.getElementById("player-list");
+            playerList.innerHTML = "";
 
+            if (selectedPosition === "all") {
+                // Display all players
+                players.forEach(function (player, index) {
+                    var playerCard = generatePlayerCard(player, index);
+                    playerList.appendChild(playerCard);
+                });
+            } else {
+                // Display only players with the selected position
+                players.forEach(function (player, index) {
+                    if (player.info === selectedPosition) {
+                        var playerCard = generatePlayerCard(player, index);
+                        playerList.appendChild(playerCard);
+                    }
+                });
+            }
+        }
+
+        // Initial filtering
+        filterByPosition();
 
 function sortByName() {
     players.sort(function (a, b) {
