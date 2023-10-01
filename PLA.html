@@ -271,6 +271,92 @@
         .sort-button:hover {
             background-color: #666;
         }
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .dropbtn {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 1;
+            border: 1px solid #ddd;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .dropdown-content1 {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            min-width: 100px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 1;
+            border: 1px solid #ddd;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .dropdown-content1 label {
+            display: block;
+            padding: 8px 16px;
+        }
+        
+        /* Style for the checkboxes */
+        .dropdown-content1 input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        
+        /* Show the dropdown content on hover */
+        .dropdown:hover .dropdown-content1 {
+            display: block;
+        }  
+
+.dropdown-content label {
+    display: block;
+    padding: 8px 16px;
+}
+
+/* Style for the checkboxes */
+.dropdown-content input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* Show the dropdown content on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.filter-container {
+    margin-top: 20px; /* Add margin to create space */
+}
     </style>
 </head>
 <body>
@@ -281,27 +367,26 @@
         <input type="text" id="search-input" placeholder="Search players...">
         <button id="search-button">Search</button>
     </div>    
-    <div class="sort-buttons">
-        <button class="sort-button" onclick="sortPlayersByTeam()">Sort by Team</button>
-        <button class="sort-button" onclick="sortPlayersByPosition()">Sort by Position</button>
-    </div>
+    <div class="filter-container">
+        <!-- Team Filter Dropdown -->
+        <div class="dropdown" id="team-dropdown">
+            <button class="dropbtn">Team</button>
+            <div class="dropdown-content" id="team-filter">
+                <label><input type="checkbox" value="Free Agent">Free Agent</label>
+                <!-- Add more team checkboxes as needed -->
+            </div>
+        </div>
 
-    <!-- Position Filter -->
-    <div class="position-filter">
-        <label for="position-filter">Filter by Position:</label>
-        <select id="position-filter" onchange="filterByPosition()">
-            <option value="all" selected>Show All Positions</option>
-            <option value="GK">GK</option>
-            <option value="CB">CB</option>
-            <option value="LB">LB</option>
-            <option value="RB">RB</option>
-            <option value="DMF">DMF</option>
-            <option value="CMF">CMF</option>
-            <option value="AMF">AMF</option>
-            <option value="LW">LW</option>
-            <option value="RW">RW</option>
-            <option value="ST">ST</option>
-        </select>
+        <!-- Position Filter Dropdown -->
+        <div class="dropdown" id="position-dropdown">
+            <button class="dropbtn">Position</button>
+            <div class="dropdown-content1" id="position-filter">
+                <label><input type="checkbox" value="GK">GK</label>
+                <label><input type="checkbox" value="CB">CB</label>
+                <label><input type="checkbox" value="ST">ST</label>
+                <!-- Add more position checkboxes as needed -->
+            </div>
+        </div>
     </div>
 
     <!-- Player Cards -->
@@ -3538,13 +3623,13 @@
                 name: "J. CRUIJFF",
                 photoUrl: "Q.png",
                 info: "ST",
-                team: "Free Agent",
-                value: "$70cc",
+                team: "Liverpool",
+                value: "$124cc",
                 career: [
                     {
                         season: "1-3",
-                        team: "Free Agent",
-                        value: "$70cc",
+                        team: "Liverpool",
+                        value: "$124cc",
                         apps: "00",
                     },
                     // Add more career data here if needed
@@ -3554,13 +3639,13 @@
                 name: "ROMARIO",
                 photoUrl: "Q.png",
                 info: "ST",
-                team: "Free Agent",
-                value: "$70cc",
+                team: "Real Madrid",
+                value: "$74cc",
                 career: [
                     {
                         season: "1-3",
-                        team: "Free Agent",
-                        value: "$70cc",
+                        team: "Real Madrid",
+                        value: "$74cc",
                         apps: "00",
                     },
                     // Add more career data here if needed
@@ -3570,13 +3655,13 @@
                 name: "D. BERGKAMP",
                 photoUrl: "Q.png",
                 info: "ST",
-                team: "Free Agent",
-                value: "$70cc",
+                team: "Mohun Bagan",
+                value: "$100cc",
                 career: [
                     {
                         season: "1-3",
-                        team: "Free Agent",
-                        value: "$70cc",
+                        team: "Mohun Bagan",
+                        value: "$100cc",
                         apps: "00",
                     },
                     // Add more career data here if needed
@@ -3586,12 +3671,12 @@
                 name: "M. VAN BASTEN",
                 photoUrl: "Q.png",
                 info: "ST",
-                team: "Free Agent",
+                team: "FC Barcelona",
                 value: "$70cc",
                 career: [
                     {
                         season: "1-3",
-                        team: "Free Agent",
+                        team: "FC Barcelona",
                         value: "$70cc",
                         apps: "00",
                     },
@@ -3602,13 +3687,13 @@
                 name: "K. RUMMENIGGE",
                 photoUrl: "Q.png",
                 info: "ST",
-                team: "Free Agent",
-                value: "$70cc",
+                team: "FC Bayern Munich",
+                value: "$180cc",
                 career: [
                     {
                         season: "1-3",
-                        team: "Free Agent",
-                        value: "$70cc",
+                        team: "FC Bayern Munich",
+                        value: "$180cc",
                         apps: "00",
                     },
                     // Add more career data here if needed
@@ -3618,13 +3703,13 @@
                 name: "S. ETO'O",
                 photoUrl: "Q.png",
                 info: "ST",
-                team: "Free Agent",
-                value: "$70cc",
+                team: "FC ST Gallen",
+                value: "$124cc",
                 career: [
                     {
                         season: "1-3",
-                        team: "Free Agent",
-                        value: "$70cc",
+                        team: "FC ST Gallen",
+                        value: "$124cc",
                         apps: "00",
                     },
                     // Add more career data here if needed
@@ -3634,13 +3719,13 @@
                 name: "G. BATISTUTA",
                 photoUrl: "Q.png",
                 info: "ST",
-                team: "Free Agent",
+                team: "Union Berlin",
                 value: "$70cc",
                 career: [
                     {
                         season: "1-3",
-                        team: "Free Agent",
-                        value: "$70cc",
+                        team: "Union Berlin",
+                        value: "$80cc",
                         apps: "00",
                     },
                     // Add more career data here if needed
@@ -3650,13 +3735,13 @@
                 name: "D. DROGBA",
                 photoUrl: "Q.png",
                 info: "ST",
-                team: "Free Agent",
-                value: "$70cc",
+                team: "Union Berlin",
+                value: "$98cc",
                 career: [
                     {
                         season: "1-3",
-                        team: "Free Agent",
-                        value: "$70cc",
+                        team: "Union Berlin",
+                        value: "$94cc",
                         apps: "00",
                     },
                     // Add more career data here if needed
@@ -3666,13 +3751,13 @@
                 name: "R. VAN NISTELROOIJ",
                 photoUrl: "Q.png",
                 info: "ST",
-                team: "Free Agent",
-                value: "$70cc",
+                team: "Union Berlin",
+                value: "$94cc",
                 career: [
                     {
                         season: "1-3",
-                        team: "Free Agent",
-                        value: "$70cc",
+                        team: "Union Berlin",
+                        value: "$94cc",
                         apps: "00",
                     },
                     // Add more career data here if needed
@@ -3682,12 +3767,12 @@
                 name: "F. TOTTI",
                 photoUrl: "Q.png",
                 info: "ST",
-                team: "Free Agent",
+                team: "Al Ahli",
                 value: "$70cc",
                 career: [
                     {
                         season: "1-3",
-                        team: "Free Agent",
+                        team: "Al Ahli",
                         value: "$70cc",
                         apps: "00",
                     },
@@ -3698,13 +3783,13 @@
                 name: "D. MARADONA",
                 photoUrl: "Q.png",
                 info: "ST",
-                team: "Free Agent",
-                value: "$70cc",
+                team: "Gokulam Kerala",
+                value: "$72cc",
                 career: [
                     {
                         season: "1-3",
-                        team: "Free Agent",
-                        value: "$70cc",
+                        team: "Gokulam Kerala",
+                        value: "$72cc",
                         apps: "00",
                     },
                     // Add more career data here if needed
@@ -3714,13 +3799,13 @@
                 name: "A. DEL PIERO",
                 photoUrl: "Q.png",
                 info: "ST",
-                team: "Free Agent",
-                value: "$70cc",
+                team: "Manchester City",
+                value: "$72cc",
                 career: [
                     {
                         season: "1-3",
-                        team: "Free Agent",
-                        value: "$70cc",
+                        team: "Manchester City",
+                        value: "$72cc",
                         apps: "00",
                     },
                     // Add more career data here if needed
@@ -3730,12 +3815,12 @@
                 name: "DAVID VILLA",
                 photoUrl: "Q.png",
                 info: "ST",
-                team: "Free Agent",
+                team: "Dortmund",
                 value: "$70cc",
                 career: [
                     {
                         season: "1-3",
-                        team: "Free Agent",
+                        team: "Dortmund",
                         value: "$70cc",
                         apps: "00",
                     },
@@ -3746,13 +3831,13 @@
                 name: "FERNANDO TORRES",
                 photoUrl: "Q.png",
                 info: "ST",
-                team: "Free Agent",
-                value: "$70cc",
+                team: "SL Benfica",
+                value: "$130cc",
                 career: [
                     {
                         season: "1-3",
-                        team: "Free Agent",
-                        value: "$70cc",
+                        team: "SL Benfica",
+                        value: "$130cc",
                         apps: "00",
                     },
                     // Add more career data here if needed
@@ -3762,12 +3847,12 @@
                 name: "D. LAW",
                 photoUrl: "Q.png",
                 info: "ST",
-                team: "Free Agent",
+                team: "FC ST Gallen",
                 value: "$70cc",
                 career: [
                     {
                         season: "1-3",
-                        team: "Free Agent",
+                        team: "FC ST Gallen",
                         value: "$70cc",
                         apps: "00",
                     },
@@ -3775,549 +3860,565 @@
                 ],
             },
             {
-                name: "I. ZOMORANO",
-                photoUrl: "Q.png",
-                info: "ST",
-                team: "Free Agent",
-                value: "$70cc",
-                career: [
-                    {
-                        season: "1-3",
-                        team: "Free Agent",
-                        value: "$70cc",
-                        apps: "00",
-                    },
-                    // Add more career data here if needed
-                ],
-            },
-            {
-                name: "MORIENTES",
-                photoUrl: "Q.png",
-                info: "ST",
-                team: "Free Agent",
-                value: "$70cc",
-                career: [
-                    {
-                        season: "1-3",
-                        team: "Free Agent",
-                        value: "$70cc",
-                        apps: "00",
-                    },
-                    // Add more career data here if needed
-                ],
-            },
-            {
-                name: "P. KLUIVERT",
-                photoUrl: "Q.png",
-                info: "ST",
-                team: "Free Agent",
-                value: "$70cc",
-                career: [
-                    {
-                        season: "1-3",
-                        team: "Free Agent",
-                        value: "$70cc",
-                        apps: "00",
-                    },
-                    // Add more career data here if needed
-                ],
-            },
-            {
-                name: "GIOVANE ELBER",
-                photoUrl: "Q.png",
-                info: "ST",
-                team: "Free Agent",
-                value: "$50cc",
-                career: [
-                    {
-                        season: "1-3",
-                        team: "Free Agent",
-                        value: "$50cc",
-                        apps: "00",
-                    },
-                    // Add more career data here if needed
-                ],
-            },
-                    {
-                        name: "D. FORLAN",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$70cc",
-                        career: [
-                            {
-                                season: "1-3",
-                                team: "Free Agent",
-                                value: "$70cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "M. OWEN",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$70cc",
-                        career: [
-                            {
-                                season: "1-3",
-                                team: "Free Agent",
-                                value: "$70cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "H. STOICHKOV",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$70cc",
-                        career: [
-                            {
-                                season: "1-3",
-                                team: "Free Agent",
-                                value: "$70cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "R. KEANE",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$50cc",
-                        career: [
-                            {
-                                season: "1-3",
-                                team: "Free Agent",
-                                value: "$50cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "A. COLE",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$50cc",
-                        career: [
-                            {
-                                season: "1-3",
-                                team: "Free Agent",
-                                value: "$50cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "F. INZAGHI",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$50cc",
-                        career: [
-                            {
-                                season: "1-3",
-                                team: "Free Agent",
-                                value: "$50cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "D. YORKE",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$50cc",
-                        career: [
-                            {
-                                season: "1-3",
-                                team: "Free Agent",
-                                value: "$50cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "BEBETO",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$50cc",
-                        career: [
-                            {
-                                season: "1-3",
-                                team: "Free Agent",
-                                value: "$50cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "J. KOLLER",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$50cc",
-                        career: [
-                            {
-                                season: "1-3",
-                                team: "Free Agent",
-                                value: "$50cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "ADRIANO",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$70cc",
-                        career: [
-                            {
-                                season: "1-3",
-                                team: "Free Agent",
-                                value: "$70cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "J. SAVIOLA",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$70cc",
-                        career: [
-                            {
-                                season: "1-3",
-                                team: "Free Agent",
-                                value: "$70cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "M. SALAS",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$50cc",
-                        career: [
-                            {
-                                season: "1-3",
-                                team: "Free Agent",
-                                value: "$50cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "K. MBAPPE",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$30cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$30cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "E. HAALAND",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$30cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$30cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "L. MESSI",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$30cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$30cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "K. BENZEMA",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$30cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$30cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "R. LEWANDOWSKI",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$30cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$30cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "H. KANE",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$30cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$30cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "NEYMAR JR",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$30cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$30cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "A. GRIEZMANN",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$30cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$30cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },     
-                    {
-                        name: "V. OSIMHEN",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$30cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$30cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "CRISTIANO RONALDO",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$30cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$30cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "C. IMMOBILE",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$30cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$30cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "P. DYBALA",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$30cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$30cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "S. MANE",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$30cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$30cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "G. JESUS",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$30cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$30cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "LAUTARO MARTINEZ",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$30cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$30cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "T. MULLER",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$20cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$20cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "BEN YADDER",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$20cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$20cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
-                    {
-                        name: "IAGO ASPAS",
-                        photoUrl: "Q.png",
-                        info: "ST",
-                        team: "Free Agent",
-                        value: "$20cc",
-                        career: [
-                            {
-                                season: "1-2",
-                                team: "Free Agent",
-                                value: "$20cc",
-                                apps: "00",
-                            },
-                            // Add more career data here if needed
-                        ],
-                    },
+                "name": "I. ZOMORANO",
+                "photoUrl": "Q.png",
+                "info": "ST",
+                "team": "Free Agent",
+                "value": "$70cc",
+                "career": [
+                  {
+                    "season": "1-3",
+                    "team": "Free Agent",
+                    "value": "$70cc",
+                    "apps": "00"
+                  }
+                  // Add more career data here if needed
+                ]
+              },
+              {
+                "name": "MORIENTES",
+                "photoUrl": "Q.png",
+                "info": "ST",
+                "team": "Gokulam Kerala",
+                "value": "$110cc",
+                "career": [
+                  {
+                    "season": "1-3",
+                    "team": "Free Agent",
+                    "value": "$70cc",
+                    "apps": "00"
+                  }
+                  // Add more career data here if needed
+                ]
+              },
+              {
+                "name": "P. KLUIVERT",
+                "photoUrl": "Q.png",
+                "info": "ST",
+                "team": "Free Agent",
+                "value": "$70cc",
+                "career": [
+                  {
+                    "season": "1-3",
+                    "team": "Free Agent",
+                    "value": "$70cc",
+                    "apps": "00"
+                  }
+                  // Add more career data here if needed
+                ]
+              },
+              {
+                "name": "GIOVANE ELBER",
+                "photoUrl": "Q.png",
+                "info": "ST",
+                "team": "Free Agent",
+                "value": "$50cc",
+                "career": [
+                  {
+                    "season": "1-3",
+                    "team": "Free Agent",
+                    "value": "$50cc",
+                    "apps": "00"
+                  }
+                  // Add more career data here if needed
+                ]
+              },
+              {
+                "name": "D. FORLAN",
+                "photoUrl": "Q.png",
+                "info": "ST",
+                "team": "Liverpool",
+                "value": "$76cc",
+                "career": [
+                  {
+                    "season": "1-3",
+                    "team": "Free Agent",
+                    "value": "$70cc",
+                    "apps": "00"
+                  }
+                  // Add more career data here if needed
+                ]
+              },
+              {
+                "name": "M. OWEN",
+                "photoUrl": "Q.png",
+                "info": "ST",
+                "team": "Al Ahli",
+                "value": "$190cc",
+                "career": [
+                  {
+                    "season": "1-3",
+                    "team": "Free Agent",
+                    "value": "$70cc",
+                    "apps": "00"
+                  }
+                  // Add more career data here if needed
+                ]
+              },
+              {
+                "name": "H. STOICHKOV",
+                "photoUrl": "Q.png",
+                "info": "ST",
+                "team": "Free Agent",
+                "value": "$70cc",
+                "career": [
+                  {
+                    "season": "1-3",
+                    "team": "Free Agent",
+                    "value": "$70cc",
+                    "apps": "00"
+                  }
+                  // Add more career data here if needed
+                ]
+              },
+                  {
+                    "name": "R. KEANE",
+                    "photoUrl": "Q.png",
+                    "info": "ST",
+                    "team": "Al Ahli",
+                    "value": "$70cc",
+                    "career": [
+                      {
+                        "season": "1-3",
+                        "team": "Al Ahli",
+                        "value": "$70cc",
+                        "apps": "00"
+                      }
+                      // Add more career data here if needed
+                    ]
+                  },
+                  {
+                    "name": "A. COLE",
+                    "photoUrl": "Q.png",
+                    "info": "ST",
+                    "team": "Arsenal FC",
+                    "value": "$62cc",
+                    "career": [
+                      {
+                        "season": "1-3",
+                        "team": "Arsenal FC",
+                        "value": "$62cc",
+                        "apps": "00"
+                      }
+                      // Add more career data here if needed
+                    ]
+                  },
+                  {
+                    "name": "F. INZAGHI",
+                    "photoUrl": "Q.png",
+                    "info": "ST",
+                    "team": "AC Milan",
+                    "value": "$76cc",
+                    "career": [
+                      {
+                        "season": "1-3",
+                        "team": "AC Milan",
+                        "value": "$76cc",
+                        "apps": "00"
+                      }
+                      // Add more career data here if needed
+                    ]
+                  },
+                  {
+                    "name": "D. YORKE",
+                    "photoUrl": "Q.png",
+                    "info": "ST",
+                    "team": "Free Agent",
+                    "value": "$50cc",
+                    "career": [
+                      {
+                        "season": "1-3",
+                        "team": "Free Agent",
+                        "value": "$50cc",
+                        "apps": "00"
+                      }
+                      // Add more career data here if needed
+                    ]
+                  },
+                  {
+                    "name": "BEBETO",
+                    "photoUrl": "Q.png",
+                    "info": "ST",
+                    "team": "Free Agent",
+                    "value": "$50cc",
+                    "career": [
+                      {
+                        "season": "1-3",
+                        "team": "Free Agent",
+                        "value": "$50cc",
+                        "apps": "00"
+                      }
+                      // Add more career data here if needed
+                    ]
+                  },
+                  {
+                    "name": "J. KOLLER",
+                    "photoUrl": "Q.png",
+                    "info": "ST",
+                    "team": "Free Agent",
+                    "value": "$50cc",
+                    "career": [
+                      {
+                        "season": "1-3",
+                        "team": "Free Agent",
+                        "value": "$50cc",
+                        "apps": "00"
+                      }
+                      // Add more career data here if needed
+                    ]
+                  },
+                  {
+                    "name": "ADRIANO",
+                    "photoUrl": "Q.png",
+                    "info": "ST",
+                    "team": "Inter Miami",
+                    "value": "$70cc",
+                    "career": [
+                      {
+                        "season": "1-3",
+                        "team": "Inter Miami",
+                        "value": "$70cc",
+                        "apps": "00"
+                      }
+                      // Add more career data here if needed
+                    ]
+                  },
+                  {
+                    "name": "J. SAVIOLA",
+                    "photoUrl": "Q.png",
+                    "info": "ST",
+                    "team": "Free Agent",
+                    "value": "$50cc",
+                    "career": [
+                      {
+                        "season": "1-3",
+                        "team": "Free Agent",
+                        "value": "$50cc",
+                        "apps": "00"
+                      }
+                      // Add more career data here if needed
+                    ]
+                  },
+                  {
+                    "name": "M. SALAS",
+                    "photoUrl": "Q.png",
+                    "info": "ST",
+                    "team": "Wolves",
+                    "value": "$70cc",
+                    "career": [
+                      {
+                        "season": "1-3",
+                        "team": "Wolves",
+                        "value": "$70cc",
+                        "apps": "00"
+                      }
+                      // Add more career data here if needed
+                    ]
+                  },
+                  {
+                    "name": "K. MBAPPE",
+                    "photoUrl": "Q.png",
+                    "info": "ST",
+                    "team": "Inter Miami",
+                    "value": "$200cc",
+                    "career": [
+                      {
+                        "season": "1-2",
+                        "team": "Inter Miami",
+                        "value": "$200cc",
+                        "apps": "00"
+                      }
+                      // Add more career data here if needed
+                    ]
+                  },
+                  {
+                    "name": "E. HAALAND",
+                    "photoUrl": "Q.png",
+                    "info": "ST",
+                    "team": "Manchester City",
+                    "value": "$182cc",
+                    "career": [
+                      {
+                        "season": "1-2",
+                        "team": "Manchester City",
+                        "value": "$182cc",
+                        "apps": "00"
+                      }
+                      // Add more career data here if needed
+                    ]
+                  },
+                  {
+                    "name": "L. MESSI",
+                    "photoUrl": "Q.png",
+                    "info": "ST",
+                    "team": "Manchester United",
+                    "value": "$260cc",
+                    "career": [
+                      {
+                        "season": "1-2",
+                        "team": "Manchester United",
+                        "value": "$260cc",
+                        "apps": "00"
+                      }
+                      // Add more career data here if needed
+                    ]
+                  },
+                  {
+                    "name": "K. BENZEMA",
+                    "photoUrl": "Q.png",
+                    "info": "ST",
+                    "team": "Kerala Blasters",
+                    "value": "$82cc",
+                    "career": [
+                      {
+                        "season": "1-2",
+                        "team": "Kerala Blasters",
+                        "value": "$82cc",
+                        "apps": "00"
+                      }
+                      // Add more career data here if needed
+                    ]
+                  },
+                  {
+                    "name": "R. LEWANDOWSKI",
+                    "photoUrl": "Q.png",
+                    "info": "ST",
+                    "team": "Manchester United",
+                    "value": "$64cc",
+                    "career": [
+                      {
+                        "season": "1-2",
+                        "team": "Manchester United",
+                        "value": "$64cc",
+                        "apps": "00"
+                      }
+                      // Add more career data here if needed
+                    ]
+                  },        
+                      {
+                        "name": "R. KEANE",
+                        "photoUrl": "Q.png",
+                        "info": "ST",
+                        "team": "Al Ahli",
+                        "value": "$70cc",
+                        "career": [
+                          {
+                            "season": "1-3",
+                            "team": "Al Ahli",
+                            "value": "$70cc",
+                            "apps": "00"
+                          }
+                          // Add more career data here if needed
+                        ]
+                      },
+                      {
+                        "name": "A. COLE",
+                        "photoUrl": "Q.png",
+                        "info": "ST",
+                        "team": "Arsenal FC",
+                        "value": "$62cc",
+                        "career": [
+                          {
+                            "season": "1-3",
+                            "team": "Arsenal FC",
+                            "value": "$62cc",
+                            "apps": "00"
+                          }
+                          // Add more career data here if needed
+                        ]
+                      },
+                      {
+                        "name": "F. INZAGHI",
+                        "photoUrl": "Q.png",
+                        "info": "ST",
+                        "team": "AC Milan",
+                        "value": "$76cc",
+                        "career": [
+                          {
+                            "season": "1-3",
+                            "team": "AC Milan",
+                            "value": "$76cc",
+                            "apps": "00"
+                          }
+                          // Add more career data here if needed
+                        ]
+                      },
+                      {
+                        "name": "D. YORKE",
+                        "photoUrl": "Q.png",
+                        "info": "ST",
+                        "team": "Free Agent",
+                        "value": "$50cc",
+                        "career": [
+                          {
+                            "season": "1-3",
+                            "team": "Free Agent",
+                            "value": "$50cc",
+                            "apps": "00"
+                          }
+                          // Add more career data here if needed
+                        ]
+                      },
+                      {
+                        "name": "BEBETO",
+                        "photoUrl": "Q.png",
+                        "info": "ST",
+                        "team": "Free Agent",
+                        "value": "$50cc",
+                        "career": [
+                          {
+                            "season": "1-3",
+                            "team": "Free Agent",
+                            "value": "$50cc",
+                            "apps": "00"
+                          }
+                          // Add more career data here if needed
+                        ]
+                      },
+                      {
+                        "name": "J. KOLLER",
+                        "photoUrl": "Q.png",
+                        "info": "ST",
+                        "team": "Free Agent",
+                        "value": "$50cc",
+                        "career": [
+                          {
+                            "season": "1-3",
+                            "team": "Free Agent",
+                            "value": "$50cc",
+                            "apps": "00"
+                          }
+                          // Add more career data here if needed
+                        ]
+                      },
+                      {
+                        "name": "ADRIANO",
+                        "photoUrl": "Q.png",
+                        "info": "ST",
+                        "team": "Inter Miami",
+                        "value": "$70cc",
+                        "career": [
+                          {
+                            "season": "1-3",
+                            "team": "Inter Miami",
+                            "value": "$70cc",
+                            "apps": "00"
+                          }
+                          // Add more career data here if needed
+                        ]
+                      },
+                      {
+                        "name": "J. SAVIOLA",
+                        "photoUrl": "Q.png",
+                        "info": "ST",
+                        "team": "Free Agent",
+                        "value": "$50cc",
+                        "career": [
+                          {
+                            "season": "1-3",
+                            "team": "Free Agent",
+                            "value": "$50cc",
+                            "apps": "00"
+                          }
+                          // Add more career data here if needed
+                        ]
+                      },
+                      {
+                        "name": "M. SALAS",
+                        "photoUrl": "Q.png",
+                        "info": "ST",
+                        "team": "Wolves",
+                        "value": "$70cc",
+                        "career": [
+                          {
+                            "season": "1-3",
+                            "team": "Wolves",
+                            "value": "$70cc",
+                            "apps": "00"
+                          }
+                          // Add more career data here if needed
+                        ]
+                      },
+                      {
+                        "name": "K. MBAPPE",
+                        "photoUrl": "Q.png",
+                        "info": "ST",
+                        "team": "Inter Miami",
+                        "value": "$200cc",
+                        "career": [
+                          {
+                            "season": "1-2",
+                            "team": "Inter Miami",
+                            "value": "$200cc",
+                            "apps": "00"
+                          }
+                          // Add more career data here if needed
+                        ]
+                      },
+                      {
+                        "name": "E. HAALAND",
+                        "photoUrl": "Q.png",
+                        "info": "ST",
+                        "team": "Manchester City",
+                        "value": "$182cc",
+                        "career": [
+                          {
+                            "season": "1-2",
+                            "team": "Manchester City",
+                            "value": "$182cc",
+                            "apps": "00"
+                          }
+                          // Add more career data here if needed
+                        ]
+                      },
+                      {
+                        "name": "L. MESSI",
+                        "photoUrl": "Q.png",
+                        "info": "ST",
+                        "team": "Manchester United",
+                        "value": "$260cc",
+                        "career": [
+                          {
+                            "season": "1-2",
+                            "team": "Manchester United",
+                            "value": "$260cc",
+                            "apps": "00"
+                          }
+                          // Add more career data here if needed
+                        ]
+                      },
+                      {
+                        "name": "K. BENZEMA",
+                        "photoUrl": "Q.png",
+                        "info": "ST",
+                        "team": "Kerala Blasters",
+                        "value": "$82cc",
+                        "career": [
+                          {
+                            "season": "1-2",
+                            "team": "Kerala Blasters",
+                            "value": "$82cc",
+                            "apps": "00"
+                          }
+                          // Add more career data here if needed
+                        ]
+                      },
+                      {
+                        "name": "R. LEWANDOWSKI",
+                        "photoUrl": "Q.png",
+                        "info": "ST",
+                        "team": "Manchester United",
+                        "value": "$64cc",
+                        "career": [
+                          {
+                            "season": "1-2",
+                            "team": "Manchester United",
+                            "value": "$64cc",
+                            "apps": "00"
+                          }
+                          // Add more career data here if needed
+                        ]
+                      },
                     {
                         name: "GERARD MORENO",
                         photoUrl: "Q.png",
@@ -5821,90 +5922,6 @@ document.getElementById("search-input").addEventListener("keyup", function () {
         }
     }
 });
-var customPositionOrder = [
-    "GK",
-    "CB",
-    "LB",
-    "RB",
-    "DMF",
-    "CMF",
-    "AMF",
-    "RW",
-    "LW",
-    "ST"
-];
-
-var isPositionAscending = true;
-
-function sortPlayersByPosition() {
-    players.sort(function (a, b) {
-        var positionA = a.info.toUpperCase();
-        var positionB = b.info.toUpperCase();
-
-        // Compare positions based on their custom order
-        var indexA = customPositionOrder.indexOf(positionA);
-        var indexB = customPositionOrder.indexOf(positionB);
-
-        if (isPositionAscending) {
-            if (indexA < indexB) {
-                return -1;
-            } else if (indexA > indexB) {
-                return 1;
-            } else {
-                // If positions are the same, compare by player name
-                var nameA = a.name.toUpperCase();
-                var nameB = b.name.toUpperCase();
-                return nameA.localeCompare(nameB);
-            }
-        } else {
-            if (indexA > indexB) {
-                return -1;
-            } else if (indexA < indexB) {
-                return 1;
-            } else {
-                // If positions are the same, compare by player name
-                var nameA = a.name.toUpperCase();
-                var nameB = b.name.toUpperCase();
-                return nameB.localeCompare(nameA);
-            }
-        }
-    });
-
-    // Toggle the sorting order for the next click
-    isPositionAscending = !isPositionAscending;
-
-    // Clear the player list
-    var playerList = document.getElementById("player-list");
-    playerList.innerHTML = "";
-
-    // Generate and append sorted player cards
-    generatePlayerCards();
-}
-        // Function to filter players by position
-        function filterByPosition() {
-            var selectedPosition = document.getElementById("position-filter").value;
-            var playerList = document.getElementById("player-list");
-            playerList.innerHTML = "";
-
-            if (selectedPosition === "all") {
-                // Display all players
-                players.forEach(function (player, index) {
-                    var playerCard = generatePlayerCard(player, index);
-                    playerList.appendChild(playerCard);
-                });
-            } else {
-                // Display only players with the selected position
-                players.forEach(function (player, index) {
-                    if (player.info === selectedPosition) {
-                        var playerCard = generatePlayerCard(player, index);
-                        playerList.appendChild(playerCard);
-                    }
-                });
-            }
-        }
-
-        // Initial filtering
-        filterByPosition();
 
 function sortByName() {
     players.sort(function (a, b) {
@@ -5926,28 +5943,6 @@ function sortByName() {
     // Generate and append sorted player cards
     generatePlayerCards();
 }
-var teamSortOrder = 1; // 1 for ascending, -1 for descending
-
-function sortPlayersByTeam() {
-    players.sort(function (a, b) {
-        var valueA = a.team.toUpperCase();
-        var valueB = b.team.toUpperCase();
-        return valueA.localeCompare(valueB) * teamSortOrder;
-    });
-
-    // Toggle the sorting order for the next click
-    teamSortOrder = -teamSortOrder;
-
-    // Clear the player list
-    var playerList = document.getElementById("player-list");
-    playerList.innerHTML = "";
-
-    // Generate and append sorted player cards
-    generatePlayerCards();
-}
-
-
-
 
 // Sort by name as default when the page loads
 sortByName();
@@ -5972,7 +5967,65 @@ function sortPlayers(key) {
     // Generate and append sorted player cards
     generatePlayerCards();
 }
+// Function to filter players based on selected team names and positions
+function filterPlayers() {
+    var selectedTeams = Array.from(document.querySelectorAll("#team-filter input[type=checkbox]:checked")).map(checkbox => checkbox.value);
+    var selectedPositions = Array.from(document.querySelectorAll("#position-filter input[type=checkbox]:checked")).map(checkbox => checkbox.value);
 
+    var playerList = document.getElementById("player-list");
+    var playerCards = playerList.getElementsByClassName("player-card");
+
+    for (var i = 0; i < playerCards.length; i++) {
+        var player = players[i];
+        var playerName = player.name.toLowerCase();
+        var playerTeam = player.team;
+        var playerPosition = player.info;
+
+        // Check if the player's team or position is in the selected options
+        var teamMatch = selectedTeams.includes(playerTeam) || selectedTeams.length === 0;
+        var positionMatch = selectedPositions.includes(playerPosition) || selectedPositions.length === 0;
+
+        if (teamMatch && positionMatch) {
+            playerCards[i].style.display = "flex";
+        } else {
+            playerCards[i].style.display = "none";
+        }
+    }
+}
+
+// Attach the filterPlayers function to the change event of checkboxes
+document.querySelectorAll("#team-filter input[type=checkbox]").forEach(checkbox => {
+    checkbox.addEventListener("change", filterPlayers);
+});
+
+document.querySelectorAll("#position-filter input[type=checkbox]").forEach(checkbox => {
+    checkbox.addEventListener("change", filterPlayers);
+});
+
+document.getElementById("team-dropdown").addEventListener("click", function (event) {
+    event.stopPropagation(); // Prevent the click event from reaching the document
+    var teamFilter = document.getElementById("team-filter");
+    teamFilter.style.display = teamFilter.style.display === "block" ? "none" : "block";
+});
+
+document.getElementById("position-dropdown").addEventListener("click", function (event) {
+    event.stopPropagation(); // Prevent the click event from reaching the document
+    var positionFilter = document.getElementById("position-filter");
+    positionFilter.style.display = positionFilter.style.display === "block" ? "none" : "block";
+});
+
+// Close dropdowns when clicking outside
+document.addEventListener("click", function () {
+    var teamFilter = document.getElementById("team-filter");
+    if (teamFilter.style.display === "block") {
+        teamFilter.style.display = "none";
+    }
+
+    var positionFilter = document.getElementById("position-filter");
+    if (positionFilter.style.display === "block") {
+        positionFilter.style.display = "none";
+    }
+});
     </script>
 </body>
 </html>
