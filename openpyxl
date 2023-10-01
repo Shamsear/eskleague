@@ -1,0 +1,16 @@
+import openpyxl
+try:
+    # Load the Excel workbook
+    workbook = openpyxl.load_workbook('player_data.xlsx')
+
+    # Select a worksheet
+    worksheet = workbook['Sheet1']  # Replace 'Sheet1' with your worksheet name
+
+    # Access cell values
+    cell_value = worksheet['A1'].value  # Replace 'A1' with the cell you want to read
+
+    print("Cell Value:", cell_value)
+except FileNotFoundError:
+    print("Excel file not found.")
+except Exception as e:
+    print(f"Error reading Excel file: {str(e)}")

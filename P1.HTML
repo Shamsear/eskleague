@@ -1,0 +1,3748 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Player Directory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 20px 0;
+        }
+
+        /* ... (existing styles) ... */
+
+        /* List View Styles */
+        #player-list {
+            display: block;
+        }
+
+        .player-card {
+            width: 290px; /* Expand the width by 20px (10px left + 10px right) */
+            margin: 4px 0;
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            padding: 6px;
+            border-radius: 5px;
+        }
+
+        .player-image {
+            max-width: 60px; /* Set the width of the player image */
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .player-image img {
+            max-width: 180%;
+            height: auto;
+        }
+
+        .player-card h3 {
+            margin: 0;
+            font-size: 1rem;
+            color: #333;
+            flex-grow: 1; /* Allow the player name to expand and fill the available space */
+        }
+
+        .player-card p {
+            margin: 3px 0;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Slide-in Popup Styles */
+        .popup-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #fff;
+            z-index: 1;
+            opacity: 0;
+            transform: translateY(100%);
+            overflow: auto;
+            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.2);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        
+
+        .popup-container.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+
+        .popup-header {
+            cursor: grab; /* Change cursor on header to indicate draggable */
+        }
+
+        .popup-content {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center content both horizontally and vertically */
+            justify-content: center;
+        }
+
+        .popup-image {
+            max-width: 170px; /* Set the maximum width for the popup image */
+            max-height: 120px; /* Set the maximum height for the popup image */
+            height: auto;
+            border-radius: 0;
+            width: auto;
+        }
+
+        .popup-content h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .popup-content p {
+            color: #666;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .close-button:hover {
+            color: #333;
+        }
+
+/* Media Query for Larger Screens */
+@media screen and (min-width: 768px) {
+    #player-list {
+        justify-content: flex-start; /* Adjust alignment to the start */
+        flex-wrap: wrap; /* Allow player cards to wrap onto a new line */
+    }
+
+    .player-card {
+        margin: 4px; /* Add some margin between player cards */
+    }
+}
+
+
+        /* Slides Styles */
+        .slide {
+            display: none;
+        }
+
+        h2 {
+            display: block;
+            font-size: 1.1em;
+            margin-block-start: 0.83em;
+            margin-block-end: 0.83em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-weight: bold;
+            margin-left: 25px;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slider-controls {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .slide-button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 5px;
+        }
+
+        .slide-button.active {
+            background-color: white;
+        }
+
+        /* Adjust spacing for the separate lines in the popup */
+        .slide p {
+            margin: 5px 0; /* Add less vertical margin */
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            white-space: nowrap; /* Prevent text from wrapping to a new line */
+            overflow: hidden; /* Hide overflow content */
+            text-overflow: ellipsis; /* Display ellipsis for text that overflows */
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Adjust the width of the "Team" column */
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 30%; /* Adjust the percentage as needed */
+        }
+
+        /* Narrower columns */
+        th:nth-child(1),
+        td:nth-child(1),
+        th:nth-child(3),
+        td:nth-child(3),
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 15%; /* Adjust the percentage as needed */
+        }
+        
+
+        /* Search Bar Styles */
+        
+        
+        /* Remove or adjust  the max-width as needed */
+        #search-button {
+            /* Add padding to increase the button size */
+            padding: 10px 20px; /* Adjust the values as needed */
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin: 5px;
+            display: none;
+        }
+        
+
+
+        #search-input {
+            flex-grow: 1;
+            border: 5;
+            outline: none;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        #search-button:hover {
+            background-color: #666;
+        }
+        .sort-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .sort-button {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 5px;
+        }
+
+        .sort-button:hover {
+            background-color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Player Directory</h1>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search players...">
+        <button id="search-button">Search</button>
+    </div>    
+    <div class="sort-buttons">
+        <button class="sort-button" onclick="sortPlayers('team')">Sort by Team</button>
+        <button class="sort-button" onclick="sortPlayers('info')">Sort by Position</button>        
+    </div>
+
+    <!-- Player Cards -->
+    <div id="player-list">
+        <!-- Player cards will be added here dynamically -->
+    </div>
+
+
+
+    <div class="popup-container" id="player-details">
+        <div class="popup-header" onmousedown="startDrag(event)">
+            <!-- Header content (You can add a title or drag indicator here) -->
+        </div>
+        <div class="popup-content" id="popup-content">
+            <span class="close-button" onclick="hidePlayerDetails()">&times;</span>
+
+            <!-- Player name -->
+            <h2 id="details-name" style="margin-top: 0;"></h2>
+
+            <div class="popup-image">
+                <img id="details-photo" src="" alt="" class="popup-image">
+            </div>
+
+            <h4 id="player-team-value">Team: Free Agent | Value: $10cc</h4> <!-- Team name and value -->
+
+            <!-- Slide 1: Career -->
+            <div class="slide active" id="slide1">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Season</th>
+                            <th>Team</th>
+                            <th>Value</th>
+                            <th>Apps</th>
+                        </tr>
+                    </thead>
+                    <tbody id="career-table">
+                        <!-- Career data will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="slider-controls">
+                <button class="slide-button active" onclick="showSlide(1)"></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+       // Define an array of player objects with their career statistics
+var players = [
+{
+    name: "CASILLAS",
+    photoUrl: "CASILAS.png",
+    info: "Goalkeeper",
+    team: "Free Agent",
+    value: "$70cc",
+    career: [
+      {
+        season: "1-2",
+        team: "Free Agent",
+        value: "$70cc",
+        apps: "00",
+      },
+    ],
+  },
+  {
+    name: "O. KAHN",
+    photoUrl: "KAHN.png",
+    info: "Goalkeeper",
+    team: "Free Agent",
+    value: "$70cc",
+    career: [
+      {
+        season: "1-2",
+        team: "Free Agent",
+        value: "$70cc",
+        apps: "00",
+      },
+    ],
+  },
+  {
+    name: "P. SCHMEICHEL",
+    photoUrl: "SCHE.PNG",
+    info: "Goalkeeper",
+    team: "Free Agent",
+    value: "$70cc",
+    career: [
+      {
+        season: "1-2",
+        team: "Free Agent",
+        value: "$70cc",
+        apps: "00",
+      },
+    ],
+  },
+  {
+    name: "P. ĆECH",
+    photoUrl: "CECH.png",
+    info: "Goalkeeper",
+    team: "Free Agent",
+    value: "$70cc",
+    career: [
+      {
+        season: "1-2",
+        team: "Free Agent",
+        value: "$70cc",
+        apps: "00",
+      },
+    ],
+  },
+  {
+    name: "JULIO CESAR",
+    photoUrl: "Cesar.png",
+    info: "Goalkeeper",
+    team: "Free Agent",
+    value: "$70cc",
+    career: [
+      {
+        season: "1-2",
+        team: "Free Agent",
+        value: "$70cc",
+        apps: "00",
+      },
+    ],
+  },
+  {
+    name: "DIDA",
+    photoUrl: "DIDA.png",
+    info: "Goalkeeper",
+    team: "Free Agent",
+    value: "$70cc",
+    career: [
+      {
+        season: "1-2",
+        team: "Free Agent",
+        value: "$70cc",
+        apps: "00",
+      },
+    ],
+  },
+  {
+    name: "VITOR BAIA",
+    photoUrl: "VITOR BAIA.png",
+    info: "Goalkeeper",
+    team: "Free Agent",
+    value: "$70cc",
+    career: [
+      {
+        season: "1-2",
+        team: "Free Agent",
+        value: "$70cc",
+        apps: "00",
+      },
+    ],
+  },
+  {
+    name: "G. OCHOA",
+    photoUrl: "OCHOA.png",
+    info: "Goalkeeper",
+    team: "Free Agent",
+    value: "$70cc",
+    career: [
+      {
+        season: "1-2",
+        team: "Free Agent",
+        value: "$70cc",
+        apps: "00",
+      },
+    ],
+  },
+  {
+    name: "T. COURTOIS",
+    photoUrl: "COURTOUIS.png",
+    info: "Goalkeeper",
+    team: "Free Agent",
+    value: "$30cc",
+    career: [
+      {
+        season: "1-2",
+        team: "Free Agent",
+        value: "$30cc",
+        apps: "00",
+      },
+    ],
+  },
+  {
+    name: "M. NUEUR",
+    photoUrl: "NEUER.png",
+    info: "Goalkeeper",
+    team: "Free Agent",
+    value: "$30cc",
+    career: [
+      {
+        season: "1-2",
+        team: "Free Agent",
+        value: "$30cc",
+        apps: "00",
+      },
+    ],
+  },
+  {
+    name: "J. OBLAK",
+    photoUrl: "OBLAK.png",
+    info: "Goalkeeper",
+    team: "Free Agent",
+    value: "$30cc",
+    career: [
+      {
+        season: "1-2",
+        team: "Free Agent",
+        value: "$30cc",
+        apps: "00",
+      },
+    ],
+  },
+  {
+    name: "TER STEGEN",
+    photoUrl: "STEGAN.png",
+    info: "Goalkeeper",
+    team: "Free Agent",
+    value: "$30cc",
+    career: [
+      {
+        season: "1-2",
+        team: "Free Agent",
+        value: "$30cc",
+        apps: "00",
+      },
+    ],
+  },
+  {
+    name: "ALISSON",
+    photoUrl: "ALISSON.png",
+    info: "Goalkeeper",
+    team: "Free Agent",
+    value: "$30cc",
+    career: [
+      {
+        season: "1-2",
+        team: "Free Agent",
+        value: "$30cc",
+        apps: "00",
+      },
+    ],
+  },
+  {
+    name: "Y. SOMMER",
+    photoUrl: "SOMMER.png",
+    info: "Goalkeeper",
+    team: "Free Agent",
+    value: "$30cc",
+    career: [
+      {
+        season: "1-2",
+        team: "Free Agent",
+        value: "$30cc",
+        apps: "00",
+      },
+    ],
+  },
+  {
+    name: "EDERSON MORAES",
+    photoUrl: "EDERSON.png",
+    info: "Goalkeeper",
+    team: "Free Agent",
+    value: "$30cc",
+    career: [
+      {
+        season: "1-2",
+        team: "Free Agent",
+        value: "$30cc",
+        apps: "00",
+      },
+    ],
+  },
+  {
+    name: "M. MAIGNAN",
+    photoUrl: "MAIGNAN.png",
+    info: "Goalkeeper",
+    team: "Free Agent",
+    value: "$30cc",
+    career: [
+      {
+        season: "1-2",
+        team: "Free Agent",
+        value: "$30cc",
+        apps: "00",
+      },
+    ],
+  },
+  {
+            name: "G. DONNARUMMA",
+            photoUrl: "DONNARUMMA.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "K. TRAPP",
+            photoUrl: "TRAP.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "W. SZCZESNY",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "Y.BOUNOU",
+            photoUrl: "BOUNOU.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "K. CASTEELS",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "UNAI SIMON",
+            photoUrl: "SIMON.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "G. KOBEL",
+            photoUrl: "KOBEL.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "H. LLORIS",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "RUI PATRICIO",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "P. GULASCI",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "K. NAVAS",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "DAVID DE GEA",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ANTHONY LOPES",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "L. HRADECKY",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "B. SAMBA",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "JOSE SA",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "E. MARTINEZ",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "N. POPE",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "A. ONANA",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ALEX REMIRO",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "A. RAMSDALE",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "G. VICARIO",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "DIOGO COSTA",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "D. OSPINA",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "M. PERIN",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "KEPA",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "J. PICKFORD",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "J. MUSSO",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "PAU LOPEZ",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "DAVID RAYA",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "A. MERET",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "E. MENDY",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ROBERT SANCHEZ",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "BENTO",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "K. SCHMEICHEL",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "L. FABIANSKI",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "M. DMITROVIC",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "B. LENO",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "RUI SILVA",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "WEVERTON",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "I. PROVEDEL",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "P. RAJKOVIC",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "DAVID SORIA",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "O. VLACHODIMOS",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "D. HENDERSON",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "D. LIVAKOVIC",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "LUCAS PERRI",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "A. TRUBIN",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "G. MAMARDASHVILI",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "A. LAFONT",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "M. CARNESECCHI",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "Goalkeeper",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "BECKENBAUER",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$70cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$70cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "NESTA",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$70cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$70cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "CANNAVARO",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$70cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$70cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "PUYOL",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$70cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$70cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "MALDINI",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$70cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$70cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "CAMPBELL",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$70cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$70cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ALDAIR",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$70cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$70cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "DEMICHELLS",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$70cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$70cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "AUGENTHALER",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$70cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$70cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "CORDOBA",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$70cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$70cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "MERTESACKER",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$70cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$70cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ALABA",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "VAN DIJK",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "RUBEN DIAS",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "DE LIGT",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "VARANE",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "MARQUINHOS",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "STONES",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "GIMENEZ",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "KOUNDE",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "EDER MILITAO",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "UPAMECANO",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "SALIBA",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ARAUJO",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "RUDIGER",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "HERNANDEZ",
+            photoUrl: "Q.PNG", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "SKRINIAR",
+            photoUrl: "Q.PNG", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "PAU TORRES",
+            photoUrl: "Q.PNG", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "GVARDIOL",
+            photoUrl: "Q.PNG", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "KOULIBALY",
+            photoUrl: "Q.PNG", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "BASTONI",
+            photoUrl: "Q.PNG", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "KONATE",
+            photoUrl: "Q.PNG", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "KIM MIN-JAE",
+            photoUrl: "Q.PNG", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "BOTMAN",
+            photoUrl: "Q.PNG", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "SCHLOTTERBECK",
+            photoUrl: "Q.PNG", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$30cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$30cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "SERGIO RAMOS",
+            photoUrl: "Q.PNG", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "SAVIC",
+            photoUrl: "Q.PNG", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "SULE",
+            photoUrl: "Q.PNG", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "PEPE",
+            photoUrl: "Q.PNG", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "KJAER",
+            photoUrl: "Q.PNG", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "THIAGO SILVA",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "SMALLING",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "DE VRIJ",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "NACHO",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ACERBI",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "INIGO MARTINEZ",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ROMAGNOLI",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "AYMERIC LAPORTE",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "AKE",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "GINTER",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "KIMPEMBE",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "YERAY",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "AKANJI",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "G. MAGALHAES",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ROMERO",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "TOMORI",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "BREMER",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "RAUL ALBIOL",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "CHIELLINI",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "BONUCCI",
+            photoUrl: "Q.png", // Add the correct image file path
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+        name: "VERTONGHEN",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "vertonghen.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "T. ALDERWEIRELD",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "alderweireld.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "COATES",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "coates.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "DANILO PEREIRA",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "danilo.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ZOUMA",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "zouma.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "G. GOMEZ",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "gomez.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "RAFAEL TOLOI",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "toloi.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "E. DIER",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "dier.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "MBEMBA",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "mbemba.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "DIEGO CARLOS",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "diegocarlos.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "CHRISTENSEN",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "christensen.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "MANCINI",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "mancini.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "MAGUIRE",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "maguire.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ROBIN LE NORMAND",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "lenormand.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "MILENKOVIC",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "milenkovic.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ORBAN",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "orban.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "LISANDRO MARTINEZ",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "martinez.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "IBANEZ",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "ibanez.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "FOFANA",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "fofana.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "SHUURS",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "shuurs.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "DEMIRAL",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "demiral.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "T. ALDERWEIRELD",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "alderweireld.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "OTTAMENDI",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "ottamendi.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "J. MATIP",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "matip.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "SCHAR",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "schar.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "L. DUNK",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "dunk.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "T. MINGS",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "mings.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ANDERSEN",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "andersen.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "J. GOMEZ",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "gomez.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "DAVID GARCIA",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "garcia.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "MARTINEZ QUARTA",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "quarta.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "LINDELOF",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "lindelof.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ELVEDI",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "elvedi.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "HERMOSO",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "hermoso.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "LIENHART",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "lienhart.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "RRAHMANI",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "rrahmani.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ZUBELDIA",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "zubeldia.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "LUIZ FELIPE",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "luizfelipe.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "DANI VIVIAN",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "danivivian.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "N. AGUERD",
+            photoUrl: "Q.png", // Add the correct image file path (e.g., "aguerd.png")
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "HANCKO",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "TODIBO",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "GUEHI",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "TIMBER",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "DANSO",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "KALULU",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "BASSEY",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ANTINIO SILVA",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "DISASI",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "NDICKA",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "PEREZ",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "BORNAUW",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "CHALOBAH",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "BIJOH",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "ERIC GARCIA",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "TIAGO DJALO",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "COLLINS",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "DAVID CARMO",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "GONCALO INACIO",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "KIWIOR",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "MEDINA",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "SALISU",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "BADIASHILE",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "SUTALO",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "BADE",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "THIAW",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "THEATE",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "SCALVINI",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "COLWILL",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "EVANS",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Free Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },
+        {
+            name: "SANCHEZ",
+            photoUrl: "Q.png",
+            info: "CB",
+            team: "Agent",
+            value: "$20cc",
+            career: [
+                {
+                    season: "1-2",
+                    team: "Free Agent",
+                    value: "$20cc",
+                    apps: "00",
+                },
+                // Add more career data here if needed
+            ],
+        },   
+];
+// Function to generate a player card element
+function generatePlayerCard(player, index) {
+    var playerCard = document.createElement("div");
+    playerCard.classList.add("player-card");
+    playerCard.onclick = function () {
+        showPlayerDetails(index); // Pass the zero-based index
+    };
+
+    var playerImage = document.createElement("div");
+    playerImage.classList.add("player-image");
+    var img = document.createElement("img");
+    img.src = player.photoUrl;
+    img.alt = player.name;
+    playerImage.appendChild(img);
+
+    var playerName = document.createElement("h2");
+    playerName.textContent = player.name;
+
+    playerCard.appendChild(playerImage);
+    playerCard.appendChild(playerName);
+
+    return playerCard;
+}
+
+// Function to generate and append all player cards
+function generatePlayerCards(sortKey = 'name') {
+    // Sort the players based on the provided sort key
+    players.sort(function (a, b) {
+        var valueA = a[sortKey].toLowerCase();
+        var valueB = b[sortKey].toLowerCase();
+        if (valueA < valueB) {
+            return -1;
+        }
+        if (valueA > valueB) {
+            return 1;
+        }
+        return 0;
+    });
+
+    var playerList = document.getElementById("player-list");
+
+    players.forEach(function (player, index) {
+        var playerCard = generatePlayerCard(player, index);
+        playerList.appendChild(playerCard);
+    });
+}
+
+// Call the function to generate player cards
+generatePlayerCards();
+
+
+function showPlayerDetails(playerId) {
+    var detailsContainer = document.getElementById("player-details");
+    var detailsPhoto = document.getElementById("details-photo");
+    var detailsName = document.getElementById("details-name");
+    var detailsTeamValue = document.getElementById("player-team-value"); // Added team name and value element
+    var careerTable = document.getElementById("career-table");
+    var body = document.body;
+
+    // Check if the player card is already open
+    if (!detailsContainer.classList.contains("active")) {
+        var player = players[playerId]; // Use zero-based index
+
+        // Populate the popup with player details
+        detailsName.textContent = player.name; // Set player name
+        detailsPhoto.src = player.photoUrl; // Set player photo
+
+        // Populate team name and value
+        var teamValueText = `Team: ${player.team} | Value: ${player.value}`;
+        detailsTeamValue.innerHTML = teamValueText;
+
+        // Populate the career table
+        var careerTableHTML = "";
+        player.career.forEach(function (seasonData) {
+            careerTableHTML += `
+                <tr>
+                    <td>${seasonData.season}</td>
+                    <td>${seasonData.team}</td>
+                    <td>${seasonData.value}</td>
+                    <td>${seasonData.apps}</td>
+                </tr>
+            `;
+        });
+        careerTable.innerHTML = careerTableHTML;
+
+        // Show the "Career" slide by default
+        showSlide(1);
+
+        // Display the player details popup
+        detailsContainer.classList.add("active");
+
+        // Disable scrolling on the background
+        body.style.overflow = "hidden";
+    }
+}
+
+
+        // Function to hide player details
+        function hidePlayerDetails() {
+            var detailsContainer = document.getElementById("player-details");
+            var body = document.body;
+
+            // Hide the player details popup
+            detailsContainer.classList.remove("active");
+
+            // Enable scrolling on the background
+            body.style.overflow = "auto";
+        }
+
+        // Function to show a specific slide
+        function showSlide(slideIndex) {
+            var slides = document.getElementsByClassName("slide");
+            var slideButtons = document.getElementsByClassName("slide-button");
+
+            // Hide all slides and deactivate buttons
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+                slideButtons[i].classList.remove("active");
+            }
+
+            // Show the selected slide and activate its button
+            slides[slideIndex - 1].classList.add("active");
+            slideButtons[slideIndex - 1].classList.add("active");
+        }
+
+        // Function to start the drag operation
+        function startDrag(e) {
+            e.preventDefault();
+
+            var container = document.getElementById("player-details");
+            var offsetX = e.clientX - container.getBoundingClientRect().left;
+            var offsetY = e.clientY - container.getBoundingClientRect().top;
+
+            document.onmousemove = function (e) {
+                var x = e.clientX - offsetX;
+                var y = e.clientY - offsetY;
+
+                // Ensure the popup stays within the viewport
+                x = Math.min(
+                    Math.max(x, 0),
+                    window.innerWidth - container.offsetWidth
+                );
+                y = Math.min(
+                    Math.max(y, 0),
+                    window.innerHeight - container.offsetHeight
+                );
+
+                container.style.transform = `translate(${x}px, ${y}px)`;
+            };
+
+            document.onmouseup = function () {
+                document.onmousemove = null;
+                document.onmouseup = null;
+            };
+        }
+
+// Search functionality
+document.getElementById("search-button").addEventListener("click", function () {
+    var searchInput = document.getElementById("search-input").value.toLowerCase();
+    var playerList = document.getElementById("player-list");
+    var playerCards = playerList.getElementsByClassName("player-card");
+
+    for (var i = 0; i < playerCards.length; i++) {
+        var playerName = players[i].name.toLowerCase();
+
+        if (playerName.includes(searchInput)) {
+            playerCards[i].style.display = "flex";
+        } else {
+            playerCards[i].style.display = "none";
+        }
+    }
+});
+
+// Search functionality (keyup event)
+document.getElementById("search-input").addEventListener("keyup", function () {
+    var searchInput = this.value.toLowerCase();
+    var playerList = document.getElementById("player-list");
+    var playerCards = playerList.getElementsByClassName("player-card");
+
+    for (var i = 0; i < playerCards.length; i++) {
+        var playerName = players[i].name.toLowerCase();
+
+        if (playerName.includes(searchInput)) {
+            playerCards[i].style.display = "flex";
+        } else {
+            playerCards[i].style.display = "none";
+        }
+    }
+});
+function sortPlayers(key) {
+    players.sort(function (a, b) {
+        if (key === 'team') {
+            // Compare team names
+            var teamNameA = a.team.toLowerCase();
+            var teamNameB = b.team.toLowerCase();
+
+            if (teamNameA < teamNameB) {
+                return -1;
+            } else if (teamNameA > teamNameB) {
+                return 1;
+            } else {
+                // If team names are equal, compare positions
+                var positionOrder = {
+                    "goalkeeper": 1,
+                    "cb": 2,
+                    "rb": 3,
+                    "lb": 4
+                };
+
+                var positionA = positionOrder[a.info.toLowerCase()] || 9999;
+                var positionB = positionOrder[b.info.toLowerCase()] || 9999;
+
+                return positionA - positionB;
+            }
+        } else if (key === 'info') {
+            // Compare positions
+            var positionOrder = {
+                "goalkeeper": 1,
+                "cb": 2,
+                "rb": 3,
+                "lb": 4
+            };
+
+            var positionA = positionOrder[a.info.toLowerCase()] || 9999;
+            var positionB = positionOrder[b.info.toLowerCase()] || 9999;
+
+            if (positionA !== positionB) {
+                return positionA - positionB;
+            } else {
+                // If positions are equal, compare team names
+                var teamNameA = a.team.toLowerCase();
+                var teamNameB = b.team.toLowerCase();
+
+                if (teamNameA < teamNameB) {
+                    return -1;
+                } else if (teamNameA > teamNameB) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        }
+    });
+
+    // Clear the player list
+    var playerList = document.getElementById("player-list");
+    playerList.innerHTML = "";
+
+    // Generate and append sorted player cards
+    generatePlayerCards();
+}
+
+
+    </script>
+</body>
+</html>
