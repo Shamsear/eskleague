@@ -12,16 +12,16 @@
         body {
           font-family: Arial, sans-serif;
           background-image: url('pla4.jpg');
-          background-size: 100% 100%;
+          background-size: cover; /* Use cover to ensure the background covers the entire viewport */
           background-repeat: no-repeat;
-          background-attachment: scroll; /* Change to 'scroll' */
+          background-attachment: fixed;
           background-position: center center;
           margin: 0;
           padding: 0;
           display: flex;
           flex-direction: column;
           align-items: center;
-          height: 100vh;
+          min-height: 100vh; /* Set a minimum height to fill the viewport */
       }
       
 
