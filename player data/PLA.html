@@ -3,6 +3,10 @@
 <head>
     <title>Player Directory</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="logo11.png" rel="shortcut icon">
+    <link href="logo11.png" rel="apple-touch-icon">
+
     <style>
         /* Global Styles */
         body {
@@ -23,7 +27,7 @@
 
         h1 {
             text-align: center;
-            color: #333;
+            color: black;
             margin: 20px 0;
         }
 
@@ -265,7 +269,7 @@
         }
 
         .sort-button {
-            background-color: #333;
+            background-color: black;
             color: #fff;
             border: none;
             padding: 8px 16px;
@@ -294,7 +298,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #333;
+            background-color: black;
             color: #fff;
             border: none;
             padding: 10px;
@@ -363,6 +367,26 @@
 .filter-container {
     margin-top: 20px; /* Add margin to create space */
 }
+#scroll-to-top-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: black;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%; /* Make the button a circle */
+  display: none; /* Initially hide the button */
+  font-size: 24px; /* Adjust the size of the arrow */
+  line-height: 1; /* Center the arrow vertically in the circle */
+}
+
+#scroll-to-top-button i {
+  font-size: 24px; /* Adjust the size of the arrow icon */
+}
+
+
     </style>
 </head>
 <body>
@@ -463,6 +487,11 @@
 <p></p>
         </div>
     </div>
+    <button id="scroll-to-top-button">
+      &#9650;
+  </button>
+  
+  
 
     <script>
        // Define an array of player objects with their career statistics
@@ -8790,7 +8819,7 @@
   },
   {
     name: "ROSICKY",
-    photoUrl: "Q.png",
+    photoUrl: "rosi.jpg",
     info: "AMF",
     team: "F BAYERN MUNICH",
     value: "50 cc",
@@ -8865,7 +8894,7 @@
   },
   {
     name: "GULLIT",
-    photoUrl: "Q.png",
+    photoUrl: "gullit.jpg",
     info: "AMF",
     team: "Inter Miami",
     value: "70 cc",
@@ -8895,7 +8924,7 @@
   },
   {
     name: "SNEIJDER",
-    photoUrl: "Q.png",
+    photoUrl: "sneij.jpg",
     info: "AMF",
     team: "Inter Milan",
     value: "70 cc",
@@ -9000,7 +9029,7 @@
   },
   {
     name: "RONALDINHO",
-    photoUrl: "Q.png",
+    photoUrl: "dinho.jpg",
     info: "AMF",
     team: "SL Benfica",
     value: "72 cc",
@@ -9015,7 +9044,7 @@
   },
   {
     name: "VAN DER VAART",
-    photoUrl: "Q.png",
+    photoUrl: "vaart.jpg",
     info: "AMF",
     team: "Union Berlin",
     value: "70 cc",
@@ -9030,7 +9059,7 @@
   },
   {
     name: "ZICO",
-    photoUrl: "Q.png",
+    photoUrl: "zico.jpg",
     info: "AMF",
     team: "Free Agent",
     value: "70 cc",
@@ -9045,7 +9074,7 @@
   },
   {
     name: "KAKA",
-    photoUrl: "Q.png",
+    photoUrl: "kaka.jpg",
     info: "AMF",
     team: "Free Agent",
     value: "70 cc",
@@ -9060,7 +9089,7 @@
   },
   {
     name: "RIVALDO",
-    photoUrl: "Q.png",
+    photoUrl: "rivaldo.jpg",
     info: "AMF",
     team: "Free Agent",
     value: "70 cc",
@@ -9075,7 +9104,7 @@
   },
   {
     name: "GASCOIGNE",
-    photoUrl: "Q.png",
+    photoUrl: "gasc.jpg",
     info: "AMF",
     team: "Free Agent",
     value: "70 cc",
@@ -9105,7 +9134,7 @@
   },
   {
     name: "NAKATA",
-    photoUrl: "Q.png",
+    photoUrl: "nakata.jpg",
     info: "AMF",
     team: "Free Agent",
     value: "70 cc",
@@ -9120,7 +9149,7 @@
   },
   {
     name: "DECO",
-    photoUrl: "Q.png",
+    photoUrl: "deco.jpg",
     info: "AMF",
     team: "Free Agent",
     value: "70 cc",
@@ -9135,7 +9164,7 @@
   },
   {
     name: "NAKAMURA",
-    photoUrl: "Q.png",
+    photoUrl: "nakamura.jpg",
     info: "AMF",
     team: "Free Agent",
     value: "70 cc",
@@ -9150,7 +9179,7 @@
   },
   {
     name: "ONO",
-    photoUrl: "Q.png",
+    photoUrl: "ono.jpg",
     info: "AMF",
     team: "Free Agent",
     value: "70 cc",
@@ -9165,7 +9194,7 @@
   },
   {
     name: "KAGAWA",
-    photoUrl: "Q.png",
+    photoUrl: "kagawa.jpg",
     info: "AMF",
     team: "Free Agent",
     value: "70 cc",
@@ -9688,6 +9717,1297 @@
       }
     ]
   },
+  {
+    name: "WAN-BISSAKA",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "AC MILAN",
+    value: "22 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "AC MILAN",
+        value: "22 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "TOMIYASU",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "AL HILAL",
+    value: "22 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "AL HILAL",
+        value: "22 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "PAVARD",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "ARSENAL FC",
+    value: "30 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "ARSENAL FC",
+        value: "30 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "HAKIMI",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "BENGELURU FC",
+    value: "40 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "BENGELURU FC",
+        value: "40 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "DARMIAN",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "BENGELURU FC",
+    value: "22 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "BENGELURU FC",
+        value: "22 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "FRIMPONG",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "DORTMUND",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "DORTMUND",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "MOLINA",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FC BARCELONA",
+    value: "22 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FC BARCELONA",
+        value: "22 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "DI LORENZO",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FC BAYERN MUNICH",
+    value: "30 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FC BAYERN MUNICH",
+        value: "30 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "AZPILICUETA",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FC ST GALLEN",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FC ST GALLEN",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "KLOSTERMANN",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FC ST GALLEN",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FC ST GALLEN",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "CAFU",
+    photoUrl: "cafu.jpg",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "70 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "70 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "MAICON",
+    photoUrl: "maicon.jpg",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "70 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "70 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "BELLETTI",
+    photoUrl: "beletti.jpg",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "70 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "70 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "SAKAI",
+    photoUrl: "sakai.jpg",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "70 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "70 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "CALABRIA",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "MUKIELE",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "PABLO MAFFEO",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "FOYTH",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "DIOGO DALOT",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "PEDRO PORRO",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "ARNAU MARTINEZ",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "IVAN FRESNEDA",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "EMERSON",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "GEERTRUIDA",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "THIERRY CORREIRA",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "HICKEY",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "DEST",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "JOAO MARIO",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "VANDESON",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "RENSCH",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "JURANOVIC",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "BEN WHITE",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "GOKULAM KERALA FC",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "GOKULAM KERALA FC",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "MAZRAOUI",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "INTER MIAMI",
+    value: "22 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "INTER MIAMI",
+        value: "22 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "KADIOGLU",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "INTER MIAMI",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "INTER MIAMI",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "JAMES",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "INTER MILAN",
+    value: "40 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "INTER MILAN",
+        value: "40 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "JOAO CANCELO",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "KERALA BLASTERS",
+    value: "50 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "KERALA BLASTERS",
+        value: "50 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "ALEXADER-ARNOLD",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "MANCHESTER CITY",
+    value: "40 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "MANCHESTER CITY",
+        value: "40 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "DANI CARVAJAL",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "MANCHESTER CITY",
+    value: "28 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "MANCHESTER CITY",
+        value: "28 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "WALKER",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "MANCHESTER UNITED",
+    value: "42 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "MANCHESTER UNITED",
+        value: "42 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "DUMFRIES",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "MOHUN BAGAN SG",
+    value: "24 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "MOHUN BAGAN SG",
+        value: "24 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "MONTIEL",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "MOHUN BAGAN SG",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "MOHUN BAGAN SG",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "ALBERT FERRER",
+    photoUrl: "ferrer.jpg",
+    info: "RB",
+    team: "REAL MADRID",
+    value: "70 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "REAL MADRID",
+        value: "70 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "TRIPPIER",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "UNION BERLIN",
+    value: "38 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "UNION BERLIN",
+        value: "38 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "LUCAS VAZQUEZ",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "UNION BERLIN",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "UNION BERLIN",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "DANILO",
+    photoUrl: "Q.png",
+    info: "RB",
+    team: "WOLVES",
+    value: "30 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "WOLVES",
+        value: "30 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "TIERNEY",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "AC MILAN",
+    value: "28 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "AC MILAN",
+        value: "28 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "NUNO MENDES",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "AL HILAL SFC",
+    value: "36 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "AL HILAL SFC",
+        value: "36 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "RENAN LODI",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "ARSENAL FC",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "ARSENAL FC",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "ALEX GRIMALDO",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "BENGALURU FC",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "BENGALURU FC",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "F. MENDY",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "DORTMUND",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "DORTMUND",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "DAVIES",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FC BARCELONA",
+    value: "40 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FC BARCELONA",
+        value: "40 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "DIMARCO",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FC BAYERN MUNICH",
+    value: "30 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FC BAYERN MUNICH",
+        value: "30 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "ROBERTO CARLOS",
+    photoUrl: "carlos.jpg",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "70 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "70 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "IRWIN",
+    photoUrl: "irwi.jpg",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "70 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "70 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "LIZARAZU",
+    photoUrl: "liza.jpg",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "70 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "70 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "SPINAZZOLA",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "JOSE GAYA",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "ACUNA",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "TAGLIAFICO",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "MARCOS ALONSO",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "CHILWELL",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "JAVI GALAN",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "REGUILON",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "MAEHLE",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "REINILDO",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "ALEJADRO BALDE",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "30 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "30 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "CAIO HENRIQUE",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "MALACIA",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "FRAN GARCIA",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "NUNO TAVARES",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "UDOGIE",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "SERGIO GOMEZ",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "MITCHELL",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "OLIVERA",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "J. FIRPO",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "FREE AGENT",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "FREE AGENT",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "GUNTER",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "GOKULAM KERALA FC",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "GOKULAM KERALA FC",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "T.HERNANDEZ",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "INTER MILAN",
+    value: "42 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "INTER MILAN",
+        value: "42 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "ZINCHENKO",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "KERALA BLASTER FC",
+    value: "30 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "KERALA BLASTER FC",
+        value: "30 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "WIJNDAL",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "LIVERPOOL",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "LIVERPOOL",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "JORDI ALBA",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "MANCHESTER UNITED",
+    value: "24 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "MANCHESTER UNITED",
+        value: "24 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "ROBERTSON",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "MOHUN BAGAN SC",
+    value: "44 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "MOHUN BAGAN SC",
+        value: "44 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "SHAW",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "MOHUN BAGAN SC",
+    value: "24 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "MOHUN BAGAN SC",
+        value: "24 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "MARC CUCURELLA",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "MOHUN BAGAN SC",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "MOHUN BAGAN SC",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "GUILHERME ARANA",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "REAL MADRID",
+    value: "20 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "REAL MADRID",
+        value: "20 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "RAPHAEL GUERREIRO",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "UNION BERLIN",
+    value: "24 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "UNION BERLIN",
+        value: "24 cc",
+        apps: "00"
+      }
+    ]
+  },
+  {
+    name: "ESTUPINAN",
+    photoUrl: "Q.png",
+    info: "LB",
+    team: "UNION BERLIN",
+    value: "22 cc",
+    career: [
+      {
+        season: "1-2",
+        team: "UNION BERLIN",
+        value: "22 cc",
+        apps: "00"
+      }
+    ]
+  },
+
   
        ];
 // Function to generate a player card element
@@ -9950,6 +11270,28 @@ document.addEventListener("click", function () {
         positionFilter.style.display = "none";
     }
 });
+// Get the button element
+const scrollToTopButton = document.getElementById("scroll-to-top-button");
+
+// Add a click event listener to the button
+scrollToTopButton.addEventListener("click", () => {
+    // Scroll to the top of the page smoothly
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
+
+// Add a scroll event listener to show/hide the button
+window.addEventListener("scroll", () => {
+  // If the user scrolls down more than 500 pixels, show the button; otherwise, hide it
+  if (window.scrollY > 500) {
+      scrollToTopButton.style.display = "block";
+  } else {
+      scrollToTopButton.style.display = "none";
+  }
+});
+
     </script>
 </body>
 </html>
