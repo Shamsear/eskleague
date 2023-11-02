@@ -708,19 +708,19 @@
     value: "82 cc",
     career: [
       {
-        season: "1-1.5",
+        season: "1-1",
         team: "Arsenal FC",
         value: "52 cc",
         apps: "00"
       },
       {
-        season: "1.5-3.5",
+        season: "1-1.5",
         team: "AL Ahli",
         value: "82 cc",
         apps: "03"
       },
       {
-        season: "1-2",
+        season: "1.5-3.5",
         team: "AL Hilal SFC",
         value: "75 cc",
         apps: "00"
@@ -12828,46 +12828,48 @@ function generatePlayerCards() {
 generatePlayerCards();
 
 function showPlayerDetails(playerId) {
-    var detailsContainer = document.getElementById("player-details");
-    var detailsPhoto = document.getElementById("details-photo");
-    var detailsName = document.getElementById("details-name");
-    var detailsTeamValue = document.getElementById("player-team-value"); // Added team name and value element
-    var careerTable = document.getElementById("career-table");
-    var body = document.body;
+  var detailsContainer = document.getElementById("player-details");
+  var detailsPhoto = document.getElementById("details-photo");
+  var detailsName = document.getElementById("details-name");
+  var detailsTeamValue = document.getElementById("player-team-value"); // Added team name and value element
+  var careerTable = document.getElementById("career-table");
+  var body = document.body;
 
-    // Check if the player card is already open
-    if (!detailsContainer.classList.contains("active")) {
-        var player = players[playerId]; // Use zero-based index
+  // Check if the player card is already open
+  if (!detailsContainer.classList.contains("active")) {
+      var player = players[playerId]; // Use zero-based index
 
-        // Populate the popup with player details
-        detailsName.textContent = player.name; // Set player name
-        detailsPhoto.src = player.photoUrl; // Set player photo
+      // Populate the popup with player details
+      detailsName.textContent = player.name; // Set player name
+      detailsPhoto.src = player.photoUrl; // Set player photo
 
-        // Populate team name and value
-        var teamValueText = `TEAM: ${player.team} | VALUE: ${player.value}`;
-        detailsTeamValue.innerHTML = teamValueText;
+      // Populate team name and value
+      var teamValueText = `TEAM: ${player.team} | VALUE: ${player.value}`;
+      detailsTeamValue.innerHTML = teamValueText;
 
-        // Populate the career table
-        var careerTableHTML = "";
-        player.career.forEach(function (seasonData) {
-            careerTableHTML += `
-                <tr>
-                    <td>${seasonData.season}</td>
-                    <td>${seasonData.team}</td>
-                    <td>${seasonData.value}</td>
-                    <td>${seasonData.apps}</td>
-                </tr>
-            `;
-        });
-        careerTable.innerHTML = careerTableHTML;
+      // Populate the career table in reverse order
+      var careerTableHTML = "";
+      for (var i = player.career.length - 1; i >= 0; i--) {
+          var seasonData = player.career[i];
+          careerTableHTML += `
+              <tr>
+                  <td>${seasonData.season}</td>
+                  <td>${seasonData.team}</td>
+                  <td>${seasonData.value}</td>
+                  <td>${seasonData.apps}</td>
+              </tr>
+          `;
+      }
+      careerTable.innerHTML = careerTableHTML;
 
-        // Display the player details popup
-        detailsContainer.classList.add("active");
+      // Display the player details popup
+      detailsContainer.classList.add("active");
 
-        // Disable scrolling on the background
-        body.style.overflow = "hidden";
-    }
+      // Disable scrolling on the background
+      body.style.overflow = "hidden";
+  }
 }
+
 
         // Function to hide player details
         function hidePlayerDetails() {
