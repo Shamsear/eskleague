@@ -4,13 +4,7 @@
 
     <head>
 
-        <title>ESKIMOS_R2G</title>
-
-
-
-
-
-
+        <title>ESKIMOS_R2G</title>  
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0" />
 
@@ -19,6 +13,7 @@
         <link rel="stylesheet" href="https://dss4hwpyv4qfp.cloudfront.net/designs/_shared/css/legacy-v1.css?v=2.0384" type="text/css" />
         <link rel="stylesheet" href="https://dss4hwpyv4qfp.cloudfront.net/designs/picturesque/css/layout.css?v=2.0384" type="text/css" />
         <link rel="stylesheet" href="https://dss4hwpyv4qfp.cloudfront.net/designs/picturesque/css/editable.css?v=2.0384" type="text/css" />
+
         <link href="logo11.png" rel="shortcut icon">
         <link href="logo11.png" rel="apple-touch-icon">      
             <link rel="stylesheet" href="https://dss4hwpyv4qfp.cloudfront.net/libs/js/fancybox3/jquery.fancybox.min.css?v=2.0384" type="text/css" />
@@ -182,19 +177,37 @@
                                                                             background-position: center center; /* Center the image horizontally and vertically */
                                                                             background-size: cover; /* Cover the entire container without cropping */
                                                                         }
-                                                                        .section-text-color-1 .mz_editable .moze-formbutton, .section-text-color-1 .mz_editable .moze-button, .section-text-color-1 .mz_editable .moze-button-large:not([class*="btn-"]) {
-                                                                            background-color: #FFFFFF;
-                                                                            background-color: #000000;
-                                                                            color: #222222;
-                                                                            color: white;
-                                                                        }
-                                                                        
                                                                         
                                                                         /* Media query for screens with a maximum width of 768px (typical mobile devices) */
                                                                         @media (max-width: 768px) {
                                                                             .background-image {
                                                                                 background-size: auto; /* Use the image's intrinsic size on mobile */
                                                                             }
+                                                                        }
+                                                                        .section-text-color-1 .mz_editable .moze-formbutton, .section-text-color-1 .mz_editable .moze-button, .section-text-color-1 .mz_editable .moze-button-large:not([class*="btn-"]) {
+                                                                            background-color: #FFFFFF;
+                                                                            background-color: #000000;
+                                                                            color: #222222;
+                                                                            color: white;
+                                                                        }
+                                                                        .button {
+                                                                            display: block;
+                                                                            width: 100%; /* This will make the buttons stretch to the full width */
+                                                                            text-align: center; /* Centers the button horizontally */
+                                                                            margin-bottom: 10px; /* Adds some space between buttons */
+                                                                            box-sizing: border-box; /* Include padding and border in the element's total width and height */
+                                                                        }
+                                                                    
+                                                                        /* Optional: Adjust the image size within the button */
+                                                                        .button img {
+                                                                            max-width: 100%; /* Ensures the image doesn't exceed the button's width */
+                                                                            height: auto; /* Maintains aspect ratio */
+                                                                            transition: transform 0.3s ease-in-out; /* Add a smooth transition effect */
+                                                                        }
+                                                                        
+                                                                        /* Apply a scaling effect when the image button is clicked */
+                                                                        .button.clicked img {
+                                                                            transform: scale(1.1); /* Increase the size of the image */
                                                                         }
                                                                         
                                                                         /* Hide the navigation bar for screens with a maximum width of 768px */
@@ -243,6 +256,22 @@
                 }
 
             });
+            // Get all image buttons
+const buttons = document.querySelectorAll('.button');
+
+// Function to toggle the 'clicked' class on click
+buttons.forEach(button => {
+    button.addEventListener('click', function() {
+        // Toggle the 'clicked' class
+        this.classList.toggle('clicked');
+        
+        // Reset the animation after a short delay (optional)
+        setTimeout(() => {
+            this.classList.remove('clicked');
+        }, 300); // Change the time to match the CSS transition duration
+    });
+});
+
 
         </script>
 
@@ -296,160 +325,25 @@
 </header>
 
 <div id="belowfold">
-<div id="wrap">
-        
+<br class="button-container">
+    <!-- Button 1 -->
+    <a href="auction.html" class="button">
+        <img src="h1.png" alt="Tournament Guide">
+    </a>
+    <a href="carhome.html" class="button">
+        <img src="h2.png" alt="Tap to Enter R2G">
+    </a>
+    <a href=".html" class="button">
+        <img src="h3.png" alt="Manager Ranking">
+    </a>
+    <a href="trophy.html" class="button">
+        <img src="h4.png" alt="Trophy Cabinet">
+    </a>
+    <a href="mode.html" class="button">
+        <img src="h5.png" alt="Career Tournament">
+    </a>
 
 
-
-<div class="mz_component mz_grid" data-cid="56963099" data-pid="8800872">
-
-
-
-    <div class="section section-customizable section-bigimg section-align-center section-text-color-none section-height-l section-width-s section-nobox" data-row-id="9908609" data-row-slice="banner" data-row-slice-variant="banner-text-center" data-transparent-text-box="1" style="background-color: transparent; color: transparent;">
-
-
-
-<div class="container">
-<div class="textbox ">
-<div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
-</div>
-</div>
-<div class="mz_component mz_inlinebuttons mz_editable"><div class="moze-wysiwyg-editor ">
-<a
-class="moze-button-large"
-href="auction.html"
-target="_self"                                            >​TOURNAMENT GUIDE</a>
-</div></div>
-</div>
 </div>
 
-<div class="section-bigimg-container " data-inlinepicture-url-target="88949444" style="background-image: url('auctionaaAA.jpg');"></div>
-
-<div class="section-bigimg-colorizer section-bg-none" style="opacity: 0; display: block"></div>
-
-</div>                                            <div class=
-"
-section section-customizable section-bigimg
-section-align-center
-section-text-color-none
-section-height-l
-section-width-s
-section-nobox        "
-
-data-row-id="9147652"
-data-row-slice="banner"
-data-row-slice-variant="banner-text-center"
-data-transparent-text-box="1">
-
-
-
-<div class="container">
-<div class="textbox ">
-<div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
-</div>
-</div>
-<div class="mz_component mz_inlinebuttons mz_editable"><div class="moze-wysiwyg-editor ">
-<a
-class="moze-button-large"
-href="carhome.html"
-target="_self"                                            >​TAP TO ENTER CAREER MODE​</a>
-</div></div>
-</div>
-</div>
-
-<div class="section-bigimg-container " data-inlinepicture-url-target="77179980" style="background-image: url('enter.jpg');"></div>
-
-<div class="section-bigimg-colorizer section-bg-3" style="opacity: 0; display: block"></div>
-
-</div>                                           <div class="section section-customizable section-bigimg section-align-center section-text-color-none section-height-l section-width-s section-nobox" data-row-id="9908609" data-row-slice="banner" data-row-slice-variant="banner-text-center" data-transparent-text-box="1" style="background-color: transparent; color: transparent;">
-
-
-
-<div class="container">
-<div class="textbox ">
-<div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
-</div>
-</div>
-<div class="mz_component mz_inlinebuttons mz_editable"><div class="moze-wysiwyg-editor ">
-<a
-class="moze-button-large"
-href="manager.html"
-target="_self"                                            >​MANAGER RANKING</a>
-</div></div>
-</div>
-</div>
-
-<div class="section-bigimg-container " data-inlinepicture-url-target="88291845" style="background-image: url('manag.png');"></div>
-
-<div class="section-bigimg-colorizer section-bg-none" style="opacity: 0; display: block"></div>
-
-</div>                                            <div class=
-"
-section section-customizable section-bigimg
-section-align-center
-section-text-color-1
-section-height-l
-section-width-s
-section-nobox        "
-
-data-row-id="9866143"
-data-row-slice="banner"
-data-row-slice-variant="banner-text-center"
-data-transparent-text-box="1">
-
-
-
-<div class="container">
-<div class="textbox ">
-<div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
-</div>
-</div>
-<div class="mz_component mz_inlinebuttons mz_editable"><div class="moze-wysiwyg-editor ">
-<a
-class="moze-button-large"
-href="trophy.html"
-target="_self"                                            >TROPHY CABINET</a>
-</div></div>
-</div>
-</div>
-
-<div class="section-bigimg-container " data-inlinepicture-url-target="88291845" style="background-image: url('cabinet.jpg');"></div>
-
-<div class="section-bigimg-colorizer section-bg-none" style="opacity: 0; display: block"></div>
-
-</div>               
-<div class=
-"
-section section-customizable section-bigimg
-section-align-center
-section-text-color-1
-section-height-l
-section-width-s
-section-nobox        "
-
-data-row-id="9866143"
-data-row-slice="banner"
-data-row-slice-variant="banner-text-center"
-data-transparent-text-box="1">
-
-
-
-<div class="container">
-<div class="textbox ">
-<div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
-</div>
-</div>
-<div class="mz_component mz_inlinebuttons mz_editable"><div class="moze-wysiwyg-editor ">
-<a
-class="moze-button-large"
-href="mode.html"
-target="_self"                                            >CAREER TOURNAMENTS</a>
-</div></div>
-</div>
-</div>
-
-<div class="section-bigimg-container " data-inlinepicture-url-target="88291845" style="background-image: url('tour.jpg');"></div>
-
-<div class="section-bigimg-colorizer section-bg-none" style="opacity: 0; display: block"></div>
-
-</div>                                   
+                              
