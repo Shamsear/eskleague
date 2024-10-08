@@ -162,6 +162,15 @@ l
                                                                                                             letter-spacing : -0.015em;
                                                                                                             text-transform : uppercase;
                                                                         }
+                                                                        @media screen and (max-width: 750px) {
+                                                                            [class^="column-"] {
+                                                                                padding: 20px 20px;
+                                                                            }
+                                                                        }
+                                                                        #bigbar-overlay {
+                                                                            text-align: center;
+                                                                            padding: 0px 25px 0px 40px;
+                                                                        }
                                                                         .white-box {
                                                                             background-color: white;
                                                                             padding: 10px;
@@ -225,7 +234,7 @@ l
                                                                             }
                                                                         }
                                                                         @media (max-width: 768px) {
-                                                                            .white-box1 {
+                                                                            .black-box {
                                                                                 margin: auto; /* Adjust the margin for smaller screens */
                                                                             }
                                                                         }
@@ -235,26 +244,16 @@ l
                                                                             }
                                                                         }
                                                                         @media (max-width: 480px) {
-                                                                            .white-box1 {
+                                                                            .black-box {
                                                                                 margin: auto; /* Adjust the margin for even smaller screens */
                                                                             }
                                                                         }
+                                                                        
                                                                         #menu {
                                                                             background-image: none; /* Remove any background image by default */
                                                                         }
                                                                     
-                                                                        @media screen and (max-width: 750px) {
-                                                                            #menu {
-                                                                                background-image: url('logo11.png'); /* Add the background image */
-                                                                                background-repeat: no-repeat;
-                                                                                    background-position: center calc(95% - 10px); /* Adjust the vertical position (e.g., move it up by 10px) */
-                                                                                    background-size: 65%; /* Adjust the size as needed (50% is an example) */
-                                                                                    text-align: center; /* Center the text content horizontally */
-                                                                                    padding: 20px; /* Add padding for spacing */
-                                                                                }
-                                                                            }
-
-
+                                                                        
                                                                     
                                                                         .hidden-text {
                                                                             opacity: 0;
@@ -281,6 +280,11 @@ l
                                                                         }
                      }                                                                                                         #languages li > a {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
+                                                                        }
+                                                                        @media (max-width: 768px) {
+                                                                            nav.mz_menu {
+                                                                                display: none;
+                                                                            }
                                                                         }
                                                                                                                                                                                     </style>
 
@@ -339,28 +343,32 @@ l
         <div id="bigbar-overlay">
             <div id="bigbar-centerpiece">
                 <div class="bigbar-h1"><div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
-        CAREER TOURNAMENTS
-</div>
-</div></div>
-          
-</div></div>
+                            CAREER TOURNAMENTS
+                    </div>
+                    </div></div>
+                              
+                    </div></div>
                                         
-                                        
-<nav class="mz_component mz_menu" id="menu">
-    <ul>
-        <li class="selected"><a href="/home.html">HOME</a></li>
-        <li><a href="/auction.html">TOURNAMENT GUIDE</a></li>
-        <li><a href="carhome.html">CAREER MODE</a>
-        <ul>
-            <li><a href="/career.html">REGISTERED CLUBS</a></li>
-            <li><a href="https://1drv.ms/x/s!Al82cgGcN1PEpnyCiAJNS9YXQpGQ?e=rI7oce">AUCTION DATA</a></li>
-            <li><a href="https://1drv.ms/x/s!Al82cgGcN1PEpn6612xvHz2ksboe?e=4fx0yz">MANAGER'S DATA</a></li>
-            <li><a href="/mode.html">CAREER TOURNAMENTS</a></li>
-        </ul>
-    </li>
-        <li><a href="/trophy.html">TROPHY CABINET</a></li>
-    </ul>
-</nav>
+                    <nav class="mz_component mz_menu" id="menu">
+                        <ul>
+                            <li class="selected"><a href="/home.html">HOME</a></li>
+                            <li><a href="/auction.html">TOURNAMENT GUIDE</a></li>
+                            <li><a href="carhome.html">CAREER MODE</a>
+                            <ul>
+                                <li><a href="/career.html">REGISTERED CLUBS</a></li>
+                                <li><a href="https://1drv.ms/x/s!Al82cgGcN1PEpnyCiAJNS9YXQpGQ?e=rI7oce">AUCTION DATA</a></li>
+                                <li><a href="https://1drv.ms/x/s!Al82cgGcN1PEpn6612xvHz2ksboe?e=4fx0yz">MANAGER'S DATA</a></li>
+                                <li><a href="/mode.html">CAREER TOURNAMENTS</a></li>
+                            </ul>
+                        </li>
+                            <li><a href="/trophy.html">TROPHY CABINET</a></li>
+                        </ul>
+                    </nav>
+                        
+                        </div>
+                    </div>
+                </div>
+            </header>
 
 
 
@@ -372,51 +380,57 @@ l
                                         <div class="black-box">
                                             <h1 class="moze-center" style="font-size: 28px;">DIVISION LEAGUE</h1>
                                         </div>
+                                        <p></p>
                                             <div class="white-box">
                                                 <h1 class="moze-center" style="font-size: 28px;">DIVISION ONE</h1>
                                             </div>
                                         <p><img src="car1.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
-                                        <p><img src="car2.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
+                                        <p><img src="car2.png" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
                                         <div class="white-box">
                                             <h1 class="moze-center" style="font-size: 28px;">DIVISION TWO</h1>
                                         </div>
                                         <p><img src="car3.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
-                                        <p><img src="car4.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
+                                        <p><img src="car4.png" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
                                         <div class="white-box">
                                             <h1 class="moze-center" style="font-size: 28px;">DIVISION THREE</h1>
                                         </div>
                                         <p><img src="car5.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
-                                        <p><img src="car6.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
+                                        <p><img src="car6.png" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
                                         <div class="white-box">
                                             <h1 class="moze-center" style="font-size: 28px;">DIVISION FOUR</h1>
                                         </div>
                                         <p><img src="car7.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
-                                        <p><img src="car8.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
+                                        <p><img src="car8.png" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
                                         <div class="white-box">
                                             <h1 class="moze-center" style="font-size: 28px;">DIVISION FIVE</h1>
                                         </div>
                                         <p><img src="car9.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
-                                        <p><img src="car10.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
+                                        <p><img src="car10.png" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
                                         <div class="white-box">
                                             <h1 class="moze-center" style="font-size: 28px;">R2G CHAMPIONS LEAGUE</h1>
                                         </div>
                                         <p><img src="car11.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
-                                        <p><img src="car12.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
+                                        <p><img src="car12.png" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
                                         <div class="white-box">
                                             <h1 class="moze-center" style="font-size: 28px;">R2G EUROPA LEAGUE</h1>
                                         </div>
                                         <p><img src="car13.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
-                                        <p><img src="car14.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
+                                        <p><img src="car14.png" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
                                         <div class="white-box">
                                             <h1 class="moze-center" style="font-size: 28px;">R2G CONFERENCE LEAGUE</h1>
                                         </div>
                                         <p><img src="car15.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
-                                        <p><img src="car16.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
+                                        <p><img src="car16.png" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
                                         <div class="white-box">
                                             <h1 class="moze-center" style="font-size: 28px;">R2G SUPER LEAGUE</h1>
                                         </div>
                                         <p><img src="car17.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
-                                        <p><img src="car18.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
+                                        <p><img src="car18.png" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
+                                        <div class="white-box">
+                                            <h1 class="moze-center" style="font-size: 28px;">R2G AUTHENTIC TOUR</h1>
+                                        </div>
+                                        <p><img src="car19.jpg" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
+                                        <p><img src="car20.png" alt="" width="814" data-moz-debase64="yes" class="moze-img-center"></p>
                                     </div>
                                 </div>
                             </div>
