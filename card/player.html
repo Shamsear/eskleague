@@ -1,0 +1,5086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Directory</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Include Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* Main page style */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #1a1a1a;
+            color: #e3e3e3;
+            margin: 0;
+            padding: 0;
+        }
+        /* Welcome screen styles */
+        #loading {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: #121212; /* Dark theme background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: #fff;
+            text-align: center;
+            font-size: 32px;
+            flex-direction: column;
+            animation: fadeIn 1s ease-in-out; /* Fade in effect */
+        }
+        /* Welcome message styling */
+        .welcome-message {
+            font-size: 48px;
+            font-weight: bold;
+            color: #b0b0b0; /* Dark gray color for the welcome message */
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out forwards, bounce 2s ease-in-out infinite;
+        }
+        @media screen and (max-width: 768px) {
+            .welcome-message {
+            font-size: 38px;
+            font-weight: bold;
+            color: #b0b0b0; /* Dark gray color for the welcome message */
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out forwards, bounce 2s ease-in-out infinite;
+        }
+    }
+
+        /* Dynamic subtext that rotates */
+        .subtext {
+            margin-top: 20px;
+            font-size: 24px;
+            color: #888; /* Light gray for the loading message */
+            opacity: 0;
+            animation: fadeIn 2.5s ease-in-out forwards;
+        }
+
+        /* Background animation */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1c1c1c, #2a2a2a, #0f0f0f); /* Dark gradient */
+            background-size: 300% 300%;
+            animation: gradientShift 5s ease infinite;
+            z-index: -1; /* Make sure it's behind the welcome screen */
+        }
+
+        /* Keyframes for fading in and background animation */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        #content {
+            display: none; /* Make sure it's hidden by default */
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 20px;
+            color: #fff;
+        }
+        h2 {
+            display: block;
+            font-size: 1.5em;
+            margin-block-start: 0.83em;
+            margin-block-end: 0.83em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+            font-weight: normal;
+            unicode-bidi: isolate;
+        }
+
+        /* Search bar and filters container */
+        .search-container {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background-color: #282828;
+        }
+
+        .search-container input {
+            width: 300px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+
+        /* Player cards section */
+        .content {
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+        }
+        .player-cards {
+             /* Ensures padding does not cause overflow */
+        }
+
+        /* Player card container with fixed dimensions */
+.player-card {
+    width: 250px; /* Fixed width for player cards */
+    height: auto; /* Fixed height for player cards */
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    text-align: center;
+    box-shadow: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex; /* Use flexbox to center content */
+    flex-direction: column; /* Arrange content vertically */
+    justify-content: center; /* Center vertically */
+}
+.player-card {
+    width: 100%;
+    box-sizing: border-box; /* Ensures that padding/margins don't cause overflow */
+}
+
+@media screen and (min-width: 768px) {
+    .player-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        max-width: 70%;
+        margin: 0 auto;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+}
+
+/* Adjust grid layout for larger screens */
+@media screen and (max-width: 768px) {
+    .player-cards {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+}
+
+        .player-card:hover {
+            transform: scale(1.05);
+        }
+
+        .player-card.selected {
+            border: 2px solid #4caf50;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.7);
+            border-radius: 10px;
+        }
+
+        .player-card img {
+            width: 100%;
+            height: auto; /* Maintain aspect ratio */
+            object-fit: cover;
+            border-radius: 10px;
+            display: block;
+        }
+
+        /* Filter section */
+        .filters {
+            flex: 1;
+            background-color: #282828;
+            padding: 20px;
+            border-radius: 10px;
+            color: #fff;
+        }
+        
+        .dropdown-option img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
+        .filters h2 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .filters label {
+            font-size: 16px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .filters select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #444;
+            color: #fff;
+            border: none;
+        }
+
+        /* Apply and Reset buttons */
+        .filters .filter-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .filters button {
+            padding: 10px 15px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .search-positions a.selected {
+            background-color: #4caf50;
+            color: white;
+        }
+                
+        .apply-button {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        .reset-button {
+            background-color: #f44336;
+            color: #fff;
+        }
+
+        /* Filter Button for Mobile/Tablets */
+        /* Filter Button for Mobile/Tablets */
+.filter-btn {
+    display: none;
+    background-color: #282828;
+    color: #e3e3e3;
+    border: 1px solid #e3e3e3;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    width: auto;
+    position: fixed; /* Keep the button fixed */
+    right: 20px; /* Position it on the right side */
+    top: 50%; /* Position it in the middle vertically */
+    transform: translateY(-50%); /* Center it vertically */
+    z-index: 100; /* Ensure it stays on top */
+}
+
+
+        .filter-btn i {
+            margin-right: 10px;
+        }
+
+        /* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+    overflow: auto; /* Allow scrolling if needed */
+}
+
+/* Modal Content (The Box) */
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the modal */
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    width: 90vw; /* 90% of the viewport width */
+    max-width: 600px; /* Limit the maximum width for larger screens */
+    max-height: 90vh; /* 90% of the viewport height */
+    overflow-y: auto; /* Scrollable content if it exceeds height */
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+}
+
+/* Modal Close Button */
+.modal-content .close {
+    color:black;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.modal-content .close:hover,
+.modal-content .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/* Player Info and Stats Table */
+.modal-content table {
+    width: 100%; /* Full width */
+    border-collapse: collapse; /* Remove space between table borders */
+    margin-top: 20px;
+}
+
+.modal-content table th, .modal-content table td {
+    border: 1px solid white;
+    padding: 8px;
+    text-align: left;
+}
+
+.modal-content table th {
+    background-color: white;
+    font-weight: bold;
+}
+
+/* Responsive Adjustments with Media Queries */
+@media (max-width: 700px) {
+    .modal-content {
+        width: 95vw; /* Use more of the viewport width on small screens */
+        max-width: 95vw; /* Override max-width for small devices */
+    }
+    
+    .modal-content img {
+        height: auto !important; /* Reduce the image size on smaller devices */
+        margin: auto;
+        width: 50% !important;
+        display: block;
+    }
+}
+@media (min-width: 700px) {
+    .modal-content img {
+        height: auto !important; /* Reduce the image size on smaller devices */
+        margin: auto;
+        width: 50% !important;
+        display: block;
+    }
+}
+
+
+        .modal-content h2 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: white;
+            text-decoration: none;
+        }
+
+        .filter-group {
+            margin-bottom: 15px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .filter-group select {
+            width: 100%;
+            padding: 8px;
+            background: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .apply-button {
+            background-color: #bada55;
+            color: #000;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 48%;
+        }
+
+        .reset-button {
+            background-color: #444;
+            color: #e3e3e3;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 48%;
+        }
+
+        .apply-button:hover {
+            background-color: #a5d84b;
+        }
+
+        .reset-button:hover {
+            background-color: #555;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); }
+            to { transform: translateY(0); }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: white;
+            text-decoration: none;
+        }
+
+        .modal h2 {
+            margin-top: 0;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            /* Hide filters and show the filter button on smaller screens */
+            .filters {
+                display: none;
+            }
+
+            .filter-btn {
+                display: block;
+            }
+        }
+
+        /* Improved Button UI */
+        button:hover {
+            opacity: 0.9;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            gap: 10px;
+        }
+        
+        .pagination button {
+            background-color: #444;
+            color: #e3e3e3;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .pagination button:hover {
+            background-color: #555;
+        }
+        
+        #page-info {
+            color: #e3e3e3;
+        }
+        .search-positions {
+            justify-content: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        .search-positions.b {
+            justify-content: center;
+            display: block;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        .search-positions-header {
+            flex: 0 0 100%;
+            margin-bottom: 5px;
+        }
+        .search-positions a {
+            flex: 0 0 85px;
+        }
+        @media screen and (max-width: 768px) {
+        .search-positions a {
+            flex: 0 0 100px;
+        }
+    }
+        .search-button {
+            display: block;
+            background: #333a3c;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.87);
+            border: 1px solid #333a3c;
+            border-radius: 6px;
+            font-size: 14px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .search-button.b {
+            display: block;
+            background: #333a3c;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.87);
+            border: 1px solid #333a3c;
+            border-radius: 6px;
+            font-size: 14px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+        .filters hr {
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 20px;
+            margin-top: 0%;
+        }
+        .logo-search-container {
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            align-items: center;
+            margin: auto;
+        }
+        .logo {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: auto; /* Adds space between logo and search bar */
+        }
+        .custom-dropdown {
+            position: relative;
+            display: inline-block;
+            width: 96%;
+            cursor: pointer;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #444;
+            color: #fff;
+        }
+        
+        .selected-option {
+            display: flex;
+            align-items: center;
+            justify-content: left; /* Space between text and icon */
+            font-size: 16px;
+            padding-right: 30px; /* Space for the icon */
+            position: relative;
+        }
+        
+        .dropdown-icon {
+            position: absolute;
+            right: 10px; /* Position the icon to the right */
+            font-size: 14px;
+            color: #fff;
+            top:10px;
+        }
+        
+        
+        
+        .dropdown-options {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: #282828;
+            border: 1px solid #ccc;
+            z-index: 1000;
+            border-radius: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .dropdown-item {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            color: #fff;
+        }
+        
+        .dropdown-item img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            object-fit:contain;
+        }
+        @media screen and (max-width: 768px) {
+            .dropdown-item img {
+            width: 20px !important;
+            height: 20px !important;
+            margin-right: 5px !important;
+            margin-left: 20px;
+            margin: 0px !important;
+            object-fit: contain;
+        }
+        .selected-option img{
+            width: 20% !important;
+            margin-left: 10px;
+            margin-right: 10px;
+            object-fit:contain;
+        }
+            .selected-option {
+            display: flex;
+            justify-content: left; /* Space between text and icon */
+            font-size: 16px;
+            padding-right: 30px; /* Space for the icon */
+            position: relative;
+            object-fit: contain;  
+        }
+    }
+        
+        .dropdown-item:hover {
+            background-color: #555;
+        }
+        .selected-option img{
+            width: 10%;
+            object-fit:contain;
+        }
+        #playerStatsTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        #playerStatsTable th, #playerStatsTable td {
+            border: 1px solid white;
+            padding: 8px;
+            text-align: center;
+        }
+        
+        #playerStatsTable th {
+            background-color: #1a1a1a;
+            font-weight: bold;
+        }
+        
+        #playerStatsTable tr:nth-child(even) {
+            background-color: #1a1a1a;
+        }
+        
+        #playerStatsTable tr:hover {
+            background-color: #1a1a1a;
+        }
+        
+        
+        
+    </style>
+</head>
+<body>
+    <div id="loading">
+        <div class="background-animation"></div> <!-- Animated background -->
+
+        <div class="welcome-message" id="dynamic-message">Welcome to R2G Player Data</div>
+        <div class="subtext" id="subtext">Loading, please wait...</div>
+    </div>
+
+    <!-- Title -->
+    <header class="header">
+        <div class="logo-search-container">
+            <div class="logo">
+                <!-- Add your logo here -->
+                <img src="logo12.png" alt="Logo" class="logo-img">
+                <h1>R2G Player Data</h1>
+            </div>
+
+    </div>
+
+    <!-- Search bar -->
+    <div class="search-container">
+        <input type="text" id="search-bar" placeholder="Search Players...">
+    </div>
+
+    <!-- Filter Button for Mobile/Tablets -->
+ <!-- Filter Button for Mobile/Tablets -->
+ <button class="filter-btn" onclick="openFilterModal()">
+    <i class="fas fa-filter"></i> Filters
+</button>
+    <!-- Main content -->
+    <div class="content">    
+        <!-- Player cards -->
+         
+        <div class="player-cards" id="player-cards">
+        <div class="player-card" 
+            data-name="DAVID SEAMAN" 
+            data-star="5-star-legend" 
+            data-level="Legend"
+            data-club="ARSENAL FC" 
+            data-position="GK" 
+            data-value="172" 
+            data-games-played="00" 
+            data-stats='[{"season": "0-0", "team": "ARSENAL FC", "value": "172", "apps": "00"}]'>
+            <img src="5 STAR LEGEND GK CARDS/D. SEAMAN_CARD.png" alt="David Seaman">
+        </div>
+        <div class="player-card" 
+            data-name="CASILLAS" 
+            data-star="5-star-legend" 
+            data-level="Legend"
+            data-club="ATLECTICO MADRID" 
+            data-position="GK" 
+            data-value="264" 
+            data-games-played="00" 
+            data-stats='[{"season": "0-0", "team": "ATLECTICO MADRID", "value": "264", "apps": "00"}]'>
+            <img src="5 STAR LEGEND GK CARDS/CASILLAS_CARD.png" alt="Iker Casillas">
+        </div>
+        <div class="player-card" 
+            data-name="JULIO CESAR" 
+            data-star="5-star-legend" 
+            data-level="Legend"
+            data-club="BORUSSIA DORTMUND" 
+            data-position="GK" 
+            data-value="100" 
+            data-games-played="00" 
+            data-stats='[{"season": "0-0", "team": "BORUSSIA DORTMUND", "value": "100", "apps": "00"}]'>
+            <img src="5 STAR LEGEND GK CARDS/J. CESAR_CARD.png" alt="Julio Cesar">
+        </div>
+        <div class="player-card" 
+            data-name="OLIVER KAHN" 
+            data-star="5-star-legend" 
+            data-level="Legend"
+            data-club="FC BAYERN MUNICH" 
+            data-position="GK" 
+            data-value="204" 
+            data-games-played="00" 
+            data-stats='[{"season": "0-0", "team": "FC BAYERN MUNICH", "value": "204", "apps": "00"}]'>
+            <img src="5 STAR LEGEND GK CARDS/OLIVER KAHN_CARD.png" alt="Oliver Kahn">
+        </div>
+        <div class="player-card" 
+            data-name="PETER SCHMEICHEL" 
+            data-star="5-star-legend" 
+            data-level="Legend"
+            data-club="MANCHESTER UNITED" 
+            data-position="GK" 
+            data-value="200" 
+            data-games-played="00" 
+            data-stats='[{"season": "0-0", "team": "MANCHESTER UNITED", "value": "200", "apps": "00"}]'>
+            <img src="5 STAR LEGEND GK CARDS/P. SCHMEICHEL_CARD.png" alt="Peter Schmeichel">
+        </div>
+        <div class="player-card" 
+            data-name="PETR CECH" 
+            data-star="5-star-legend" 
+            data-level="Legend"
+            data-club="RANDERS FC" 
+            data-position="GK" 
+            data-value="210" 
+            data-games-played="00" 
+            data-stats='[{"season": "0-0", "team": "RANDERS FC", "value": "210", "apps": "00"}]'>
+            <img src="5 STAR LEGEND GK CARDS/PETR CECH_CARD.png" alt="Petr Cech">
+        </div>
+        <div class="player-card" 
+            data-name="DIDA" 
+            data-star="5-star-legend" 
+            data-level="Legend"
+            data-club="SS LAZIO" 
+            data-position="GK" 
+            data-value="150" 
+            data-games-played="00" 
+            data-stats='[{"season": "0-0", "team": "SS LAZIO", "value": "150", "apps": "00"}]'>
+            <img src="5 STAR LEGEND GK CARDS/DIDA_CARD.png" alt="Dida">
+        </div>
+        <div class="player-card" 
+            data-name="SHAY GIVEN" 
+            data-star="4-star-legend" 
+            data-level="Legend"
+            data-club="RC LENS" 
+            data-position="GK" 
+            data-value="98" 
+            data-games-played="00" 
+            data-stats='[{"season": "0-0", "team": "SS LAZIO", "value": "150", "apps": "00"}]'>
+            <img src="4 STAR LEGEND GK CARDS/S. GIVEN_CARD.PNG" alt="Given">
+        </div>
+        <div class="player-card" 
+     data-name="MANUEL NEUER" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="AC MILAN" 
+     data-position="GK" 
+     data-value="142" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AC MILAN", "value": "142", "apps": "00"}]'>
+    <img src="5 STAR GK CARDS/M. NEUER_CARD.png" alt="Manuel Neuer">
+</div>
+
+<div class="player-card" 
+     data-name="EDERSON MORAES" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL-NASSR FC" 
+     data-position="GK" 
+     data-value="122" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL-NASSR FC", "value": "122", "apps": "00"}]'>
+    <img src="5 STAR GK CARDS/EDERSON_CARD.png" alt="Ederson Moraes">
+</div>
+
+<div class="player-card" 
+     data-name="TER STEGEN" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="ASTON VILLA FC" 
+     data-position="GK" 
+     data-value="160" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ASTON VILLA FC", "value": "160", "apps": "00"}]'>
+    <img src="5 STAR GK CARDS/TER STEGEN_CARD.png" alt="Marc Ter Stegen">
+</div>
+
+<div class="player-card" 
+     data-name="MIKE MAIGNAN" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="BAYER LEVERKUSEN" 
+     data-position="GK" 
+     data-value="128" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "BAYER LEVERKUSEN", "value": "128", "apps": "00"}]'>
+    <img src="5 STAR GK CARDS/M. MAIGNAN_CARD.png" alt="Mike Maignan">
+</div>
+
+<div class="player-card" 
+     data-name="GIORGI MAMARDASHVILI" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="CHELSEA FC" 
+     data-position="GK" 
+     data-value="140" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "CHELSEA FC", "value": "140", "apps": "00"}]'>
+    <img src="5 STAR GK CARDS/G. MAMARDASHVILI_CARD.png" alt="Giorgi Mamardashvili">
+</div>
+
+<div class="player-card" 
+     data-name="THIBAUT COURTOIS" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="FC BARCELONA" 
+     data-position="GK" 
+     data-value="150" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "FC BARCELONA", "value": "150", "apps": "00"}]'>
+    <img src="5 STAR GK CARDS/T. COURTOIS_CARD.png" alt="Thibaut Courtois">
+</div>
+
+<div class="player-card" 
+     data-name="ALISSON BECKER" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="LIVERPOOL FC" 
+     data-position="GK" 
+     data-value="112" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "LIVERPOOL FC", "value": "112", "apps": "00"}]'>
+    <img src="5 STAR GK CARDS/ALISSON_CARD.png" alt="Alisson Becker">
+</div>
+
+<div class="player-card" 
+     data-name="GREGOR KOBEL" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="PARIS SAINT-GERMAIN FC" 
+     data-position="GK" 
+     data-value="100" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "PARIS SAINT-GERMAIN FC", "value": "100", "apps": "00"}]'>
+    <img src="5 STAR GK CARDS/G. KOBEL_CARD.png" alt="Gregor Kobel">
+</div>
+
+<div class="player-card" 
+     data-name="UNAI SIMON" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="SEPAHAN FC" 
+     data-position="GK" 
+     data-value="110" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SEPAHAN FC", "value": "110", "apps": "00"}]'>
+    <img src="5 STAR GK CARDS/UNAI SIMON_CARD.png" alt="Unai Simon">
+</div>
+
+<div class="player-card" 
+     data-name="JAN OBLAK" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="SPORTING CP" 
+     data-position="GK" 
+     data-value="122" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SPORTING CP", "value": "122", "apps": "00"}]'>
+    <img src="5 STAR GK CARDS/J. OBLAK_CARD.png" alt="Jan Oblak">
+</div>
+
+<div class="player-card" 
+     data-name="YANN SOMMER" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="VFL WOLFSBURG" 
+     data-position="GK" 
+     data-value="116" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "VFL WOLFSBURG", "value": "116", "apps": "00"}]'>
+    <img src="5 STAR GK CARDS/Y. SOMMER_CARD.png" alt="Yann Sommer">
+</div>
+
+<div class="player-card" 
+     data-name="YASSINE BOUNOU" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="VFL WOLFSBURG" 
+     data-position="GK" 
+     data-value="112" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "VFL WOLFSBURG", "value": "112", "apps": "00"}]'>
+    <img src="5 STAR GK CARDS/Y. BOUNOU_CARD.png" alt="Yassine Bounou">
+</div>
+
+<div class="player-card" 
+     data-name="GIANLUIGI DONNARUMMA" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="WOLVES" 
+     data-position="GK" 
+     data-value="140" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "WOLVES", "value": "140", "apps": "00"}]'>
+    <img src="5 STAR GK CARDS/G. DONNARUMMA_CARD.png" alt="Gianluigi Donnarumma">
+</div>
+<div class="player-card" 
+     data-name="ANDRIY LUNIN" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="AC MILAN" 
+     data-position="GK" 
+     data-value="92" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AC MILAN", "value": "92", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/A. LUNIN_CARD.png" alt="Andriy Lunin">
+</div>
+
+<div class="player-card" 
+     data-name="DOMINIK LIVAKOVIĆ" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="AFC AJAX" 
+     data-position="GK" 
+     data-value="52" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AFC AJAX", "value": "52", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/D. LIVAKOVIC_CARD.png" alt="Dominik Livaković">
+</div>
+
+<div class="player-card" 
+     data-name="FERNANDO MUSLERA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL HILAL SFC" 
+     data-position="GK" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL HILAL SFC", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/F. MUSLERA_CARD.png" alt="Fernando Muslera">
+</div>
+
+<div class="player-card" 
+     data-name="ALEX MERET" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL HILAL SFC" 
+     data-position="GK" 
+     data-value="52" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL HILAL SFC", "value": "52", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/A. MERET_CARD.png" alt="Alex Meret">
+</div>
+
+<div class="player-card" 
+     data-name="WOJCIECH SZCZĘSNY" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL-NASSR FC" 
+     data-position="GK" 
+     data-value="70" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL-NASSR FC", "value": "70", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/W. SZCZESNY_CARD.png" alt="Wojciech Szczęsny">
+</div>
+
+<div class="player-card" 
+     data-name="EMILIANO MARTÍNEZ" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="ASTON VILLA FC" 
+     data-position="GK" 
+     data-value="126" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ASTON VILLA FC", "value": "126", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/E. MARTINEZ_CARD.png" alt="Emiliano Martínez">
+</div>
+
+<div class="player-card" 
+     data-name="BRICE SAMBA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="CHELSEA FC" 
+     data-position="GK" 
+     data-value="66" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "CHELSEA FC", "value": "66", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/B. SAMBA_CARD.png" alt="Brice Samba">
+</div>
+
+<div class="player-card" 
+     data-name="AARON RAMSDALE" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="CHELSEA FC" 
+     data-position="GK" 
+     data-value="56" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "CHELSEA FC", "value": "56", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/A. RAMSDALE_CARD.png" alt="Aaron Ramsdale">
+</div>
+
+<div class="player-card" 
+     data-name="NICK POPE" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="FC PORTO" 
+     data-position="GK" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "FC PORTO", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/N. POPE_CARD.png" alt="Nick Pope">
+</div>
+
+<div class="player-card" 
+     data-name="ÁLEX REMIRO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="INTER MILAN" 
+     data-position="GK" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "INTER MILAN", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/A. REMIRO_CARD.png" alt="Álex Remiro">
+</div>
+
+<div class="player-card" 
+     data-name="BERND LENO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="INTER MILAN" 
+     data-position="GK" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "INTER MILAN", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/B. LENO_CARD.png" alt="Bernd Leno">
+</div>
+
+<div class="player-card" 
+     data-name="OLIVER BAUMANN" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="LIVERPOOL FC" 
+     data-position="GK" 
+     data-value="62" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "LIVERPOOL FC", "value": "62", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/O. BAUMANN_CARD.png" alt="Oliver Baumann">
+</div>
+
+<div class="player-card" 
+     data-name="PÉTER GULÁCSI" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="LIVERPOOL FC" 
+     data-position="GK" 
+     data-value="54" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "LIVERPOOL FC", "value": "54", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/P. GULACSI_CARD.png" alt="Péter Gulácsi">
+</div>
+
+<div class="player-card" 
+     data-name="DAVID SORIA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="LOSC LILLE" 
+     data-position="GK" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "LOSC LILLE", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/D. SORIA_CARD.png" alt="David Soria">
+</div>
+
+<div class="player-card" 
+     data-name="DE GEA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER CITY" 
+     data-position="GK" 
+     data-value="92" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER CITY", "value": "92", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/DE GEA_CARD.png" alt="David De Gea">
+</div>
+
+<div class="player-card" 
+     data-name="RUI PATRÍCIO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER CITY" 
+     data-position="GK" 
+     data-value="56" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER CITY", "value": "56", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/RUI PATRICIO_CARD.png" alt="Rui Patrício">
+</div>
+
+<div class="player-card" 
+     data-name="ANDRÉ ONANA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MOHUN BAGAN AC" 
+     data-position="GK" 
+     data-value="120" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MOHUN BAGAN AC", "value": "120", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/A. ONANA_CARD.png" alt="André Onana">
+</div>
+
+<div class="player-card" 
+     data-name="DAVID RAYA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="NEWCASTLE UNITED FC" 
+     data-position="GK" 
+     data-value="62" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "NEWCASTLE UNITED FC", "value": "62", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/D. RAYA_CARD.png" alt="David Raya">
+</div>
+
+<div class="player-card" 
+     data-name="ÁLVARO VALLÉS" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="NEWCASTLE UNITED FC" 
+     data-position="GK" 
+     data-value="52" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "NEWCASTLE UNITED FC", "value": "52", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/A. VALLES_CARD.png" alt="Álvaro Vallés">
+</div>
+
+<div class="player-card" 
+     data-name="LUKÁŠ HRADECKÝ" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="PARIS SAINT-GERMAIN FC" 
+     data-position="GK" 
+     data-value="64" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "PARIS SAINT-GERMAIN FC", "value": "64", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/L. HRADECKY_CARD.png" alt="Lukáš Hradecký">
+</div>
+
+<div class="player-card" 
+     data-name="MICHELE DI GREGORIO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RB LEIPZIG" 
+     data-position="GK" 
+     data-value="54" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RB LEIPZIG", "value": "54", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/M. DI GREGORIO_CARD.png" alt="Michele Di Gregorio">
+</div>
+
+<div class="player-card" 
+     data-name="JOSÉ SÁ" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RB LEIPZIG" 
+     data-position="GK" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RB LEIPZIG", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/JOSE SA_CARD.png" alt="José Sá">
+</div>
+
+<div class="player-card" 
+     data-name="KASPER SCHMEICHEL" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RC LENS" 
+     data-position="GK" 
+     data-value="82" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RC LENS", "value": "82", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/K. SCHMEICHEL_CARD.png" alt="Kasper Schmeichel">
+</div>
+
+<div class="player-card" 
+     data-name="DIOGO COSTA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RED BULL BRAGANTINO" 
+     data-position="GK" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RED BULL BRAGANTINO", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/D. COSTA_CARD.png" alt="Diogo Costa">
+</div>
+
+<div class="player-card" 
+     data-name="ANATOLIY TRUBIN" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RED BULL BRAGANTINO" 
+     data-position="GK" 
+     data-value="58" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RED BULL BRAGANTINO", "value": "58", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/A. TRUBIN_CARD.png" alt="Anatoliy Trubin">
+</div>
+
+<div class="player-card" 
+     data-name="GUGLIELMO VICARIO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SPORTING CP" 
+     data-position="GK" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SPORTING CP", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/G. VICARIO_CARD.png" alt="Guglielmo Vicario">
+</div>
+
+<div class="player-card" 
+     data-name="JORDAN PICKFORD" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="TOTTENHAM HOTSPUR FC" 
+     data-position="GK" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "TOTTENHAM HOTSPUR FC", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/J. PICKFORD_CARD.png" alt="Jordan Pickford">
+</div>
+
+<div class="player-card" 
+     data-name="KOEN CASTEELS" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="WOLVES" 
+     data-position="GK" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "WOLVES", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR GK CARDS/K. CASTEELS_CARD.png" alt="Koen Casteels">
+</div>
+<div class="player-card" 
+     data-name="GUILLERMO OCHOA" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL HILAL SFC" 
+     data-position="GK" 
+     data-value="84" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL HILAL SFC", "value": "84", "apps": "00"}]'>
+    <img src="3 STAR GK CARDS/G. OCHOA_CARD.png" alt="Guillermo Ochoa">
+</div>
+
+<div class="player-card" 
+     data-name="SERGIO HERRERA" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="BAYER LEVERKUSEN" 
+     data-position="GK" 
+     data-value="40" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "BAYER LEVERKUSEN", "value": "40", "apps": "00"}]'>
+    <img src="3 STAR GK CARDS/S. HERRERA_CARD.png" alt="Sergio Herrera">
+</div>
+
+<div class="player-card" 
+     data-name="EDOUARD MENDY" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="MOHUN BAGAN AC" 
+     data-position="GK" 
+     data-value="40" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MOHUN BAGAN AC", "value": "40", "apps": "00"}]'>
+    <img src="3 STAR GK CARDS/E. MENDY_CARD.png" alt="Edouard Mendy">
+</div>
+
+<div class="player-card" 
+     data-name="KEPA" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="RB LEIPZIG" 
+     data-position="GK" 
+     data-value="40" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RB LEIPZIG", "value": "40", "apps": "00"}]'>
+    <img src="3 STAR GK CARDS/KEPA_CARD.png" alt="Kepa">
+</div>
+
+<div class="player-card" 
+     data-name="JUAN MUSSO" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="REAL MADRID" 
+     data-position="GK" 
+     data-value="64" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "REAL MADRID", "value": "64", "apps": "00"}]'>
+    <img src="3 STAR GK CARDS/J. MUSSO_CARD.png" alt="Juan Musso">
+</div>
+
+<div class="player-card" 
+     data-name="RUI SILVA" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="WOLVES" 
+     data-position="GK" 
+     data-value="40" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "WOLVES", "value": "40", "apps": "00"}]'>
+    <img src="3 STAR GK CARDS/RUI SILVA_CARD.png" alt="Rui Silva">
+</div>
+<div class="player-card" 
+     data-name="TONY ADAMS" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="AFC AJAX" 
+     data-position="CB" 
+     data-value="100" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AFC AJAX", "value": "100", "apps": "00"}]'>
+    <img src="5 STAR LEGEND CB CARDS/T. ADAMS_CARD.png" alt="Tony Adams">
+</div>
+
+<div class="player-card" 
+     data-name="DANIEL VAN BUYTEN" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="AL HILAL SFC" 
+     data-position="CB" 
+     data-value="114" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL HILAL SFC", "value": "114", "apps": "00"}]'>
+    <img src="5 STAR LEGEND CB CARDS/VAN BUYTEN_CARD.png" alt="Daniel Van Buyten">
+</div>
+
+<div class="player-card" 
+     data-name="PAOLO MALDINI" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="AL-NASSR FC" 
+     data-position="CB" 
+     data-value="142" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL-NASSR FC", "value": "142", "apps": "00"}]'>
+    <img src="5 STAR LEGEND CB CARDS/P. MALDINI_CARD.png" alt="Paolo Maldini">
+</div>
+
+<div class="player-card" 
+     data-name="FRANCO BARESI" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="ATLETICO DE MADRID" 
+     data-position="CB" 
+     data-value="132" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ATLETICO DE MADRID", "value": "132", "apps": "00"}]'>
+    <img src="5 STAR LEGEND CB CARDS/F. BARESI_CARD.png" alt="Franco Baresi">
+</div>
+
+<div class="player-card" 
+     data-name="ALESSANDRO NESTA" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="FC BAYERN MUNICH" 
+     data-position="CB" 
+     data-value="132" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "FC BAYERN MUNICH", "value": "132", "apps": "00"}]'>
+    <img src="5 STAR LEGEND CB CARDS/A. NESTA_CARD.png" alt="Alessandro Nesta">
+</div>
+
+<div class="player-card" 
+     data-name="MARTIN DEMICHELIS" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="RB LEIPZIG" 
+     data-position="CB" 
+     data-value="138" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RB LEIPZIG", "value": "138", "apps": "00"}]'>
+    <img src="5 STAR LEGEND CB CARDS/M. DEMICHELIS_CARD.png" alt="Martin Demichelis">
+</div>
+
+<div class="player-card" 
+     data-name="FABIO CANNAVARO" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="RED BULL BRAGANTINO" 
+     data-position="CB" 
+     data-value="120" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RED BULL BRAGANTINO", "value": "120", "apps": "00"}]'>
+    <img src="5 STAR LEGEND CB CARDS/F. CANNAVARO_CARD.png" alt="Fabio Cannavaro">
+</div>
+
+<div class="player-card" 
+     data-name="FRANZ BECKENBAUER" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="SS LAZIO" 
+     data-position="CB" 
+     data-value="194" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SS LAZIO", "value": "194", "apps": "00"}]'>
+    <img src="5 STAR LEGEND CB CARDS/BECKENBAUER_CARD.png" alt="Franz Beckenbauer">
+</div>
+
+<div class="player-card" 
+     data-name="CARLES PUYOL" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="WOLVES" 
+     data-position="CB" 
+     data-value="152" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "WOLVES", "value": "152", "apps": "00"}]'>
+    <img src="5 STAR LEGEND CB CARDS/PUYOL_CARD.png" alt="Carles Puyol">
+</div>
+
+<div class="player-card" 
+     data-name="CAMPBELL" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="WOLVES" 
+     data-position="CB" 
+     data-value="150" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "WOLVES", "value": "150", "apps": "00"}]'>
+    <img src="5 STAR LEGEND CB CARDS/CAMPBELL_CARD.png" alt="Sol Campbell">
+</div>
+<div class="player-card" 
+     data-name="ÉDER MILITÃO" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="AC MILAN" 
+     data-position="CB" 
+     data-value="136" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AC MILAN", "value": "136", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/E. MILITAO_CARD.png" alt="Éder Militão">
+</div>
+
+<div class="player-card" 
+     data-name="DAVID ALABA" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="AC MILAN" 
+     data-position="CB" 
+     data-value="138" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AC MILAN", "value": "138", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/D. ALABA_CARD.png" alt="David Alaba">
+</div>
+
+<div class="player-card" 
+     data-name="KIM MIN-JAE" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="AC MILAN" 
+     data-position="CB" 
+     data-value="138" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AC MILAN", "value": "138", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/K. MIN-JAE_CARD.png" alt="Kim Min-Jae">
+</div>
+
+<div class="player-card" 
+     data-name="ANTONIO RÜDIGER" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="AFC AJAX" 
+     data-position="CB" 
+     data-value="200" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AFC AJAX", "value": "200", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/A. RUDIGER_CARD.png" alt="Antonio Rüdiger">
+</div>
+
+<div class="player-card" 
+     data-name="GABRIEL MAGALHÃES" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL HILAL SFC" 
+     data-position="CB" 
+     data-value="130" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL HILAL SFC", "value": "130", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/G. MAGALHAES_CARD.png" alt="Gabriel Magalhães">
+</div>
+
+<div class="player-card" 
+     data-name="MARQUINHOS" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="ASTON VILLA FC" 
+     data-position="CB" 
+     data-value="180" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ASTON VILLA FC", "value": "180", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/MARQUINHOS_CARD.png" alt="Marquinhos">
+</div>
+
+<div class="player-card" 
+     data-name="JOHN STONES" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="ASTON VILLA FC" 
+     data-position="CB" 
+     data-value="130" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ASTON VILLA FC", "value": "130", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/J. STONES_CARD.png" alt="John Stones">
+</div>
+
+<div class="player-card" 
+     data-name="ALESSANDRO BASTONI" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="ASTON VILLA FC" 
+     data-position="CB" 
+     data-value="162" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ASTON VILLA FC", "value": "162", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/A. BASTONI_CARD.png" alt="Alessandro Bastoni">
+</div>
+
+<div class="player-card" 
+     data-name="CRISTIAN ROMERO" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="ATLETICO DE MADRID" 
+     data-position="CB" 
+     data-value="182" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ATLETICO DE MADRID", "value": "182", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/C. ROMERO_CARD.png" alt="Cristian Romero">
+</div>
+
+<div class="player-card" 
+     data-name="MANUEL AKANJI" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="BAYER LEVERKUSEN" 
+     data-position="CB" 
+     data-value="106" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "BAYER LEVERKUSEN", "value": "106", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/M. AKANJI_CARD.png" alt="Manuel Akanji">
+</div>
+
+<div class="player-card" 
+     data-name="RÚBEN DIAS" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="BORUSSIA DORTMUND" 
+     data-position="CB" 
+     data-value="156" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "BORUSSIA DORTMUND", "value": "156", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/R. DIAS_CARD.png" alt="Rúben Dias">
+</div>
+
+<div class="player-card" 
+     data-name="PAU TORRES" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="BORUSSIA DORTMUND" 
+     data-position="CB" 
+     data-value="144" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "BORUSSIA DORTMUND", "value": "144", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/P. TORRES_CARD.png" alt="Pau Torres">
+</div>
+
+<div class="player-card" 
+     data-name="MATTHIJS DE LIGT" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="INTER MILAN" 
+     data-position="CB" 
+     data-value="206" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "INTER MILAN", "value": "206", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/DE LIGT_CARD.png" alt="Matthijs de Ligt">
+</div>
+
+<div class="player-card" 
+     data-name="IBRAHIMA KONATÉ" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="INTER MILAN" 
+     data-position="CB" 
+     data-value="120" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "INTER MILAN", "value": "120", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/I. KONATE_CARD.png" alt="Ibrahima Konaté">
+</div>
+
+<div class="player-card" 
+     data-name="SVEN BOTMAN" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="LIVERPOOL FC" 
+     data-position="CB" 
+     data-value="114" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "LIVERPOOL FC", "value": "114", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/S. BOTMAN_CARD.png" alt="Sven Botman">
+</div>
+
+<div class="player-card" 
+     data-name="RICCARDO CALAFIORI" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="NEWCASTLE UNITED FC" 
+     data-position="CB" 
+     data-value="90" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "NEWCASTLE UNITED FC", "value": "90", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/R. CALAFIORI_CARD.png" alt="Riccardo Calafiori">
+</div>
+
+<div class="player-card" 
+     data-name="VIRGIL VAN DIJK" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="RANDERS FC" 
+     data-position="CB" 
+     data-value="192" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RANDERS FC", "value": "192", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/VAN DIJK_CARD.png" alt="Virgil van Dijk">
+</div>
+
+<div class="player-card" 
+     data-name="MALICK THIAW" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="RANDERS FC" 
+     data-position="CB" 
+     data-value="132" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RANDERS FC", "value": "132", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/M. THIAW_CARD.png" alt="Malick Thiaw">
+</div>
+
+<div class="player-card" 
+     data-name="NATHAN AKÉ" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="RB LEIPZIG" 
+     data-position="CB" 
+     data-value="98" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RB LEIPZIG", "value": "98", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/N. AKE_CARD.png" alt="Nathan Aké">
+</div>
+
+<div class="player-card" 
+     data-name="CRISTHIAN MOSQUERA" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="RB LEIPZIG" 
+     data-position="CB" 
+     data-value="82" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RB LEIPZIG", "value": "82", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/C. MOSQUERA_CARD.png" alt="Cristhian Mosquera">
+</div>
+
+<div class="player-card" 
+     data-name="PAU CUBARSÍ" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="RED BULL BRAGANTINO" 
+     data-position="CB" 
+     data-value="114" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RED BULL BRAGANTINO", "value": "114", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/P. CUBARSI_CARD.png" alt="Pau Cubarsí">
+</div>
+
+<div class="player-card" 
+     data-name="RONALD ARAÚJO" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="SS LAZIO" 
+     data-position="CB" 
+     data-value="148" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SS LAZIO", "value": "148", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/R. ARAUJO_CARD.png" alt="Ronald Araújo">
+</div>
+
+<div class="player-card" 
+     data-name="JOŠKO GVARDIOL" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="TOTTENHAM HOTSPUR FC" 
+     data-position="CB" 
+     data-value="142" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "TOTTENHAM HOTSPUR FC", "value": "142", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/J. GVARDIOL_CARD.png" alt="Joško Gvardiol">
+</div>
+
+<div class="player-card" 
+     data-name="WILLIAM SALIBA" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="VFL WOLFSBURG" 
+     data-position="CB" 
+     data-value="172" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "VFL WOLFSBURG", "value": "172", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/W. SALIBA_CARD.png" alt="William Saliba">
+</div>
+
+<div class="player-card" 
+     data-name="MICKY VAN DE VEN" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="WOLVES" 
+     data-position="CB" 
+     data-value="130" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "WOLVES", "value": "130", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/VAN DE VEN_CARD.png" alt="Micky Van de Ven">
+</div>
+
+<div class="player-card" 
+     data-name="DAYOT UPAMECANO" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="WOLVES" 
+     data-position="CB" 
+     data-value="134" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "WOLVES", "value": "134", "apps": "00"}]'>
+    <img src="5 STAR CB CARDS/D. UPAMECANO_CARD.png" alt="Dayot Upamecano">
+</div>
+<div class="player-card" 
+     data-name="GIORGIO SCALVINI" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="AFC AJAX" 
+     data-position="CB" 
+     data-value="62" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AFC AJAX", "value": "62", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/G. SCALVINI_CARD.png" alt="Giorgio Scalvini">
+</div>
+
+<div class="player-card" 
+     data-name="AXEL WITSEL" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL HILAL SFC" 
+     data-position="CB" 
+     data-value="52" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL HILAL SFC", "value": "52", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/A. WITSEL_CARD.png" alt="Axel Witsel">
+</div>
+
+<div class="player-card" 
+     data-name="MURILLO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL HILAL SFC" 
+     data-position="CB" 
+     data-value="56" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL HILAL SFC", "value": "56", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/MURILLO_CARD.png" alt="Murillo">
+</div>
+
+<div class="player-card" 
+     data-name="EVAN NDICKA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL-NASSR FC" 
+     data-position="CB" 
+     data-value="58" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL-NASSR FC", "value": "58", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/E. NDICKA_CARD.png" alt="Evan Ndicka">
+</div>
+
+<div class="player-card" 
+     data-name="NIKOLA MILENKOVIĆ" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL-NASSR FC" 
+     data-position="CB" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL-NASSR FC", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/N. MILENKOVIĆ_CARD.png" alt="Nikola Milenković">
+</div>
+
+<div class="player-card" 
+     data-name="TOBY ALDERWEIRELD" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL-NASSR FC" 
+     data-position="CB" 
+     data-value="72" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL-NASSR FC", "value": "72", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/T. ALDERWEIRELD_CARD.png" alt="Toby Alderweireld">
+</div>
+
+<div class="player-card" 
+     data-name="IÑIGO MARTÍNEZ" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="ARSENAL FC" 
+     data-position="CB" 
+     data-value="80" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ARSENAL FC", "value": "80", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/I. MARTINEZ_CARD.png" alt="Iñigo Martínez">
+</div>
+
+<div class="player-card" 
+     data-name="GONÇALO INÁCIO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="ARSENAL FC" 
+     data-position="CB" 
+     data-value="64" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ARSENAL FC", "value": "64", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/G. INACIO_CARD.png" alt="Gonçalo Inácio">
+</div>
+
+<div class="player-card" 
+     data-name="CALVIN BASSEY" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="ARSENAL FC" 
+     data-position="CB" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ARSENAL FC", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/C. BASSEY_CARD.png" alt="Calvin Bassey">
+</div>
+
+<div class="player-card" 
+     data-name="ARTHUR THEATE" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="ARSENAL FC" 
+     data-position="CB" 
+     data-value="56" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ARSENAL FC", "value": "56", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/A. THEATE_CARD.png" alt="Arthur Theate">
+</div>
+
+<div class="player-card" 
+     data-name="BENOÎT BADIASHILE" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="ARSENAL FC" 
+     data-position="CB" 
+     data-value="70" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ARSENAL FC", "value": "70", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/B. BADIASHILE_CARD.png" alt="Benoît Badiashile">
+</div>
+
+<div class="player-card" 
+     data-name="DANI VIVIAN" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="ASTON VILLA FC" 
+     data-position="CB" 
+     data-value="80" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ASTON VILLA FC", "value": "80", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/D. VIVIAN_CARD.png" alt="Dani Vivian">
+</div>
+
+<div class="player-card" 
+     data-name="ANTÓNIO SILVA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="BORUSSIA DORTMUND" 
+     data-position="CB" 
+     data-value="92" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "BORUSSIA DORTMUND", "value": "92", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/A. SILVA_CARD.png" alt="António Silva">
+</div>
+
+<div class="player-card" 
+     data-name="AXEL DISASI" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="BORUSSIA DORTMUND" 
+     data-position="CB" 
+     data-value="66" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "BORUSSIA DORTMUND", "value": "66", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/A. DISASI_CARD.png" alt="Axel Disasi">
+</div>
+
+<div class="player-card" 
+     data-name="JOE GOMEZ" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="BORUSSIA DORTMUND" 
+     data-position="CB" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "BORUSSIA DORTMUND", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/J. GOMEZ_CARD.png" alt="Joe Gomez">
+</div>
+
+<div class="player-card" 
+     data-name="EZRI KONSA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="CHELSEA FC" 
+     data-position="CB" 
+     data-value="70" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "CHELSEA FC", "value": "70", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/E. KONSA_CARD.png" alt="Ezri Konsa">
+</div>
+
+<div class="player-card" 
+     data-name="DANILO PEREIRA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="CHELSEA FC" 
+     data-position="CB" 
+     data-value="80" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "CHELSEA FC", "value": "80", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/D. PEREIRA_CARD.png" alt="Danilo Pereira">
+</div>
+
+<div class="player-card" 
+     data-name="DÁVID HANCKO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="CHELSEA FC" 
+     data-position="CB" 
+     data-value="100" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "CHELSEA FC", "value": "100", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/D. HANCKO_CARD.png" alt="Dávid Hancko">
+</div>
+
+<div class="player-card" 
+     data-name="NAIF AGUERD" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="CHELSEA FC" 
+     data-position="CB" 
+     data-value="74" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "CHELSEA FC", "value": "74", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/N. AGUERD_CARD.png" alt="Naif Aguerd">
+</div>
+
+<div class="player-card" 
+     data-name="NICO SCHLOTTERBECK" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="FC BAYERN MUNICH" 
+     data-position="CB" 
+     data-value="120" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "FC BAYERN MUNICH", "value": "120", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/N. SCHLOTTERBECK_CARD.png" alt="Nico Schlotterbeck">
+</div>
+
+<div class="player-card" 
+     data-name="IGOR ZUBELDIA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="FC BAYERN MUNICH" 
+     data-position="CB" 
+     data-value="72" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "FC BAYERN MUNICH", "value": "72", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/I. ZUBELDIA_CARD.png" alt="Igor Zubeldia">
+</div>
+
+<div class="player-card" 
+     data-name="LISANDRO MARTÍNEZ" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="FC PORTO" 
+     data-position="CB" 
+     data-value="82" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "FC PORTO", "value": "82", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/LISANDRO MARTINEZ_CARD.png" alt="Lisandro Martínez">
+</div>
+
+<div class="player-card" 
+     data-name="GIANLUCA MANCINI" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="FC PORTO" 
+     data-position="CB" 
+     data-value="52" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "FC PORTO", "value": "52", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/G. MANCINI_CARD.png" alt="Gianluca Mancini">
+</div>
+
+<div class="player-card" 
+     data-name="PRESNEL KIMPEMBE" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="FC PORTO" 
+     data-position="CB" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "FC PORTO", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/P. KIMPEMBE_CARD.png" alt="Presnel Kimpembe">
+</div>
+
+<div class="player-card" 
+     data-name="YERAY" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="LIVERPOOL FC" 
+     data-position="CB" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "LIVERPOOL FC", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/YERAY_CARD.png" alt="Yeray">
+</div>
+<div class="player-card" 
+     data-name="DAVID GARCÍA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="LIVERPOOL FC" 
+     data-position="CB" 
+     data-value="68" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "LIVERPOOL FC", "value": "68", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/D. GARCIA_CARD.png" alt="David García">
+</div>
+
+<div class="player-card" 
+     data-name="JONATHAN TAH" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER CITY" 
+     data-position="CB" 
+     data-value="118" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER CITY", "value": "118", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/J. TAH_CARD.png" alt="Jonathan Tah">
+</div>
+
+<div class="player-card" 
+     data-name="WILLI ORBAN" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER CITY" 
+     data-position="CB" 
+     data-value="72" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER CITY", "value": "72", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/W. ORBAN_CARD.png" alt="Willi Orban">
+</div>
+
+<div class="player-card" 
+     data-name="JAN VERTONGHEN" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER CITY" 
+     data-position="CB" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER CITY", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/J. VERTONGHEN_CARD.png" alt="Jan Vertonghen">
+</div>
+
+<div class="player-card" 
+     data-name="LUCAS HERNÁNDEZ" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER UNITED" 
+     data-position="CB" 
+     data-value="94" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER UNITED", "value": "94", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/L. HERNANDEZ_CARD.png" alt="Lucas Hernández">
+</div>
+
+<div class="player-card" 
+     data-name="JOSÉ MARÍA GIMÉNEZ" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER UNITED" 
+     data-position="CB" 
+     data-value="100" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER UNITED", "value": "100", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/GIMENEZ_CARD.png" alt="José María Giménez">
+</div>
+
+<div class="player-card" 
+     data-name="AYMERIC LAPORTE" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER UNITED" 
+     data-position="CB" 
+     data-value="120" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER UNITED", "value": "120", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/A. LAPORTE_CARD.png" alt="Aymeric Laporte">
+</div>
+
+<div class="player-card" 
+     data-name="BREMER" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER UNITED" 
+     data-position="CB" 
+     data-value="100" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER UNITED", "value": "100", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/BREMER_CARD.png" alt="Bremer">
+</div>
+
+<div class="player-card" 
+     data-name="FIKAYO TOMORI" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER UNITED" 
+     data-position="CB" 
+     data-value="120" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER UNITED", "value": "120", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/F. TOMORI_CARD.png" alt="Fikayo Tomori">
+</div>
+
+<div class="player-card" 
+     data-name="MILAN ŠKRINIAR" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER UNITED" 
+     data-position="CB" 
+     data-value="130" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER UNITED", "value": "130", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/M. SKRINIAR_CARD.png" alt="Milan Škriniar">
+</div>
+
+<div class="player-card" 
+     data-name="THIAGO SILVA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER UNITED" 
+     data-position="CB" 
+     data-value="100" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER UNITED", "value": "100", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/T. SILVA_CARD.png" alt="Thiago Silva">
+</div>
+
+<div class="player-card" 
+     data-name="PIERRE KALULU" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER UNITED" 
+     data-position="CB" 
+     data-value="70" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER UNITED", "value": "70", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/P. KALULU_CARD.png" alt="Pierre Kalulu">
+</div>
+
+<div class="player-card" 
+     data-name="L. MARTÍNEZ QUARTA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MOHUN BAGAN AC" 
+     data-position="CB" 
+     data-value="70" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MOHUN BAGAN AC", "value": "70", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/L. MARTINEZ_CARD.png" alt="L. Martínez Quarta">
+</div>
+
+<div class="player-card" 
+     data-name="MERIH DEMIRAL" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="NEWCASTLE UNITED FC" 
+     data-position="CB" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "NEWCASTLE UNITED FC", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/M. DEMIRAL_CARD.png" alt="Merih Demiral">
+</div>
+
+<div class="player-card" 
+     data-name="MARC GUÉHI" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="NEWCASTLE UNITED FC" 
+     data-position="CB" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "NEWCASTLE UNITED FC", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/M. GUEHI_CARD.png" alt="Marc Guéhi">
+</div>
+
+<div class="player-card" 
+     data-name="JEAN-CLAIR TODIBO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="NEWCASTLE UNITED FC" 
+     data-position="CB" 
+     data-value="58" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "NEWCASTLE UNITED FC", "value": "58", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/TODIBO_CARD.png" alt="Jean-Clair Todibo">
+</div>
+
+<div class="player-card" 
+     data-name="MATS HUMMELS" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="PARIS SAINT-GERMAIN FC" 
+     data-position="CB" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "PARIS SAINT-GERMAIN FC", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/M. HUMMELS_CARD.png" alt="Mats Hummels">
+</div>
+
+<div class="player-card" 
+     data-name="IBAÑEZ" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="PARIS SAINT-GERMAIN FC" 
+     data-position="CB" 
+     data-value="72" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "PARIS SAINT-GERMAIN FC", "value": "72", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/IBANEZ_CARD.png" alt="Ibañez">
+</div>
+
+<div class="player-card" 
+     data-name="AITOR PAREDES" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="PARIS SAINT-GERMAIN FC" 
+     data-position="CB" 
+     data-value="80" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "PARIS SAINT-GERMAIN FC", "value": "80", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/A. PAREDES_CARD.png" alt="Aitor Paredes">
+</div>
+
+<div class="player-card" 
+     data-name="MARIO HERMOSO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RANDERS FC" 
+     data-position="CB" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RANDERS FC", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/M. HERMOSO_CARD.png" alt="Mario Hermoso">
+</div>
+
+<div class="player-card" 
+     data-name="HIROKI ITO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RANDERS FC" 
+     data-position="CB" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RANDERS FC", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/H. ITO_CARD.png" alt="Hiroki Ito">
+</div>
+
+<div class="player-card" 
+     data-name="BENJAMIN PAVARD" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RB LEIPZIG" 
+     data-position="CB" 
+     data-value="106" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RB LEIPZIG", "value": "106", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/B. PAVARD_CARD.png" alt="Benjamin Pavard">
+</div>
+
+<div class="player-card" 
+     data-name="JURRIËN TIMBER" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RB LEIPZIG" 
+     data-position="CB" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RB LEIPZIG", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/J. TIMBER_CARD.png" alt="Jurriën Timber">
+</div>
+
+<div class="player-card" 
+     data-name="NEHUÉN PÉREZ" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RB LEIPZIG" 
+     data-position="CB" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RB LEIPZIG", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/N. PEREZ_CARD.png" alt="Nehuén Pérez">
+</div>
+
+<div class="player-card" 
+     data-name="STEFAN DE VRIJ" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RC LENS" 
+     data-position="CB" 
+     data-value="58" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RC LENS", "value": "58", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/DE VRIJ_CARD.png" alt="Stefan De Vrij">
+</div>
+<div class="player-card" 
+     data-name="KEVIN DANSO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RC LENS" 
+     data-position="CB" 
+     data-value="70" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RC LENS", "value": "70", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/K. DANSO_CARD.png" alt="Kevin Danso">
+</div>
+
+<div class="player-card" 
+     data-name="A. BUONGIORNO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RC LENS" 
+     data-position="CB" 
+     data-value="52" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RC LENS", "value": "52", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/A. BUONGIORNO_CARD.png" alt="A. Buongiorno">
+</div>
+
+<div class="player-card" 
+     data-name="ROBIN LE NORMAND" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RED BULL BRAGANTINO" 
+     data-position="CB" 
+     data-value="80" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RED BULL BRAGANTINO", "value": "80", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/R. LE NORMAND_CARD.png" alt="Robin Le Normand">
+</div>
+
+<div class="player-card" 
+     data-name="VICTOR LINDELÖF" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RED BULL BRAGANTINO" 
+     data-position="CB" 
+     data-value="52" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RED BULL BRAGANTINO", "value": "52", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/V. LINDELOF_CARD.png" alt="Victor Lindelöf">
+</div>
+
+<div class="player-card" 
+     data-name="JARRAD BRANTHWAITE" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RED BULL BRAGANTINO" 
+     data-position="CB" 
+     data-value="62" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RED BULL BRAGANTINO", "value": "62", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/J. BRANTHWAITE_CARD.png" alt="Jarrad Branthwaite">
+</div>
+
+<div class="player-card" 
+     data-name="KALIDOU KOULIBALY" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SEPABAN SC" 
+     data-position="CB" 
+     data-value="100" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SEPABAN SC", "value": "100", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/KOULIBALY_CARD.png" alt="Kalidou Koulibaly">
+</div>
+
+<div class="player-card" 
+     data-name="JAKUB KIWIOR" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SEPABAN SC" 
+     data-position="CB" 
+     data-value="82" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SEPABAN SC", "value": "82", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/J. KIWIOR_CARD.png" alt="Jakub Kiwior">
+</div>
+
+<div class="player-card" 
+     data-name="FRANCESCO ACERBI" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SEPABAN SC" 
+     data-position="CB" 
+     data-value="76" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SEPABAN SC", "value": "76", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/F. ACERBI_CARD.png" alt="Francesco Acerbi">
+</div>
+
+<div class="player-card" 
+     data-name="LENY YORO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SEPABAN SC" 
+     data-position="CB" 
+     data-value="52" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SEPABAN SC", "value": "52", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/L. YORO_CARD.png" alt="Leny Yoro">
+</div>
+
+<div class="player-card" 
+     data-name="HARRY MAGUIRE" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SPORTING CP" 
+     data-position="CB" 
+     data-value="76" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SPORTING CP", "value": "76", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/H. MAGUIRE_CARD.png" alt="Harry Maguire">
+</div>
+
+<div class="player-card" 
+     data-name="LOÏC BADÉ" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SPORTING CP" 
+     data-position="CB" 
+     data-value="76" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SPORTING CP", "value": "76", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/L. BADE_CARD.png" alt="Loïc Badé">
+</div>
+
+<div class="player-card" 
+     data-name="MAX KILMAN" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SPORTING CP" 
+     data-position="CB" 
+     data-value="80" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SPORTING CP", "value": "80", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/M. KILMAN_CARD.png" alt="Max Kilman">
+</div>
+
+<div class="player-card" 
+     data-name="PERR SCHUURS" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SPORTING CP" 
+     data-position="CB" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SPORTING CP", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/P. SCHUURS_CARD.png" alt="Perr Schuurs">
+</div>
+
+<div class="player-card" 
+     data-name="LEWIS DUNK" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SPORTING CP" 
+     data-position="CB" 
+     data-value="94" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SPORTING CP", "value": "94", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/L. DUNK_CARD.png" alt="Lewis Dunk">
+</div>
+
+<div class="player-card" 
+     data-name="PEPE" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SS LAZIO" 
+     data-position="CB" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SS LAZIO", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/PEPE_CARD.png" alt="Pepe">
+</div>
+
+<div class="player-card" 
+     data-name="ALESSIO ROMAGNOLI" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="TOTTENHAM HOTSPUR FC" 
+     data-position="CB" 
+     data-value="84" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "TOTTENHAM HOTSPUR FC", "value": "84", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/A. ROMAGNOLI_CARD.png" alt="Alessio Romagnoli">
+</div>
+
+<div class="player-card" 
+     data-name="NICOLÁS OTAMENDI" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="TOTTENHAM HOTSPUR FC" 
+     data-position="CB" 
+     data-value="56" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "TOTTENHAM HOTSPUR FC", "value": "56", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/N. OTAMENDI_CARD.png" alt="Nicolás Otamendi">
+</div>
+
+<div class="player-card" 
+     data-name="WESLEY FOFANA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="TOTTENHAM HOTSPUR FC" 
+     data-position="CB" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "TOTTENHAM HOTSPUR FC", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/W. FOFANA_CARD.png" alt="Wesley Fofana">
+</div>
+
+<div class="player-card" 
+     data-name="LEVI COLWILL" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="VFL WOLFSBURG" 
+     data-position="CB" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "VFL WOLFSBURG", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/L. COLWILL_CARD.png" alt="Levi Colwill">
+</div>
+
+<div class="player-card" 
+     data-name="GUSTAVO GÓMEZ" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="VFL WOLFSBURG" 
+     data-position="CB" 
+     data-value="54" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "VFL WOLFSBURG", "value": "54", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/G. GOMEZ_CARD.png" alt="Gustavo Gómez">
+</div>
+
+<div class="player-card" 
+     data-name="MIKA MÀRMOL" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="VFL WOLFSBURG" 
+     data-position="CB" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "VFL WOLFSBURG", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/M. MARMOL_CARD.png" alt="Mika Mármol">
+</div>
+
+<div class="player-card" 
+     data-name="NATHAN COLLINS" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="VFL WOLFSBURG" 
+     data-position="CB" 
+     data-value="122" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "VFL WOLFSBURG", "value": "122", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/N. COLLINS_CARD.png" alt="Nathan Collins">
+</div>
+
+<div class="player-card" 
+     data-name="ISSA DIOP" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="VFL WOLFSBURG" 
+     data-position="CB" 
+     data-value="82" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "VFL WOLFSBURG", "value": "82", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/I. DIOP_CARD.png" alt="Issa Diop">
+</div>
+
+<div class="player-card" 
+     data-name="ANDREAS CHRISTENSEN" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="WOLVES" 
+     data-position="CB" 
+     data-value="70" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "WOLVES", "value": "70", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/A. CHRISTENSEN_CARD.png" alt="Andreas Christensen">
+</div>
+
+<div class="player-card" 
+     data-name="DIEGO CARLOS" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="WOLVES" 
+     data-position="CB" 
+     data-value="82" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "WOLVES", "value": "82", "apps": "00"}]'>
+    <img src="4 STAR CB CARDS/D. CARLOS_CARD.png" alt="Diego Carlos">
+</div>
+<div class="player-card" 
+     data-name="STEFAN SAVIC" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL HILAL SFC" 
+     data-position="CB" 
+     data-value="40" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL HILAL SFC", "value": "40", "apps": "00"}]'>
+    <img src="3 STAR CB CARDS/S. SAVIC_CARD.png" alt="Stefan Savic">
+</div>
+
+<div class="player-card" 
+     data-name="AMIR RRAHMANI" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL-NASSR FC" 
+     data-position="CB" 
+     data-value="40" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL-NASSR FC", "value": "40", "apps": "00"}]'>
+    <img src="3 STAR CB CARDS/A. RRAHMANI_CARD.png" alt="Amir Rrahmani">
+</div>
+
+<div class="player-card" 
+     data-name="ETHAN PINNOCK" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL-NASSR FC" 
+     data-position="CB" 
+     data-value="48" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL-NASSR FC", "value": "48", "apps": "00"}]'>
+    <img src="3 STAR CB CARDS/E. PINNOCK_CARD.png" alt="Ethan Pinnock">
+</div>
+
+<div class="player-card" 
+     data-name="DALEY BLIND" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="ATLETICO DE MADRID" 
+     data-position="CB" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ATLETICO DE MADRID", "value": "60", "apps": "00"}]'>
+    <img src="3 STAR CB CARDS/D. BLIND_CARD.png" alt="Daley Blind">
+</div>
+
+<div class="player-card" 
+     data-name="SAMUEL UMTITI" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="ATLETICO DE MADRID" 
+     data-position="CB" 
+     data-value="48" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ATLETICO DE MADRID", "value": "48", "apps": "00"}]'>
+    <img src="3 STAR CB CARDS/S. UMTITI_CARD.png" alt="Samuel Umtiti">
+</div>
+
+<div class="player-card" 
+     data-name="RAPHAEL VARANE" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="MOHUN BAGAN AC" 
+     data-position="CB" 
+     data-value="110" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MOHUN BAGAN AC", "value": "110", "apps": "00"}]'>
+    <img src="3 STAR CB CARDS/R. VARANE_CARD.png" alt="Raphael Varane">
+</div>
+
+<div class="player-card" 
+     data-name="ABDULKERIM BARDAKCI" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="RANDERS FC" 
+     data-position="CB" 
+     data-value="44" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RANDERS FC", "value": "44", "apps": "00"}]'>
+    <img src="3 STAR CB CARDS/A. BARDAKCI_CARD.png" alt="Abdulkerim Bardakci">
+</div>
+
+<div class="player-card" 
+     data-name="RAUL ALBIOL" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="RB LEIPZIG" 
+     data-position="CB" 
+     data-value="40" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RB LEIPZIG", "value": "40", "apps": "00"}]'>
+    <img src="3 STAR CB CARDS/R. ALBIOL_CARD.png" alt="Raul Albiol">
+</div>
+
+<div class="player-card" 
+     data-name="BEN MEE" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="RB LEIPZIG" 
+     data-position="CB" 
+     data-value="40" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RB LEIPZIG", "value": "40", "apps": "00"}]'>
+    <img src="3 STAR CB CARDS/B. MEE_CARD.png" alt="Ben Mee">
+</div>
+
+<div class="player-card" 
+     data-name="NACHO" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="RC LENS" 
+     data-position="CB" 
+     data-value="42" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RC LENS", "value": "42", "apps": "00"}]'>
+    <img src="3 STAR CB CARDS/NACHO_CARD.png" alt="Nacho">
+</div>
+
+<div class="player-card" 
+     data-name="LEONARDO SIGALI" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="TOTTENHAM HOTSPUR FC" 
+     data-position="CB" 
+     data-value="42" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "TOTTENHAM HOTSPUR FC", "value": "42", "apps": "00"}]'>
+    <img src="3 STAR CB CARDS/L. SIGALI_CARD.png" alt="Leonardo Sigali">
+</div>
+<div class="player-card" 
+     data-name="ROMARIO" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="AFC AJAX" 
+     data-position="ST" 
+     data-value="150" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AFC AJAX", "value": "150", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/ROMARIO_CARD.png" alt="Romario">
+</div>
+
+<div class="player-card" 
+     data-name="ALESSANDRO DEL PIERO" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="AL-NASSR FC" 
+     data-position="ST" 
+     data-value="184" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL-NASSR FC", "value": "184", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/A. DEL PIERO_CARD.png" alt="Alessandro Del Piero">
+</div>
+
+<div class="player-card" 
+     data-name="FRANCESCO TOTTI" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="AL-NASSR FC" 
+     data-position="ST" 
+     data-value="136" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL-NASSR FC", "value": "136", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/F. TOTTI_CARD.png" alt="Francesco Totti">
+</div>
+
+<div class="player-card" 
+     data-name="MICHAEL OWEN" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="BORUSSIA DORTMUND" 
+     data-position="ST" 
+     data-value="206" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "BORUSSIA DORTMUND", "value": "206", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/M. OWEN_CARD.png" alt="Michael Owen">
+</div>
+
+<div class="player-card" 
+     data-name="RUUD VAN NISTELROOIJ" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="BORUSSIA DORTMUND" 
+     data-position="ST" 
+     data-value="170" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "BORUSSIA DORTMUND", "value": "170", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/VAN NISTELROOIJ_CARD.png" alt="Ruud van Nistelrooij">
+</div>
+
+<div class="player-card" 
+     data-name="DENNIS BERGKAMP" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="CHELSEA FC" 
+     data-position="ST" 
+     data-value="120" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "CHELSEA FC", "value": "120", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/D. BERGKAMP_CARD.png" alt="Dennis Bergkamp">
+</div>
+
+<div class="player-card" 
+     data-name="DIEGO FORLAN" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="CHELSEA FC" 
+     data-position="ST" 
+     data-value="162" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "CHELSEA FC", "value": "162", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/D. FORLAN_CARD.png" alt="Diego Forlan">
+</div>
+
+<div class="player-card" 
+     data-name="SAMUEL ETO" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="CHELSEA FC" 
+     data-position="ST" 
+     data-value="220" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "CHELSEA FC", "value": "220", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/S. ETO_CARD.png" alt="Samuel Eto">
+</div>
+
+<div class="player-card" 
+     data-name="HRISTO STOICHKOV" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="INTER MILAN" 
+     data-position="ST" 
+     data-value="172" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "INTER MILAN", "value": "172", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/H. STOICHKOV_CARD.png" alt="Hristo Stoichkov">
+</div>
+
+<div class="player-card" 
+     data-name="DAVID VILLA" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="NEWCASTLE UNITED FC" 
+     data-position="ST" 
+     data-value="200" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "NEWCASTLE UNITED FC", "value": "200", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/D. VILLA_CARD.png" alt="David Villa">
+</div>
+
+<div class="player-card" 
+     data-name="DENIS LAW" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="RB LEIPZIG" 
+     data-position="ST" 
+     data-value="150" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RB LEIPZIG", "value": "150", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/D. LAW_CARD.png" alt="Denis Law">
+</div>
+
+<div class="player-card" 
+     data-name="GABRIEL BATISTUTA" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="RB LEIPZIG" 
+     data-position="ST" 
+     data-value="110" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RB LEIPZIG", "value": "110", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/G. BATISTUTA_CARD.png" alt="Gabriel Batistuta">
+</div>
+
+<div class="player-card" 
+     data-name="MARCO VAN BASTEN" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="RB LEIPZIG" 
+     data-position="ST" 
+     data-value="320" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RB LEIPZIG", "value": "320", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/VAN BASTEN_CARD.png" alt="Marco van Basten">
+</div>
+
+<div class="player-card" 
+     data-name="HEINZ RUMMENIGGE" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="REAL MADRID" 
+     data-position="ST" 
+     data-value="100" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "REAL MADRID", "value": "100", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/RUMMENIGGE_CARD.png" alt="Heinz Rummenigge">
+</div>
+
+<div class="player-card" 
+     data-name="CLAUDIO PIZARRO" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="RED BULL BRAGANTINO" 
+     data-position="ST" 
+     data-value="214" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RED BULL BRAGANTINO", "value": "214", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/C. PIZARRO_CARD.png" alt="Claudio Pizarro">
+</div>
+
+<div class="player-card" 
+     data-name="JOHAN CRUYFF" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="RED BULL BRAGANTINO" 
+     data-position="ST" 
+     data-value="102" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RED BULL BRAGANTINO", "value": "102", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/J. CRUYFF_CARD.png" alt="Johan Cruyff">
+</div>
+
+<div class="player-card" 
+     data-name="PATRICK KLUIVERT" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="RED BULL BRAGANTINO" 
+     data-position="ST" 
+     data-value="254" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RED BULL BRAGANTINO", "value": "254", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/P. KLUIVERT_CARD.png" alt="Patrick Kluivert">
+</div>
+
+<div class="player-card" 
+     data-name="FERNANDO TORRES" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="SEPAHAN SC" 
+     data-position="ST" 
+     data-value="160" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SEPAHAN SC", "value": "160", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/F. TORRES_CARD.png" alt="Fernando Torres">
+</div>
+
+<div class="player-card" 
+     data-name="DIDIER DROGBA" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="SS LAZIO" 
+     data-position="ST" 
+     data-value="100" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SS LAZIO", "value": "100", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/D. DROGBA_CARD.png" alt="Didier Drogba">
+</div>
+
+<div class="player-card" 
+     data-name="DIEGO MARADONA" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="SS LAZIO" 
+     data-position="ST" 
+     data-value="146" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SS LAZIO", "value": "146", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/D. MARADONA_CARD.png" alt="Diego Maradona">
+</div>
+
+<div class="player-card" 
+     data-name="FERNANDO MORIENTES" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="TOTTENHAM HOTSPUR FC" 
+     data-position="ST" 
+     data-value="100" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "TOTTENHAM HOTSPUR FC", "value": "100", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/F. MORIENTES_CARD.png" alt="Fernando Morientes">
+</div>
+
+<div class="player-card" 
+     data-name="ERIC CANTONA" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="WOLVES" 
+     data-position="ST" 
+     data-value="100" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "WOLVES", "value": "100", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/E. CANTONA_CARD.png" alt="Eric Cantona">
+</div>
+
+<div class="player-card" 
+     data-name="RAUL" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="WOLVES" 
+     data-position="ST" 
+     data-value="146" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "WOLVES", "value": "146", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/RAUL_CARD.png" alt="Raul">
+</div>
+
+<div class="player-card" 
+     data-name="ROY MAKAAY" 
+     data-star="5-star-legend" 
+     data-level="LEGEND" 
+     data-club="WOLVES" 
+     data-position="ST" 
+     data-value="100" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "WOLVES", "value": "100", "apps": "00"}]'>
+    <img src="5 STAR LEGEND ST CARDS/R. MAKAAY_CARD.png" alt="Roy Makaay">
+</div>
+<div class="player-card" 
+     data-name="GIOVANE ELBER" 
+     data-star="4-star-legend" 
+     data-level="LEGEND" 
+     data-club="AC MILAN" 
+     data-position="ST" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AC MILAN", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR LEGEND ST CARDS/G. ELBER_CARD.png" alt="Giovane Elber">
+</div>
+
+<div class="player-card" 
+     data-name="JAN KOLLER" 
+     data-star="4-star-legend" 
+     data-level="LEGEND" 
+     data-club="AL-NASSR FC" 
+     data-position="ST" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL-NASSR FC", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR LEGEND ST CARDS/J. KOLLER_CARD.png" alt="Jan Koller">
+</div>
+
+<div class="player-card" 
+     data-name="ANDY COLE" 
+     data-star="4-star-legend" 
+     data-level="LEGEND" 
+     data-club="ASTON VILLA FC" 
+     data-position="ST" 
+     data-value="128" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ASTON VILLA FC", "value": "128", "apps": "00"}]'>
+    <img src="4 STAR LEGEND ST CARDS/A. COLE_CARD.png" alt="Andy Cole">
+</div>
+
+<div class="player-card" 
+     data-name="FILIPPO INZAGHI" 
+     data-star="4-star-legend" 
+     data-level="LEGEND" 
+     data-club="ASTON VILLA FC" 
+     data-position="ST" 
+     data-value="160" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ASTON VILLA FC", "value": "160", "apps": "00"}]'>
+    <img src="4 STAR LEGEND ST CARDS/F. INZAGHI_CARD.png" alt="Filippo Inzaghi">
+</div>
+
+<div class="player-card" 
+     data-name="DWIGHT YORKE" 
+     data-star="4-star-legend" 
+     data-level="LEGEND" 
+     data-club="FC BAYERN MUNICH" 
+     data-position="ST" 
+     data-value="102" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "FC BAYERN MUNICH", "value": "102", "apps": "00"}]'>
+    <img src="4 STAR LEGEND ST CARDS/D. YORKE_CARD.png" alt="Dwight Yorke">
+</div>
+
+<div class="player-card" 
+     data-name="IVAN ZAMORANO" 
+     data-star="4-star-legend" 
+     data-level="LEGEND" 
+     data-club="FC BAYERN MUNICH" 
+     data-position="ST" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "FC BAYERN MUNICH", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR LEGEND ST CARDS/I. ZAMORANO_CARD.png" alt="Ivan Zamorano">
+</div>
+
+<div class="player-card" 
+     data-name="MARCELO SALAS" 
+     data-star="4-star-legend" 
+     data-level="LEGEND" 
+     data-club="FC BAYERN MUNICH" 
+     data-position="ST" 
+     data-value="62" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "FC BAYERN MUNICH", "value": "62", "apps": "00"}]'>
+    <img src="4 STAR LEGEND ST CARDS/M. SALAS_CARD.png" alt="Marcelo Salas">
+</div>
+
+<div class="player-card" 
+     data-name="ROBBIE KEANE" 
+     data-star="4-star-legend" 
+     data-level="LEGEND" 
+     data-club="WOLVES" 
+     data-position="ST" 
+     data-value="102" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "WOLVES", "value": "102", "apps": "00"}]'>
+    <img src="4 STAR LEGEND ST CARDS/R. KEANE_CARD.png" alt="Robbie Keane">
+</div>
+<div class="player-card" 
+     data-name="NEYMAR JR" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="AFC AJAX" 
+     data-position="ST" 
+     data-value="170" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AFC AJAX", "value": "170", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/NEYMAR JR_CARD.png" alt="Neymar Jr">
+</div>
+
+<div class="player-card" 
+     data-name="SON HEUNG-MIN" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="AFC AJAX" 
+     data-position="ST" 
+     data-value="350" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AFC AJAX", "value": "350", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/SON_CARD.png" alt="Son Heung-Min">
+</div>
+
+<div class="player-card" 
+     data-name="PAULO DYBALA" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL HILAL SFC" 
+     data-position="ST" 
+     data-value="102" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL HILAL SFC", "value": "102", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/P. DYBALA_CARD.png" alt="Paulo Dybala">
+</div>
+
+<div class="player-card" 
+     data-name="KARIM BENZEMA" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL-NASSR FC" 
+     data-position="ST" 
+     data-value="84" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL-NASSR FC", "value": "84", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/K. BENZEMA_CARD.png" alt="Karim Benzema">
+</div>
+
+<div class="player-card" 
+     data-name="ERLING HAALAND" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="ASTON VILLA FC" 
+     data-position="ST" 
+     data-value="350" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ASTON VILLA FC", "value": "350", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/E. HAALAND_CARD.png" alt="Erling Haaland">
+</div>
+
+<div class="player-card" 
+     data-name="KYLIAN MBAPPE" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="CHELSEA FC" 
+     data-position="ST" 
+     data-value="304" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "CHELSEA FC", "value": "304", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/K. MBAPPE_CARD.png" alt="Kylian Mbappe">
+</div>
+
+<div class="player-card" 
+     data-name="LAUTARO MARTINEZ" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="FC PORTO" 
+     data-position="ST" 
+     data-value="230" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "FC PORTO", "value": "230", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/L. MARTINEZ_CARD.png" alt="Lautaro Martinez">
+</div>
+
+<div class="player-card" 
+     data-name="JONATHAN DAVID" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="INTER MILAN" 
+     data-position="ST" 
+     data-value="202" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "INTER MILAN", "value": "202", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/J. DAVID_CARD.png" alt="Jonathan David">
+</div>
+
+<div class="player-card" 
+     data-name="GABRIEL JESUS" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="LIVERPOOL FC" 
+     data-position="ST" 
+     data-value="142" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "LIVERPOOL FC", "value": "142", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/G. JESUS_CARD.png" alt="Gabriel Jesus">
+</div>
+
+<div class="player-card" 
+     data-name="ANTOINE GRIEZMANN" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER CITY" 
+     data-position="ST" 
+     data-value="176" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER CITY", "value": "176", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/GRIEZMANN_CARD.png" alt="Antoine Griezmann">
+</div>  
+<div class="player-card" 
+     data-name="VICTOR OSIMHEN" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER CITY" 
+     data-position="ST" 
+     data-value="198" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER CITY", "value": "198", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/V. OSIMHEN_CARD.png" alt="Victor Osimhen">
+</div>
+
+<div class="player-card" 
+     data-name="DUSAN VLAHOVIC" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="MOHUN BAGAN AC" 
+     data-position="ST" 
+     data-value="138" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MOHUN BAGAN AC", "value": "138", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/D. VLAHOVIC_CARD.png" alt="Dusan Vlahovic">
+</div>
+
+<div class="player-card" 
+     data-name="ALVARO MORATO" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="PARIS SAINT-GERMAIN FC" 
+     data-position="ST" 
+     data-value="130" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "PARIS SAINT-GERMAIN FC", "value": "130", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/A. MORATO_CARD.png" alt="Alvaro Morato">
+</div>
+
+<div class="player-card" 
+     data-name="CRISTIANO RONALDO" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="PARIS SAINT-GERMAIN FC" 
+     data-position="ST" 
+     data-value="210" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "PARIS SAINT-GERMAIN FC", "value": "210", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/C. RONALDO_CARD.png" alt="Cristiano Ronaldo">
+</div>
+
+<div class="player-card" 
+     data-name="JULIAN ALVAREZ" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="PARIS SAINT-GERMAIN FC" 
+     data-position="ST" 
+     data-value="134" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "PARIS SAINT-GERMAIN FC", "value": "134", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/J. ALVAREZ_CARD.png" alt="Julian Alvarez">
+</div>
+
+<div class="player-card" 
+     data-name="ROBERT LEWANDOWSKI" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="PARIS SAINT-GERMAIN FC" 
+     data-position="ST" 
+     data-value="200" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "PARIS SAINT-GERMAIN FC", "value": "200", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/R. LEWANDOWSKI_CARD.png" alt="Robert Lewandowski">
+</div>
+
+<div class="player-card" 
+     data-name="HARRY KANE" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="RANDERS FC" 
+     data-position="ST" 
+     data-value="98" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RANDERS FC", "value": "98", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/H. KANE_CARD.png" alt="Harry Kane">
+</div>
+
+<div class="player-card" 
+     data-name="ALEXANDER ISAK" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="RC LENS" 
+     data-position="ST" 
+     data-value="166" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RC LENS", "value": "166", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/A. ISAK_CARD.png" alt="Alexander Isak">
+</div>
+
+<div class="player-card" 
+     data-name="MARCUS THURAM" 
+     data-star="5-star-standard" 
+     data-level="STANDARD" 
+     data-club="SEPAHAN SC" 
+     data-position="ST" 
+     data-value="180" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SEPAHAN SC", "value": "180", "apps": "00"}]'>
+    <img src="5 STAR ST CARDS/M. THURAM_CARD.png" alt="Marcus Thuram">
+</div>
+
+<div class="player-card" 
+     data-name="EDIN DZEKO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="AFC AJAX" 
+     data-position="ST" 
+     data-value="80" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AFC AJAX", "value": "80", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/E. DZEKO_CARD.png" alt="Edin Dzeko">
+</div>
+
+<div class="player-card" 
+     data-name="EDDIE NKETIAH" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL-NASSR FC" 
+     data-position="ST" 
+     data-value="72" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL-NASSR FC", "value": "72", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/E. NKETIAH_CARD.png" alt="Eddie Nketiah">
+</div>
+
+<div class="player-card" 
+     data-name="CALLUM WILSON" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="ARSENAL FC" 
+     data-position="ST" 
+     data-value="104" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ARSENAL FC", "value": "104", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/C. WILSON_CARD.png" alt="Callum Wilson">
+</div>
+
+<div class="player-card" 
+     data-name="ENDRICK" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="ARSENAL FC" 
+     data-position="ST" 
+     data-value="90" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ARSENAL FC", "value": "90", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/ENDRICK_CARD.png" alt="Endrick">
+</div>
+
+<div class="player-card" 
+     data-name="MIKEL OYARZABAL" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="ARSENAL FC" 
+     data-position="ST" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ARSENAL FC", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/M. OYARZABAL_CARD.png" alt="Mikel Oyarzabal">
+</div>
+
+<div class="player-card" 
+     data-name="RASMUS HOJLUND" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="ARSENAL FC" 
+     data-position="ST" 
+     data-value="108" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ARSENAL FC", "value": "108", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/R. HOJLUND_CARD.png" alt="Rasmus Hojlund">
+</div>
+
+<div class="player-card" 
+     data-name="THOMAS MULLER" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="ARSENAL FC" 
+     data-position="ST" 
+     data-value="66" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ARSENAL FC", "value": "66", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/T. MULLER_CARD.png" alt="Thomas Muller">
+</div>
+
+<div class="player-card" 
+     data-name="RANDAL KOLO MUANI" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="ATLETICO DE MADRID" 
+     data-position="ST" 
+     data-value="86" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ATLETICO DE MADRID", "value": "86", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/R. KOLO MUANI_CARD.png" alt="Randal Kolo Muani">
+</div>
+
+<div class="player-card" 
+     data-name="BRIAN BROBBEY" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="BAYER LEVERKUSEN" 
+     data-position="ST" 
+     data-value="66" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "BAYER LEVERKUSEN", "value": "66", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/B. BROBBEY_CARD.png" alt="Brian Brobbey">
+</div>
+
+<div class="player-card" 
+     data-name="EVANILSON" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="BAYER LEVERKUSEN" 
+     data-position="ST" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "BAYER LEVERKUSEN", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/EVANILSON_CARD.png" alt="Evanilson">
+</div>
+<div class="player-card" 
+     data-name="D. CALVERT-LEWIN" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="BORUSSIA DORTMUND" 
+     data-position="ST" 
+     data-value="58" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "BORUSSIA DORTMUND", "value": "58", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/D. CALVERT-LEWIN_CARD.png" alt="Dominic Calvert-Lewin">
+</div>
+
+<div class="player-card" 
+     data-name="VITOR ROQUE" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="BORUSSIA DORTMUND" 
+     data-position="ST" 
+     data-value="68" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "BORUSSIA DORTMUND", "value": "68", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/V. ROQUE_CARD.png" alt="Vitor Roque">
+</div>
+
+<div class="player-card" 
+     data-name="IVAN TONEY" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="CHELSEA FC" 
+     data-position="ST" 
+     data-value="64" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "CHELSEA FC", "value": "64", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/I. TONEY_CARD.png" alt="Ivan Toney">
+</div>
+
+<div class="player-card" 
+     data-name="J PEDRO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="CHELSEA FC" 
+     data-position="ST" 
+     data-value="40" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "CHELSEA FC", "value": "40", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/J. PEDRO_CARD.png" alt="J Pedro">
+</div>
+
+<div class="player-card" 
+     data-name="RICHARLISON" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="CHELSEA FC" 
+     data-position="ST" 
+     data-value="62" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "CHELSEA FC", "value": "62", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/RICHARLISON_CARD.png" alt="Richarlison">
+</div>
+
+<div class="player-card" 
+     data-name="ARTEM DOVBYK" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="FC PORTO" 
+     data-position="ST" 
+     data-value="118" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "FC PORTO", "value": "118", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/A. DOVBYK_CARD.png" alt="Artem Dovbyk">
+</div>
+
+<div class="player-card" 
+     data-name="NICOLAS JACKSON" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="INTER MILAN" 
+     data-position="ST" 
+     data-value="86" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "INTER MILAN", "value": "86", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/N. JACKSON_CARD.png" alt="Nicolas Jackson">
+</div>
+
+<div class="player-card" 
+     data-name="OLLIE WATKINS" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="INTER MILAN" 
+     data-position="ST" 
+     data-value="150" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "INTER MILAN", "value": "150", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/O. WATKINS_CARD.png" alt="Ollie Watkins">
+</div>
+
+<div class="player-card" 
+     data-name="CHARLES DE KETELAERE" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="LIVERPOOL FC" 
+     data-position="ST" 
+     data-value="90" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "LIVERPOOL FC", "value": "90", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/C. DE KETELAERE_CARD.png" alt="Charles De Ketelaere">
+</div>
+
+<div class="player-card" 
+     data-name="JHON DURAN" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="LIVERPOOL FC" 
+     data-position="ST" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "LIVERPOOL FC", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/J. DURAN_CARD.png" alt="Jhon Duran">
+</div>
+
+<div class="player-card" 
+     data-name="TAMMY ABRAHAM" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="LIVERPOOL FC" 
+     data-position="ST" 
+     data-value="80" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "LIVERPOOL FC", "value": "80", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/T. ABRAHAM_CARD.png" alt="Tammy Abraham">
+</div>
+
+<div class="player-card" 
+     data-name="ALEXANDRE LACAZETTE" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER CITY" 
+     data-position="ST" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER CITY", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/A. LACAZETTE_CARD.png" alt="Alexandre Lacazette">
+</div>
+
+<div class="player-card" 
+     data-name="JOSELU" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER CITY" 
+     data-position="ST" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER CITY", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/JOSELU_CARD.png" alt="Joselu">
+</div>
+
+<div class="player-card" 
+     data-name="MAURO ICARDI" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER CITY" 
+     data-position="ST" 
+     data-value="52" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER CITY", "value": "52", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/M. ICARDI_CARD.png" alt="Mauro Icardi">
+</div>
+
+<div class="player-card" 
+     data-name="OLIVER GIROUD" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MANCHESTER CITY" 
+     data-position="ST" 
+     data-value="62" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MANCHESTER CITY", "value": "62", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/O. GIROUD_CARD.png" alt="Oliver Giroud">
+</div>
+
+<div class="player-card" 
+     data-name="FOLARIN BALOGUN" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MOHUN BAGAN AC" 
+     data-position="ST" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MOHUN BAGAN AC", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/F. BALOGUN_CARD.png" alt="Folarin Balogun">
+</div>
+
+<div class="player-card" 
+     data-name="JOSHUA ZIRKZEE" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MOHUN BAGAN AC" 
+     data-position="ST" 
+     data-value="76" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MOHUN BAGAN AC", "value": "76", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/J. ZIRKZEE_CARD.png" alt="Joshua Zirkzee">
+</div>
+
+<div class="player-card" 
+     data-name="ROMELU LUKAKU" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="MOHUN BAGAN AC" 
+     data-position="ST" 
+     data-value="62" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MOHUN BAGAN AC", "value": "62", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/R. LUKAKU_CARD.png" alt="Romelu Lukaku">
+</div>
+
+<div class="player-card" 
+     data-name="ADEMOLA LOOKMAN" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="NEWCASTLE UNITED FC" 
+     data-position="ST" 
+     data-value="162" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "NEWCASTLE UNITED FC", "value": "162", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/A. LOOKMAN_CARD.png" alt="Ademola Lookman">
+</div>
+
+<div class="player-card" 
+     data-name="LOIS OPENDA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="NEWCASTLE UNITED FC" 
+     data-position="ST" 
+     data-value="70" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "NEWCASTLE UNITED FC", "value": "70", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/L. OPENDA_CARD.png" alt="Lois Openda">
+</div>
+<div class="player-card" 
+     data-name="RAFA SILVA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="NEWCASTLE UNITED FC" 
+     data-position="ST" 
+     data-value="88" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "NEWCASTLE UNITED FC", "value": "88", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/R. SILVA_CARD.png" alt="Rafa Silva">
+</div>
+
+<div class="player-card" 
+     data-name="BORJA MAYORAL" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RANDERS FC" 
+     data-position="ST" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RANDERS FC", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/B. MAYORAL_CARD.png" alt="Borja Mayoral">
+</div>
+
+<div class="player-card" 
+     data-name="MEHDI TAREMI" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RANDERS FC" 
+     data-position="ST" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RANDERS FC", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/M. TAREMI_CARD.png" alt="Mehdi Taremi">
+</div>
+
+<div class="player-card" 
+     data-name="NOAH OKAFOR" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RC LENS" 
+     data-position="ST" 
+     data-value="110" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RC LENS", "value": "110", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/N. OKAFOR_CARD.png" alt="Noah Okafor">
+</div>
+
+<div class="player-card" 
+     data-name="YOUSSEF EN NESYRI" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RC LENS" 
+     data-position="ST" 
+     data-value="70" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RC LENS", "value": "70", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/Y. EN NESYRI_CARD.png" alt="Youssef En Nesyri">
+</div>
+
+<div class="player-card" 
+     data-name="MATHEUS CUNHA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="RED BULL BRAGANTINO" 
+     data-position="ST" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RED BULL BRAGANTINO", "value": "60", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/M. CUNHA_CARD.png" alt="Matheus Cunha">
+</div>
+
+<div class="player-card" 
+     data-name="ELYE WAHI" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SEPAHAN SC" 
+     data-position="ST" 
+     data-value="76" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SEPAHAN SC", "value": "76", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/E. WAHI_CARD.png" alt="Elye Wahi">
+</div>
+
+<div class="player-card" 
+     data-name="ALBERT GUDMUNDSSON" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SPORTING CP" 
+     data-position="ST" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SPORTING CP", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/A. GUDMUNDSSON_CARD.png" alt="Albert Gudmundsson">
+</div>
+
+<div class="player-card" 
+     data-name="ALEXANDER SORLOTH" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SPORTING CP" 
+     data-position="ST" 
+     data-value="104" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SPORTING CP", "value": "104", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/A. SORLOTH_CARD.png" alt="Alexander Sorloth">
+</div>
+
+<div class="player-card" 
+     data-name="DARWIN NUNEZ" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SPORTING CP" 
+     data-position="ST" 
+     data-value="134" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SPORTING CP", "value": "134", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/D. NUNEZ_CARD.png" alt="Darwin Nunez">
+</div>
+
+<div class="player-card" 
+     data-name="GONCALO RAMOS" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SPORTING CP" 
+     data-position="ST" 
+     data-value="84" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SPORTING CP", "value": "84", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/G. RAMOS_CARD.png" alt="Goncalo Ramos">
+</div>
+
+<div class="player-card" 
+     data-name="JEAN-PHILIPPE MATETA" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SPORTING CP" 
+     data-position="ST" 
+     data-value="52" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SPORTING CP", "value": "52", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/JEAN-PHILIPPE MATETA_CARD.PNG" alt="Jean-Philippe Mateta">
+</div>
+
+<div class="player-card" 
+     data-name="VIKTOR GYOKERES" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SPORTING CP" 
+     data-position="ST" 
+     data-value="104" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SPORTING CP", "value": "104", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/V. GYOKERES_CARD.png" alt="Viktor Gyokeres">
+</div>
+
+<div class="player-card" 
+     data-name="YOUSSOUFA MOUKOKO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SPORTING CP" 
+     data-position="ST" 
+     data-value="58" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SPORTING CP", "value": "58", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/MOUKOKO_CARD.png" alt="Youssoufa Moukoko">
+</div>
+
+<div class="player-card" 
+     data-name="CODY GAKPO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SS LAZIO" 
+     data-position="ST" 
+     data-value="94" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SS LAZIO", "value": "94", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/C. GAKPO_CARD.png" alt="Cody Gakpo">
+</div>
+
+<div class="player-card" 
+     data-name="MATHYS TEL" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="SS LAZIO" 
+     data-position="ST" 
+     data-value="102" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SS LAZIO", "value": "102", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/M. TEL_CARD.png" alt="Mathys Tel">
+</div>
+
+<div class="player-card" 
+     data-name="CIRO IMMOBILE" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="TOTTENHAM HOTSPUR FC" 
+     data-position="ST" 
+     data-value="70" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "TOTTENHAM HOTSPUR FC", "value": "70", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/C. IMMOBILE_CARD.png" alt="Ciro Immobile">
+</div>
+
+<div class="player-card" 
+     data-name="JAO PEDRO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="TOTTENHAM HOTSPUR FC" 
+     data-position="ST" 
+     data-value="68" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "TOTTENHAM HOTSPUR FC", "value": "68", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/J. PEDRO_CARD.png" alt="Jao Pedro">
+</div>
+
+<div class="player-card" 
+     data-name="GERARD DEULOFEU" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="VFL WOLFSBERG" 
+     data-position="ST" 
+     data-value="50" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "VFL WOLFSBERG", "value": "50", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/G. DEULOFEU_CARD.png" alt="Gerard Deulofeu">
+</div>
+
+<div class="player-card" 
+     data-name="DOMINIC SOLANKE" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="VFL WOLFSBURG" 
+     data-position="ST" 
+     data-value="70" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "VFL WOLFSBURG", "value": "70", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/D. SOLANKE_CARD.png" alt="Dominic Solanke">
+</div>
+
+<div class="player-card" 
+     data-name="MEMPHIS DEPAY" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="VFL WOLFSBURG" 
+     data-position="ST" 
+     data-value="56" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "VFL WOLFSBURG", "value": "56", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/M. DEPAY_CARD.png" alt="Memphis Depay">
+</div>
+
+<div class="player-card" 
+     data-name="PATRIK SCHICK" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="VFL WOLFSBURG" 
+     data-position="ST" 
+     data-value="54" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "VFL WOLFSBURG", "value": "54", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/P. SCHICK_CARD.png" alt="Patrik Schick">
+</div>
+
+<div class="player-card" 
+     data-name="GERARD MORENO" 
+     data-star="4-star-standard" 
+     data-level="STANDARD" 
+     data-club="WOLVES" 
+     data-position="ST" 
+     data-value="80" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "WOLVES", "value": "80", "apps": "00"}]'>
+    <img src="4 STAR ST CARDS/G. MORENO_CARD.png" alt="Gerard Moreno">
+</div>
+<div class="player-card" 
+     data-name="ALEXIS SANCHEZ" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="AL HILAL SFC" 
+     data-position="ST" 
+     data-value="40" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "AL HILAL SFC", "value": "40", "apps": "00"}]'>
+    <img src="3 STAR ST CARDS/A. SANCHEZ_CARD.png" alt="Alexis Sanchez">
+</div>
+
+<div class="player-card" 
+     data-name="SARDAR AZMOUN" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="ARSENAL FC" 
+     data-position="ST" 
+     data-value="44" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ARSENAL FC", "value": "44", "apps": "00"}]'>
+    <img src="3 STAR ST CARDS/S. AZMOUN_CARD.png" alt="Sardar Azmoun">
+</div>
+
+<div class="player-card" 
+     data-name="TEREM MOFFI" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="ARSENAL FC" 
+     data-position="ST" 
+     data-value="40" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ARSENAL FC", "value": "40", "apps": "00"}]'>
+    <img src="3 STAR ST CARDS/T. MOFFI_CARD.png" alt="Terem Moffi">
+</div>
+
+<div class="player-card" 
+     data-name="BREEL EMBOLO" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="ATLETICO DE MADRID" 
+     data-position="ST" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ATLETICO DE MADRID", "value": "60", "apps": "00"}]'>
+    <img src="3 STAR ST CARDS/B. EMBOLO_CARD.png" alt="Breel Embolo">
+</div>
+
+<div class="player-card" 
+     data-name="HUGO EKITIKE" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="ATLETICO DE MADRID" 
+     data-position="ST" 
+     data-value="44" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "ATLETICO DE MADRID", "value": "44", "apps": "00"}]'>
+    <img src="3 STAR ST CARDS/H. EKITIKE_CARD.png" alt="Hugo Ekitike">
+</div>
+
+<div class="player-card" 
+     data-name="MIKAEL UHRE" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="BAYER LEVERKUSEN" 
+     data-position="ST" 
+     data-value="40" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "BAYER LEVERKUSEN", "value": "40", "apps": "00"}]'>
+    <img src="3 STAR ST CARDS/M. UHRE_CARD.png" alt="Mikael Uhre">
+</div>
+
+<div class="player-card" 
+     data-name="ARNAUT DANJUMA" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="BORUSSIA DORTMUND" 
+     data-position="ST" 
+     data-value="70" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "BORUSSIA DORTMUND", "value": "70", "apps": "00"}]'>
+    <img src="3 STAR ST CARDS/A. DANJUMA_CARD.png" alt="Arnaut Danjuma">
+</div>
+
+<div class="player-card" 
+     data-name="AYASE UEDA" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="LIVERPOOL FC" 
+     data-position="ST" 
+     data-value="52" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "LIVERPOOL FC", "value": "52", "apps": "00"}]'>
+    <img src="3 STAR ST CARDS/A. UEDA_CARD.png" alt="Ayase Ueda">
+</div>
+
+<div class="player-card" 
+     data-name="BETO" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="MOHUN BAGAN AC" 
+     data-position="ST" 
+     data-value="78" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "MOHUN BAGAN AC", "value": "78", "apps": "00"}]'>
+    <img src="3 STAR ST CARDS/BETO_CARD.png" alt="Beto">
+</div>
+
+<div class="player-card" 
+     data-name="PATSON DAKA" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="NEWCASTLE UNITED FC" 
+     data-position="ST" 
+     data-value="52" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "NEWCASTLE UNITED FC", "value": "52", "apps": "00"}]'>
+    <img src="3 STAR ST CARDS/P. DAKA_CARD.png" alt="Patson Daka">
+</div>
+
+<div class="player-card" 
+     data-name="LUKA JOVIC" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="RANDERS FC" 
+     data-position="ST" 
+     data-value="44" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RANDERS FC", "value": "44", "apps": "00"}]'>
+    <img src="3 STAR ST CARDS/L. JOVIC_CARD.png" alt="Luka Jovic">
+</div>
+
+<div class="player-card" 
+     data-name="TIMO WERNER" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="RB LEIPZIG" 
+     data-position="ST" 
+     data-value="100" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RB LEIPZIG", "value": "100", "apps": "00"}]'>
+    <img src="3 STAR ST CARDS/T. WERNER_CARD.png" alt="Timo Werner">
+</div>
+
+<div class="player-card" 
+     data-name="PIERRE AUBAMEYANG" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="RC LENS" 
+     data-position="ST" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "RC LENS", "value": "60", "apps": "00"}]'>
+    <img src="3 STAR ST CARDS/AUBAMEYANG_CARD.png" alt="Pierre Aubameyang">
+</div>
+
+<div class="player-card" 
+     data-name="MICHAIL ANTONIO" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="SEPAHAN SC" 
+     data-position="ST" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "SEPAHAN SC", "value": "60", "apps": "00"}]'>
+    <img src="3 STAR ST CARDS/M. ANTONIO_CARD.png" alt="Michail Antonio">
+</div>
+
+<div class="player-card" 
+     data-name="GIOVANNI SIMEONE" 
+     data-star="3-star-standard" 
+     data-level="STANDARD" 
+     data-club="VFL WOLFSBURG" 
+     data-position="ST" 
+     data-value="60" 
+     data-games-played="00" 
+     data-stats='[{"season": "0-0", "team": "VFL WOLFSBURG", "value": "60", "apps": "00"}]'>
+    <img src="3 STAR ST CARDS/G. SIMEONE_CARD.png" alt="Giovanni Simeone">
+</div>
+
+
+        </div>
+        
+
+        <!-- Filters Section -->
+        <div class="filters">
+            <h2>Filters</h2>
+            <!-- Custom Dropdown for Star Filter -->
+    <label for="star">Card Type:</label>
+    <div class="custom-dropdown" id="starDropdown">
+        <div class="selected-option" data-value="all">All</div>
+                <i class="dropdown-icon fa fa-chevron-down"></i> 
+                <div class="dropdown-options">
+                    <div class="dropdown-item" data-value="all">All</div>
+                    <div class="dropdown-item" data-value="3-star-standard">
+                        <img src="4STAR.png" alt="3 Star Standard"> 3 Star Standard
+                    </div>
+                    <div class="dropdown-item" data-value="4-star-standard">
+                        <img src="4STAR.png" alt="4 Star Standard"> 4 Star Standard
+                    </div>
+                    <div class="dropdown-item" data-value="5-star-standard">
+                        <img src="5STAR.png" alt="5 Star Standard"> 5 Star Standard
+                    </div>
+                    <div class="dropdown-item" data-value="4-star-legend">
+                        <img src="3STARLEGEND.png" alt="4 Star Legend"> 4 Star Legend
+                    </div>
+                    <div class="dropdown-item" data-value="5-star-legend">
+                        <img src="5STARLEGEND.png" alt="5 Star Legend"> 5 Star Legend
+                    </div>
+                </div>
+    </div>
+            <label for="club">Club:</label>
+            <div class="custom-dropdown" id="clubDropdown">
+                <div class="selected-option">All</div>
+                <i class="dropdown-icon fa fa-chevron-down"></i>
+                <div class="dropdown-options">
+                    <div class="dropdown-item" data-value="ALL">All</div>
+                    <div class="dropdown-item" data-value="AC MILAN">
+                        <img src="club/AC Milan.png" alt=""> AC Milan
+                    </div>
+                    <div class="dropdown-item" data-value="AFC AJAX">
+                        <img src="club/AFC Ajax.png" alt=""> AFC Ajax
+                    </div>
+                    <div class="dropdown-item" data-value="AL HILAL SFC">
+                        <img src="club/Al Hilal SFC.png" alt=""> Al Hilal SFC
+                    </div>
+                    <div class="dropdown-item" data-value="AL-NASSR FC">
+                        <img src="club/Al-Nassr FC.png" alt=""> Al-Nassr FC
+                    </div>
+                    <div class="dropdown-item" data-value="ARSENAL FC">
+                        <img src="club/Arsenal FC.png" alt=""> Arsenal FC
+                    </div>
+                    <div class="dropdown-item" data-value="ASTON VILLA FC">
+                        <img src="club/Aston Villa FC.png" alt=""> Aston Villa FC
+                    </div>
+                    <div class="dropdown-item" data-value="ATLETICO DE MADRID">
+                        <img src="club/Atletico de Madrid.png" alt=""> Atletico de Madrid
+                    </div>
+                    <div class="dropdown-item" data-value="BAYER LEVERKUSEN">
+                        <img src="club/Bayer Leverkusen.png" alt=""> Bayer Leverkusen
+                    </div>
+                    <div class="dropdown-item" data-value="BORUSSIA DORTMUND">
+                        <img src="club/Borussia Dortmund.png" alt=""> Borussia Dortmund
+                    </div>
+                    <div class="dropdown-item" data-value="CHELSEA FC">
+                        <img src="club/Chelsea FC.png" alt=""> Chelsea FC
+                    </div>
+                    <div class="dropdown-item" data-value="FC BARCELONA">
+                        <img src="club/FC Barcelona.png" alt=""> FC Barcelona
+                    </div>
+                    <div class="dropdown-item" data-value="FC BAYERN MUNICH">
+                        <img src="club/FC Bayern Munich.png" alt=""> FC Bayern Munich
+                    </div>
+                    <div class="dropdown-item" data-value="FC PORTO">
+                        <img src="club/FC Porto.png" alt=""> FC Porto
+                    </div>
+                    <div class="dropdown-item" data-value="INTER MILAN">
+                        <img src="club/Inter Milan.png" alt=""> Inter Milan
+                    </div>
+                    <div class="dropdown-item" data-value="LIVERPOOL FC">
+                        <img src="club/Liverpool FC.png" alt=""> Liverpool FC
+                    </div>
+                    <div class="dropdown-item" data-value="LOSC LILLE">
+                        <img src="club/LOSC Lille.png" alt=""> LOSC Lille
+                    </div>
+                    <div class="dropdown-item" data-value="MANCHESTER CITY">
+                        <img src="club/Manchester City FC.png" alt=""> Manchester City FC
+                    </div>
+                    <div class="dropdown-item" data-value="MANCHESTER UNITED">
+                        <img src="club/Manchester United FC.png" alt=""> Manchester United FC
+                    </div>
+                    <div class="dropdown-item" data-value="MOHUN BAGAN AC">
+                        <img src="club/Mohun Bagan AC.png" alt=""> Mohun Bagan AC
+                    </div>
+                    <div class="dropdown-item" data-value="NEWCASTLE UNITED FC">
+                        <img src="club/Newcastle United FC.png" alt=""> Newcastle United FC
+                    </div>
+                    <div class="dropdown-item" data-value="PARIS SAINT-GERMAIN">
+                        <img src="club/Paris Saint-Germain FC.png" alt=""> Paris Saint-Germain FC
+                    </div>
+                    <div class="dropdown-item" data-value="RANDERS FC">
+                        <img src="club/Randers FC.png" alt=""> Randers FC
+                    </div>
+                    <div class="dropdown-item" data-value="RB LEIPZIG">
+                        <img src="club/RB Leipzig.png" alt=""> RB Leipzig
+                    </div>
+                    <div class="dropdown-item" data-value="RC LENS">
+                        <img src="club/RC Lens.png" alt=""> RC Lens
+                    </div>
+                    <div class="dropdown-item" data-value="REAL MADRID CF">
+                        <img src="club/Real Madrid CF.png" alt=""> Real Madrid CF
+                    </div>
+                    <div class="dropdown-item" data-value="RED BULL BRAGANTINO">
+                        <img src="club/Red Bull Bragantino.png" alt=""> Red Bull Bragantino
+                    </div>
+                    <div class="dropdown-item" data-value="SEPAHAN SC">
+                        <img src="club/Sepahan SC.png" alt=""> Sepahan SC
+                    </div>
+                    <div class="dropdown-item" data-value="SPORTING CP">
+                        <img src="club/Sporting CP.png" alt=""> Sporting CP
+                    </div>
+                    <div class="dropdown-item" data-value="SS LAZIO">
+                        <img src="club/SS Lazio.png" alt=""> SS Lazio
+                    </div>
+                    <div class="dropdown-item" data-value="TOTTENHAM HOTSPUR FC">
+                        <img src="club/Tottenham Hotspur FC.png" alt=""> Tottenham Hotspur FC
+                    </div>
+                    <div class="dropdown-item" data-value="VFL WOLFSBURG">
+                        <img src="club/VfL Wolfsburg.png" alt=""> VfL Wolfsburg
+                    </div>
+                    <div class="dropdown-item" data-value="WOLVES">
+                        <img src="club/Wolves.png" alt=""> Wolves
+                    </div>
+                </div>
+            </div>
+            
+            <hr>
+            <div class="search-positions">
+                <div class="search-positions-header">
+                Position:
+               </div>
+            <a href="Javascript:;" class="search-button.b" data-btn-type="search-positions.b" data-btn-var=""></a>
+            <a href="Javascript:;" class="search-button" data-btn-type="search-positions" data-btn-var="gk">GK</a>
+            <a href="Javascript:;" class="search-button.b" data-btn-type="search-positions" data-btn-var=""></a>
+            <a href="Javascript:;" class="search-button" data-btn-type="search-positions" data-btn-var="lb">LB</a>
+            <a href="Javascript:;" class="search-button" data-btn-type="search-positions" data-btn-var="cb">CB</a>
+            <a href="Javascript:;" class="search-button" data-btn-type="search-positions" data-btn-var="rb">RB</a>
+            <a href="Javascript:;" class="search-button" data-btn-type="search-positions" data-btn-var="cm">CM</a>
+            <a href="Javascript:;" class="search-button" data-btn-type="search-positions" data-btn-var="cam">AM</a>
+            <a href="Javascript:;" class="search-button" data-btn-type="search-positions" data-btn-var="dm">DM</a>
+            <a href="Javascript:;" class="search-button" data-btn-type="search-positions" data-btn-var="lw">LW</a>
+            <a href="Javascript:;" class="search-button" data-btn-type="search-positions" data-btn-var="st">ST</a>
+            <a href="Javascript:;" class="search-button" data-btn-type="search-positions" data-btn-var="rw">RW</a>
+            </div>
+            <div class="filter-buttons">
+                <button class="apply-button" onclick="filterPlayers()">Apply</button>
+                <button class="reset-button" onclick="resetFilters()">Reset</button>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div id="playerModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalPlayerName">Player Name</h2>
+            <img id="modalPlayerPhoto" src="" alt="Player Photo" style="width:100%; height:auto; border-radius:10px; margin-bottom:20px;">
+    
+            <!-- Additional Player Information -->
+            <p><strong>Club:</strong> <span id="modalPlayerClub"></span></p>
+            <p><strong>Star Rating:</strong> <span id="modalPlayerLevel"></span></p>
+            <p><strong>Position:</strong> <span id="modalPlayerPosition"></span></p>
+            <p><strong>Games Played:</strong> <span id="modalPlayerGames"></span></p>    
+            <!-- Player Stats Table -->
+            <table id="playerStatsTable">
+                <thead>
+                    <tr>
+                        <th>Season</th>
+                        <th>Team</th>
+                        <th>Value</th>
+                        <th>Apps</th>
+                    </tr>
+                </thead>
+                <tbody id="modalPlayerDetails">
+                    <!-- Dynamic rows will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+
+
+<!-- Modal for Filters (on mobile/tablets) -->
+<div id="filterModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeFilterModal()">&times;</span>
+        <h2>Search Filters</h2>
+
+        <!-- Custom Dropdown for Star Filter in Modal -->
+        <div class="filter-group">
+            <label for="modal-star">Card Type:</label>
+            <div class="custom-dropdown" id="modalStarDropdown">
+                <div class="selected-option" data-value="all">All</div>
+                <i class="dropdown-icon fa fa-chevron-down"></i> 
+                <div class="dropdown-options">
+                    <div class="dropdown-item" data-value="all">All</div>
+                    <div class="dropdown-item" data-value="3-star-standard">
+                        <img src="4STAR.png" alt="3 Star Standard"> 3 Star Standard
+                    </div>
+                    <div class="dropdown-item" data-value="4-star-standard">
+                        <img src="4STAR.png" alt="4 Star Standard"> 4 Star Standard
+                    </div>
+                    <div class="dropdown-item" data-value="5-star-standard">
+                        <img src="5STAR.png" alt="5 Star Standard"> 5 Star Standard
+                    </div>
+                    <div class="dropdown-item" data-value="4-star-legend">
+                        <img src="3STARLEGEND.png" alt="4 Star Legend"> 4 Star Legend
+                    </div>
+                    <div class="dropdown-item" data-value="5-star-legend">
+                        <img src="5STARLEGEND.png" alt="5 Star Legend"> 5 Star Legend
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Dropdown for Club Filter in Modal -->
+            <label for="modal-club">Club:</label>
+            <div class="custom-dropdown" id="modalClubDropdown">
+                <div class="selected-option">All</div>
+                <i class="dropdown-icon fa fa-chevron-down"></i>
+                <div class="dropdown-options">
+                    <div class="dropdown-item" data-value="ALL">All</div>
+                    <div class="dropdown-item" data-value="AC MILAN">
+                        <img src="club/AC Milan.png" alt=""> AC Milan
+                    </div>
+                    <div class="dropdown-item" data-value="AFC AJAX">
+                        <img src="club/AFC Ajax.png" alt=""> AFC Ajax
+                    </div>
+                    <div class="dropdown-item" data-value="AL HILAL SFC">
+                        <img src="club/Al Hilal SFC.png" alt=""> Al Hilal SFC
+                    </div>
+                    <div class="dropdown-item" data-value="AL-NASSR FC">
+                        <img src="club/Al-Nassr FC.png" alt=""> Al-Nassr FC
+                    </div>
+                    <div class="dropdown-item" data-value="ARSENAL FC">
+                        <img src="club/Arsenal FC.png" alt=""> Arsenal FC
+                    </div>
+                    <div class="dropdown-item" data-value="ASTON VILLA FC">
+                        <img src="club/Aston Villa FC.png" alt=""> Aston Villa FC
+                    </div>
+                    <div class="dropdown-item" data-value="ATLETICO DE MADRID">
+                        <img src="club/Atletico de Madrid.png" alt=""> Atletico de Madrid
+                    </div>
+                    <div class="dropdown-item" data-value="BAYER LEVERKUSEN">
+                        <img src="club/Bayer Leverkusen.png" alt=""> Bayer Leverkusen
+                    </div>
+                    <div class="dropdown-item" data-value="BORUSSIA DORTMUND">
+                        <img src="club/Borussia Dortmund.png" alt=""> Borussia Dortmund
+                    </div>
+                    <div class="dropdown-item" data-value="CHELSEA FC">
+                        <img src="club/Chelsea FC.png" alt=""> Chelsea FC
+                    </div>
+                    <div class="dropdown-item" data-value="FC BARCELONA">
+                        <img src="club/FC Barcelona.png" alt=""> FC Barcelona
+                    </div>
+                    <div class="dropdown-item" data-value="FC BAYERN MUNICH">
+                        <img src="club/FC Bayern Munich.png" alt=""> FC Bayern Munich
+                    </div>
+                    <div class="dropdown-item" data-value="FC PORTO">
+                        <img src="club/FC Porto.png" alt=""> FC Porto
+                    </div>
+                    <div class="dropdown-item" data-value="INTER MILAN">
+                        <img src="club/Inter Milan.png" alt=""> Inter Milan
+                    </div>
+                    <div class="dropdown-item" data-value="LIVERPOOL FC">
+                        <img src="club/Liverpool FC.png" alt=""> Liverpool FC
+                    </div>
+                    <div class="dropdown-item" data-value="LOSC LILLE">
+                        <img src="club/LOSC Lille.png" alt=""> LOSC Lille
+                    </div>
+                    <div class="dropdown-item" data-value="MANCHESTER CITY">
+                        <img src="club/Manchester City FC.png" alt=""> Manchester City FC
+                    </div>
+                    <div class="dropdown-item" data-value="MANCHESTER UNITED">
+                        <img src="club/Manchester United FC.png" alt=""> Manchester United FC
+                    </div>
+                    <div class="dropdown-item" data-value="MOHUN BAGAN AC">
+                        <img src="club/Mohun Bagan AC.png" alt=""> Mohun Bagan AC
+                    </div>
+                    <div class="dropdown-item" data-value="NEWCASTLE UNITED FC">
+                        <img src="club/Newcastle United FC.png" alt=""> Newcastle United FC
+                    </div>
+                    <div class="dropdown-item" data-value="PARIS SAINT-GERMAIN">
+                        <img src="club/Paris Saint-Germain FC.png" alt=""> Paris Saint-Germain FC
+                    </div>
+                    <div class="dropdown-item" data-value="RANDERS FC">
+                        <img src="club/Randers FC.png" alt=""> Randers FC
+                    </div>
+                    <div class="dropdown-item" data-value="RB LEIPZIG">
+                        <img src="club/RB Leipzig.png" alt=""> RB Leipzig
+                    </div>
+                    <div class="dropdown-item" data-value="RC LENS">
+                        <img src="club/RC Lens.png" alt=""> RC Lens
+                    </div>
+                    <div class="dropdown-item" data-value="REAL MADRID CF">
+                        <img src="club/Real Madrid CF.png" alt=""> Real Madrid CF
+                    </div>
+                    <div class="dropdown-item" data-value="RED BULL BRAGANTINO">
+                        <img src="club/Red Bull Bragantino.png" alt=""> Red Bull Bragantino
+                    </div>
+                    <div class="dropdown-item" data-value="SEPAHAN SC">
+                        <img src="club/Sepahan SC.png" alt=""> Sepahan SC
+                    </div>
+                    <div class="dropdown-item" data-value="SPORTING CP">
+                        <img src="club/Sporting CP.png" alt=""> Sporting CP
+                    </div>
+                    <div class="dropdown-item" data-value="SS LAZIO">
+                        <img src="club/SS Lazio.png" alt=""> SS Lazio
+                    </div>
+                    <div class="dropdown-item" data-value="TOTTENHAM HOTSPUR FC">
+                        <img src="club/Tottenham Hotspur FC.png" alt=""> Tottenham Hotspur FC
+                    </div>
+                    <div class="dropdown-item" data-value="VFL WOLFSBURG">
+                        <img src="club/VfL Wolfsburg.png" alt=""> VfL Wolfsburg
+                    </div>
+                    <div class="dropdown-item" data-value="WOLVES">
+                        <img src="club/Wolves.png" alt=""> Wolves
+                    </div>
+                </div>
+            </div>            
+        </div>
+
+            <div class="search-positions">
+            <div class="search-positions-header">
+            Position
+            </div>
+            <a href="Javascript:;" class="search-button.b" data-btn-type="search-positions.b" data-btn-var=""></a>
+            <a href="Javascript:;" class="search-button gk" data-btn-type="search-positions" data-btn-var="gk">GK</a>
+            <a href="Javascript:;" class="search-button.b" data-btn-type="search-positions" data-btn-var=""></a>
+            <a href="Javascript:;" class="search-button lb" data-btn-type="search-positions" data-btn-var="lb">LB</a>
+            <a href="Javascript:;" class="search-button cb" data-btn-type="search-positions" data-btn-var="cb">CB</a>
+            <a href="Javascript:;" class="search-button rb" data-btn-type="search-positions" data-btn-var="rb">RB</a>
+            <a href="Javascript:;" class="search-button cm" data-btn-type="search-positions" data-btn-var="cm">CM</a>
+            <a href="Javascript:;" class="search-button am" data-btn-type="search-positions" data-btn-var="am">AM</a>
+            <a href="Javascript:;" class="search-button dm" data-btn-type="search-positions" data-btn-var="dm">DM</a>
+            <a href="Javascript:;" class="search-button lw" data-btn-type="search-positions" data-btn-var="lw">LW</a>
+            <a href="Javascript:;" class="search-button st" data-btn-type="search-positions" data-btn-var="st">ST</a>
+            <a href="Javascript:;" class="search-button rw" data-btn-type="search-positions" data-btn-var="rw">RW</a>
+            </div>
+            
+        <div class="filter-buttons">
+            <button class="apply-button" onclick="applyModalFilters()">Apply Filters</button>
+            <button class="reset-button" onclick="resetModalFilters()">Reset Filters</button>
+        </div>
+    </div>
+</div>
+<div class="pagination">
+    <button class="prev-button" onclick="prevPage()">Previous</button>
+    <span id="page-info">Page 1</span>
+    <button class="next-button" onclick="nextPage()">Next</button>
+</div>
+
+    <script>
+
+window.onload = function() {
+    const messages = [
+        "Welcome to R2G Player Data",
+        "Loading Data...",
+        "Ready to Explore Players?"
+    ];
+    let messageIndex = 0;
+
+    // Cycle through messages every 1.5 seconds
+    const messageInterval = setInterval(function() {
+        messageIndex++;
+        if (messageIndex < messages.length) {
+            document.getElementById("dynamic-message").textContent = messages[messageIndex];
+        } else {
+            clearInterval(messageInterval); // Stop the interval once all messages have been shown
+        }
+    }, 1500);
+
+    // Add a 4-second delay before hiding the welcome message and showing content
+    setTimeout(function() {
+        document.getElementById('loading').style.display = 'none';  // Hide the welcome screen
+        document.getElementById('content').style.display = 'block';  // Show the main content
+    }, 4000);  // 4000 milliseconds = 4 seconds
+    resetFilters();
+    resetModalFilters(); // Reset the filters when the page loads
+    sortPlayers();  // Sort players when the page loads
+};
+document.addEventListener('DOMContentLoaded', function() {
+    // Select the "Next" and "Previous" buttons based on their classes or IDs
+    const nextButton = document.querySelector('.next-button'); // Change this selector to match your actual button class or ID
+    const prevButton = document.querySelector('.prev-button'); // Change this selector to match your actual button class or ID
+
+    // Scroll to the top when the "Next" button is clicked
+    if (nextButton) {
+        nextButton.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default navigation (for testing)
+            
+            // Simulate page loading content and then scroll to top
+            setTimeout(function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' }); // Smooth scroll to the top
+            }, 0.00000001); // Adjust delay if needed
+        });
+    }
+
+    // Scroll to the top when the "Previous" button is clicked
+    if (prevButton) {
+        prevButton.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default navigation (for testing)
+            
+            // Simulate page loading content and then scroll to top
+            setTimeout(function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' }); // Smooth scroll to the top
+            }, 0.0000001); // Adjust delay if needed
+        });
+    }
+});
+        // Custom order for positions
+const positionOrder = ['gk', 'cb', 'lb', 'rb', 'dm', 'cm', 'am', 'lw', 'rw', 'st'];
+
+// Function to sort players by custom position order and then by name
+function sortPlayers() {
+    const playersContainer = document.querySelector('.player-cards');
+    const players = Array.from(playersContainer.children);
+
+    players.sort((a, b) => {
+        const nameA = a.getAttribute('data-name').toLowerCase();
+        const nameB = b.getAttribute('data-name').toLowerCase();
+        const positionA = a.getAttribute('data-position').toLowerCase();
+        const positionB = b.getAttribute('data-position').toLowerCase();
+        const positionIndexA = positionOrder.indexOf(positionA);
+        const positionIndexB = positionOrder.indexOf(positionB);
+        if (positionIndexA === -1) {
+            // If position is not in the custom order, treat it as the lowest priority
+            return 1;
+        }
+        if (positionIndexB === -1) {
+            // If position is not in the custom order, treat it as the lowest priority
+            return -1;
+        }
+        if (positionIndexA !== positionIndexB) {
+            return positionIndexA - positionIndexB;
+        }
+        return nameA.localeCompare(nameB);
+        });
+
+    // Re-append sorted players to the container
+    players.forEach(player => playersContainer.appendChild(player));
+}
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Function to initialize dropdowns
+            function setupDropdown(dropdownId) {
+                const customDropdown = document.getElementById(dropdownId);
+                const selectedOption = customDropdown.querySelector('.selected-option');
+                const dropdownOptions = customDropdown.querySelector('.dropdown-options');
+        
+                // Toggle the dropdown display
+                selectedOption.addEventListener('click', () => {
+                    dropdownOptions.style.display = dropdownOptions.style.display === 'block' ? 'none' : 'block';
+                });
+        
+                // Use event delegation for the dropdown options
+                dropdownOptions.addEventListener('click', (event) => {
+                    const item = event.target.closest('.dropdown-item');
+                    if (item) {
+                        selectedOption.innerHTML = item.innerHTML;
+                        selectedOption.setAttribute('data-value', item.getAttribute('data-value'));
+                        dropdownOptions.style.display = 'none';
+                    }
+                });
+                
+        
+                // Close the dropdown if clicked outside
+                document.addEventListener('click', (event) => {
+                    if (!customDropdown.contains(event.target)) {
+                        dropdownOptions.style.display = 'none';
+                    }
+                });
+            }
+        
+            // Initialize both main filter and modal dropdowns
+            setupDropdown('starDropdown');
+            setupDropdown('clubDropdown');
+            setupDropdown('modalStarDropdown');
+            setupDropdown('modalClubDropdown');
+        });
+         // Event listener for player card clicks
+         document.querySelectorAll('.player-card').forEach(card => {
+            card.addEventListener('click', function() {
+                openModal(this); // Call openModal with the clicked player card
+            });
+        });
+// Function to hide the filter button
+function hideFilterButton() {
+    document.querySelector('.filter-btn').style.display = 'none';
+}
+
+// Function to show the filter button
+function showFilterButton() {
+    document.querySelector('.filter-btn').style.display = 'block';
+}
+
+// Open the filter modal and hide the filter button
+function openFilterModal() {
+    document.getElementById('filterModal').style.display = 'block';
+    hideFilterButton();  // Hide filter button when modal is opened
+}
+
+// Close the filter modal and show the filter button
+function closeFilterModal() {
+    document.getElementById('filterModal').style.display = 'none';
+    showFilterButton();  // Show filter button when modal is closed
+}
+
+// Open the player modal and hide the filter button
+function openModal(card) {
+    const name = card.getAttribute('data-name');
+    const photoSrc = card.querySelector('img').src;
+    const club = card.getAttribute('data-club');
+    const level = card.getAttribute('data-level');
+    const position = card.getAttribute('data-position');
+    const gamesPlayed = card.getAttribute('data-games-played');
+    
+    // Parse stats from the JSON-like data-stats attribute
+    const stats = JSON.parse(card.getAttribute('data-stats'));
+
+    // Set modal content for basic info
+    document.getElementById('modalPlayerName').textContent = name;
+    document.getElementById('modalPlayerPhoto').src = photoSrc;
+    document.getElementById('modalPlayerClub').textContent = club;
+    document.getElementById('modalPlayerLevel').textContent = level;
+    document.getElementById('modalPlayerPosition').textContent = position;
+    document.getElementById('modalPlayerGames').textContent = `${gamesPlayed}`;
+    
+    // Clear the previous table rows
+    const tableBody = document.getElementById('modalPlayerDetails');
+    tableBody.innerHTML = '';
+
+    // Populate the playerStatsTable with the player's individual stats
+    stats.forEach(stat => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${stat.season}</td>
+            <td>${stat.team}</td>
+            <td>${stat.value}</td>
+            <td>${stat.apps}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+
+    // Show the modal
+    const modal = document.getElementById('playerModal');
+    modal.style.display = "block";
+    hideFilterButton();  // Hide filter button when player modal is opened
+}
+
+// Close the player modal and show the filter button
+function closeModal() {
+    const modal = document.getElementById('playerModal');
+    modal.style.display = "none";
+    showFilterButton();  // Show filter button when player modal is closed
+}
+
+       // Open the filter modal and hide the filter button
+function openFilterModal() {
+    document.getElementById('filterModal').style.display = 'block';
+    hideFilterButton();  // Hide filter button when modal is opened
+}
+
+// Close the filter modal and check if the filter button can be shown
+function closeFilterModal() {
+    document.getElementById('filterModal').style.display = 'none';
+    showFilterButton();  // Show filter button if no other modals are open
+}
+
+        function applyModalFilters() {
+            const modalStar = document.querySelector('#modalStarDropdown .selected-option').getAttribute('data-value');
+            const modalClub = document.querySelector('#modalClubDropdown .selected-option').getAttribute('data-value');
+        
+            // Set the main filters to match modal selections
+            document.querySelector('#starDropdown .selected-option').innerHTML = modalStar === "all" ? "All" : modalStar;
+            document.querySelector('#starDropdown .selected-option').setAttribute('data-value', modalStar);
+            document.querySelector('#clubDropdown .selected-option').innerHTML = modalClub === "all" ? "All" : modalClub;
+            document.querySelector('#clubDropdown .selected-option').setAttribute('data-value', modalClub);
+        
+            filterPlayers(); // Apply the filters
+            closeFilterModal(); // Close the modal
+        }
+        function resetModalFilters() {
+            // Reset star and club filters to "All"
+            document.querySelector('#modalStarDropdown .selected-option').innerHTML = "All";
+            document.querySelector('#modalStarDropdown .selected-option').setAttribute('data-value', "all");
+            document.querySelector('#modalClubDropdown .selected-option').innerHTML = "All";
+            document.querySelector('#modalClubDropdown .selected-option').setAttribute('data-value', "all");
+        
+            // Clear selected positions
+            selectedPositions = [];
+            document.querySelectorAll('.search-positions a').forEach(button => {
+                button.classList.remove('selected');
+            });
+        
+            // Reset the player filtering
+            applyModalFilters();
+        
+            // Sort players after resetting filters
+            sortPlayers();
+        
+            // Reapply pagination
+            currentPage = 1;  // Reset to the first page
+            displayPage(currentPage);  // Call the displayPage function to show paginated cards
+        }
+let filteredPlayersGlobal = []; // Global array to store filtered players
+let currentPage = 1;
+const itemsPerPage = 24;
+        // Filtering logic
+        document.getElementById('search-bar').addEventListener('input', filterPlayers);
+
+// Function to filter players based on search query and selected filters
+function filterPlayers() {
+    const searchQuery = document.getElementById('search-bar').value.toLowerCase();
+    const star = document.querySelector('#starDropdown .selected-option').getAttribute('data-value').toLowerCase();
+    const club = document.querySelector('#clubDropdown .selected-option').getAttribute('data-value').toLowerCase();
+
+    const players = document.querySelectorAll('.player-card');
+    filteredPlayersGlobal = []; // Reset global filtered players array
+
+    players.forEach(player => {
+        const name = player.getAttribute('data-name').toLowerCase();
+        const playerStar = player.getAttribute('data-star').toLowerCase(); // Check the star rating of the player
+        const playerClub = player.getAttribute('data-club').toLowerCase();
+        const playerPosition = player.getAttribute('data-position').toLowerCase();
+
+        // Apply filtering logic
+        const matchesSearch = name.includes(searchQuery);
+        const matchesStar = star === "all" || playerStar.includes(star);  // Ensure we filter only by the selected star
+        const matchesClub = club === "all" || playerClub.includes(club);
+        const matchesPosition = selectedPositions.length === 0 || selectedPositions.includes(playerPosition);
+
+        // If player matches all criteria, add to the global filtered array
+        if (matchesSearch && matchesStar && matchesClub && matchesPosition) {
+            filteredPlayersGlobal.push(player);
+        }
+    });
+
+    // Reset to the first page and display filtered players
+    currentPage = 1;
+    displayFilteredPage(currentPage);
+}
+
+// Function to display filtered players with pagination
+function displayFilteredPage(page) {
+    const totalItems = filteredPlayersGlobal.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    // Ensure the current page is within valid range
+    if (page < 1) page = 1;
+    if (page > totalPages) page = totalPages;
+
+    // Hide all players initially
+    document.querySelectorAll('.player-card').forEach(player => {
+        player.style.display = 'none';
+    });
+
+    // Calculate start and end indices for the current page
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = page * itemsPerPage;
+
+    // Show only the players within the current page range
+    filteredPlayersGlobal.forEach((player, index) => {
+        if (index >= startIndex && index < endIndex) {
+            player.style.display = 'block'; // Show the players on the current page
+        }
+    });
+
+    // Update pagination information
+    document.getElementById('page-info').textContent = `Page ${page} of ${totalPages}`;
+    
+    // Update button states
+    document.querySelector('.prev-button').disabled = page === 1;
+    document.querySelector('.next-button').disabled = page === totalPages;
+
+    currentPage = page; // Update current page
+}
+
+// Pagination handlers
+function prevPage() {
+    if (currentPage > 1) {
+        displayFilteredPage(currentPage - 1);
+    }
+}
+
+function nextPage() {
+    const totalItems = filteredPlayersGlobal.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    if (currentPage < totalPages) {
+        displayFilteredPage(currentPage + 1);
+    }
+}
+
+// Call filterPlayers() on search or filter change
+document.getElementById('search-bar').addEventListener('input', filterPlayers);
+document.querySelector('.apply-button').addEventListener('click', filterPlayers);
+let selectedPositions = []; // Array to store selected positions
+let modalSelectedPositions = [];
+document.querySelectorAll('.search-positions a').forEach(button => {
+    button.addEventListener('click', function() {
+        const position = this.getAttribute('data-btn-var');
+
+        // Toggle selection
+        if (selectedPositions.includes(position)) {
+            selectedPositions = selectedPositions.filter(pos => pos !== position);
+            this.classList.remove('selected');
+        } else {
+            selectedPositions.push(position);
+            this.classList.add('selected');
+        }
+    });
+});
+document.querySelectorAll('#filterModal .search-positions a').forEach(button => {
+    button.addEventListener('click', function() {
+        const position = this.getAttribute('data-btn-var');
+
+        // Toggle selection for modal
+        if (modalSelectedPositions.includes(position)) {
+            modalSelectedPositions = modalSelectedPositions.filter(pos => pos !== position);
+            this.classList.remove('selected');
+        } else {
+            modalSelectedPositions.push(position);
+            this.classList.add('selected');
+        }
+    });
+});     
+function resetFilters() {
+    // Clear the search bar
+    document.getElementById('search-bar').value = "";
+
+    // Reset star and club filters to "All"
+    document.querySelector('#starDropdown .selected-option').innerHTML = "All";
+    document.querySelector('#starDropdown .selected-option').setAttribute('data-value', "all");
+    document.querySelector('#clubDropdown .selected-option').innerHTML = "All";
+    document.querySelector('#clubDropdown .selected-option').setAttribute('data-value', "all");
+
+    // Clear selected positions
+    selectedPositions = [];
+    document.querySelectorAll('.search-positions a').forEach(button => {
+        button.classList.remove('selected');
+    });
+
+    // Reset the player filtering
+    filterPlayers();
+
+    // Sort players after resetting filters
+    sortPlayers();
+
+    // Reapply pagination
+    currentPage = 1;  // Reset to the first page
+    displayPage(currentPage);  // Call the displayPage function to show paginated cards
+}
+
+function displayPage(page) {
+    const players = document.querySelectorAll('.player-card');
+    const totalItems = players.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    // Ensure the current page is within valid range
+    if (page < 1) page = 1;
+    if (page > totalPages) page = totalPages;
+
+    // Hide all player cards initially
+    players.forEach((player, index) => {
+        player.style.display = 'none';
+
+        // Calculate start and end indices for the current page
+        const startIndex = (page - 1) * itemsPerPage;
+        const endIndex = page * itemsPerPage;
+
+        // Display only the cards that fall within the current page range
+        if (index >= startIndex && index < endIndex) {
+            player.style.display = 'block';
+        }
+    });
+
+    // Update page info
+    document.getElementById('page-info').textContent = `Page ${page} of ${totalPages}`;
+
+    // Update button states
+    document.querySelector('.prev-button').disabled = page === 1;
+    document.querySelector('.next-button').disabled = page === totalPages;
+
+    currentPage = page;
+}
+
+
+// Initial display
+displayPage(1);
+
+        
+
+    </script>
+
+</body>
+</html>
