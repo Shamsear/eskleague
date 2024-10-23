@@ -4667,6 +4667,13 @@ window.onload = function() {
     resetModalFilters(); // Reset the filters when the page loads
     sortPlayers();  // Sort players when the page loads
 };
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        document.getElementById('loading').style.display = 'none';  // Hide loading screen
+        document.getElementById('content').style.display = 'block'; // Show main content
+    }, 1500); // Adjust this time to match your reduced animation duration
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     // Select the "Next" and "Previous" buttons based on their classes or IDs
     const nextButton = document.querySelector('.next-button'); // Change this selector to match your actual button class or ID
