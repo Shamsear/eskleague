@@ -4656,13 +4656,13 @@ window.onload = function() {
         } else {
             clearInterval(messageInterval); // Stop the interval once all messages have been shown
         }
-    }, 1500);
+    }, 1000);
 
     // Add a 4-second delay before hiding the welcome message and showing content
     setTimeout(function() {
         document.getElementById('loading').style.display = 'none';  // Hide the welcome screen
         document.getElementById('content').style.display = 'block';  // Show the main content
-    }, 4000);  // 4000 milliseconds = 4 seconds
+    }, 2000);  // 4000 milliseconds = 4 seconds
     resetFilters();
     resetModalFilters(); // Reset the filters when the page loads
     sortPlayers();  // Sort players when the page loads
