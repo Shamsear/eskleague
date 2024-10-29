@@ -17,6 +17,9 @@
             color: #e3e3e3;
             margin: 0;
             padding: 0;
+            user-select: none; /* Standard property */
+            -webkit-user-select: none; /* Safari */
+            -ms-user-select: none; /* Internet Explorer/Edge */
         }
         /* Welcome screen styles */
         #loading {
@@ -12189,6 +12192,12 @@ window.onload = function() {
     resetModalFilters(); // Reset the filters when the page loads
     sortPlayers();  // Sort players when the page loads
 };
+document.addEventListener('contextmenu', function(event) {
+    event.preventDefault();
+});
+document.addEventListener('selectstart', function(event) {
+    event.preventDefault();
+});
 function normalizeText(text) {
     // Normalize the text to NFD (Normalization Form Decomposition) and remove diacritics
     return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
