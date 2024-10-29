@@ -6330,11 +6330,11 @@
      data-name="WILFRED NDIDI" 
      data-star="3-star-standard"  
      data-level="STANDARD"  
-     data-club="AL-NASSR FC" 
+     data-club="WOLVES" 
      data-position="CM" 
      data-value="40" 
      data-games-played="00" 
-     data-stats='[{"season": "4-6", "team": "AL-NASSR FC", "value": "40 RC", "apps": "00"}]'>
+     data-stats='[{"season": "4-6", "team": "WOLVES", "value": "40 RC", "apps": "00"}]'>
     <img src="3 STAR CM CARDS/W. NDIDI_CARD.webp" alt="Wilfred Ndidi" loading="lazy"> 
 </div>
 
@@ -11644,11 +11644,11 @@
     data-name="ERIC CHOUPO MOTING" 
     data-star="3-star-standard"  
     data-level="STANDARD"  
-    data-club="AL NASSR" 
+    data-club="AL-NASSR FC" 
     data-position="ST" 
     data-value="40" 
     data-games-played="00" 
-    data-stats='[{"season": "4-6", "team": "AL NASSR", "value": "40", "apps": "00"}]'>
+    data-stats='[{"season": "4-6", "team": "AL-NASSR FC", "value": "40", "apps": "00"}]'>
     <img src="3 STAR ST CARDS/E. CHOUPO-MOTING_CARD.webp" alt="Eric Choupo Moting" loading="lazy"> 
 </div>
 
@@ -11740,11 +11740,11 @@
     data-name="ROBERTO FIRMINO" 
     data-star="3-star-standard"  
     data-level="STANDARD"  
-    data-club="AL NASSR" 
+    data-club="AL-NASSR FC" 
     data-position="ST" 
     data-value="40" 
     data-games-played="00" 
-    data-stats='[{"season": "4-6", "team": "AL NASSR", "value": "40", "apps": "00"}]'>
+    data-stats='[{"season": "4-6", "team": "AL-NASSR FC", "value": "40", "apps": "00"}]'>
     <img src="3 STAR ST CARDS/R. FIRMINO_CARD.webp" alt="Roberto Firmino" loading="lazy"> 
 </div>
 
@@ -11845,7 +11845,7 @@
                         <img src="club/Al Hilal SFC.webp" alt=""> Al Hilal SFC
                     </div>
                     <div class="dropdown-item" data-value="AL-NASSR FC">
-                        <img src="club/Al-Nassr FC.webp" alt=""> Al-Nassr FC
+                        <img src="club/AL-NASSR FC.webp" alt=""> Al-Nassr FC
                     </div>
                     <div class="dropdown-item" data-value="ARSENAL FC">
                         <img src="club/Arsenal FC.webp" alt=""> Arsenal FC
@@ -12043,7 +12043,7 @@
                         <img src="club/Al Hilal SFC.webp" alt=""> Al Hilal SFC
                     </div>
                     <div class="dropdown-item" data-value="AL-NASSR FC">
-                        <img src="club/Al-Nassr FC.webp" alt=""> Al-Nassr FC
+                        <img src="club/AL-NASSR FC.webp" alt=""> Al-Nassr FC
                     </div>
                     <div class="dropdown-item" data-value="ARSENAL FC">
                         <img src="club/Arsenal FC.webp" alt=""> Arsenal FC
@@ -12433,8 +12433,20 @@ function closeFilterModal() {
 let filteredPlayersGlobal = []; // Global array to store filtered players
 let currentPage = 1;
 const itemsPerPage = 24;
-        // Filtering logic
-        document.getElementById('search-bar').addEventListener('input', filterPlayers);
+document.getElementById("search-bar").addEventListener("input", function() {
+    const searchQuery = this.value.toLowerCase();
+    const playerCards = document.querySelectorAll(".player-card");
+
+    playerCards.forEach(card => {
+        const playerName = card.getAttribute("data-name").toLowerCase();
+        if (card.style.display !== "none" && playerName.includes(searchQuery)) {
+            card.style.display = ""; // Show the card if it matches the search and is visible
+        } else {
+            card.style.display = "none"; // Hide if it doesn't match or isn't part of the filtered set
+        }
+    });
+});
+
 // Existing search function
 function searchPlayers() {
     const searchInput = document.getElementById("search-bar").value;
@@ -12538,6 +12550,58 @@ function nextPage() {
         displayFilteredPage(currentPage + 1);
     }
 }
+// Save filter selections to local storage
+function saveFilters() {
+    const selectedFilters = {
+        star: document.querySelector('#star-filter')?.value || '',
+        position: document.querySelector('#position-filter')?.value || '',
+        club: document.querySelector('#club-filter')?.value || '',
+        // Add more filters as necessary
+    };
+    localStorage.setItem('playerFilters', JSON.stringify(selectedFilters));
+}
+
+// Save the search query separately in local storage
+function saveSearchQuery() {
+    const searchQuery = document.querySelector('#search-bar')?.value || '';
+    localStorage.setItem('playerSearchQuery', searchQuery);
+}
+
+// Apply saved filters and search query on page load or refresh
+function applySavedSettings() {
+    const savedFilters = JSON.parse(localStorage.getItem('playerFilters'));
+    const savedSearchQuery = localStorage.getItem('playerSearchQuery') || '';
+
+    // Apply filters
+    if (savedFilters) {
+        if (savedFilters.star && document.querySelector('#star-filter')) {
+            document.querySelector('#star-filter').value = savedFilters.star;
+        }
+        if (savedFilters.position && document.querySelector('#position-filter')) {
+            document.querySelector('#position-filter').value = savedFilters.position;
+        }
+        if (savedFilters.club && document.querySelector('#club-filter')) {
+            document.querySelector('#club-filter').value = savedFilters.club;
+        }
+        // Add more filters as necessary
+    }
+
+    // Apply search query
+    if (savedSearchQuery && document.querySelector('#search-bar')) {
+        document.querySelector('#search-bar').value = savedSearchQuery;
+    }
+}
+
+// Event listener to save filters when they are changed
+document.querySelectorAll('.filter-select').forEach(select => {
+    select.addEventListener('change', saveFilters);
+});
+
+// Event listener to save search query when the search bar input changes
+document.querySelector('#search-bar')?.addEventListener('input', saveSearchQuery);
+
+// Apply saved filters and search query on page load
+document.addEventListener('DOMContentLoaded', applySavedSettings);
 
 // Call filterPlayers() on search or filter change
 document.getElementById('search-bar').addEventListener('input', filterPlayers);
