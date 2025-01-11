@@ -5,7 +5,7 @@
 
     <head>
 
-        <title>MANAGER RANKING</title>
+        <title>CAREER MODE CLUBS</title>
 
 
 
@@ -190,22 +190,50 @@
                                                                             align-items: center;
                                                                             height: 10vh;
                                                                         }
-
+                                                                        h1{
+                                                                            font-size: 60px;
+                                                                            font-weight: bold; /* Make the text bold */
+                                                                            color: white; /* Main text color */
+                                                                            text-shadow: 
+                                                                                -2px -2px 0 #000,  
+                                                                                2px -2px 0 #000,  
+                                                                                -2px 2px 0 #000,  
+                                                                                2px 2px 0 #000,
+                                                                                2px 0px 0 #000,  
+                                                                                0px 2px 0 #000,  
+                                                                                -2px 0px 0 #000,  
+                                                                                0px -2px 0 #000; /* Black outline */
+                                                                        }
                                                                         /* Style the black box */
                                                                         .black-box {
-                                                                            background-color: black;
+                                                                            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black background */
                                                                             padding: 10px;
                                                                             margin: 9px;
-                                                                            border: 2px solid black;
+                                                                            border: 0px solid black;
                                                                             width: 212px;
                                                                             text-align: center;
                                                                             margin-left: 21px;
+                                                                            color: white; /* Ensure text is visible */
+                                                                        }
+                                                                        
+                                                                        @media screen and (max-width: 750px) {
+                                                                            @media screen and (max-width: 480px) {
+                                                                                ul.moze-gallery li {
+                                                                                    margin-bottom: 5px;
+                                                                                    margin-left: 15px;
+                                                                                    margin-right: 0px;
+                                                                                    width: 46%;
+                                                                                    padding-top: 24%;
+                                                                                }
+                                                                            }
                                                                         }
 
                                                                         /* Style the "CLUBS" heading inside the black box */
                                                                         .black-box h1 {
                                                                             color: white; /* Set the text color to white or any color you prefer */
                                                                             font-size: 2rem; /* Adjust the font size as needed */
+                                                                            font-weight: bold;
+                                                                            color: #ffffff;
                                                                         }
 
                                                                         /* Make the heading responsive for different screens */
@@ -214,12 +242,7 @@
                                                                                 font-size: 3rem; /* Adjust the font size for larger screens */
                                                                             }
                                                                         }
-                                                                        ul.moze-gallery li, ul.moze-gallery li:nth-child(n), ul.moze-gallery li.ui-sortable-helper ~ li:nth-child(n) {
-                                                                            width: 96%;
-                                                                            margin: 0 3.8% 30.8% 0;
-                                                                            margin-left: 8px;
-                                                                            padding-bottom: 25%;
-                                                                        }
+
                                                                         h2 {
                                                                             text-decoration: underline; /* Add an underline */
                                                                             text-decoration-color: white; /* Set the underline color to white */
@@ -245,6 +268,23 @@
                                                                             box-sizing: border-box;
                                                                             min-width: 300px;
                                                                         }
+                                                                    }
+                                                                    @media (max-width: 768px) {
+                                                                        nav.mz_menu {
+                                                                            display: none;
+                                                                        }
+                                                                    }  
+                                                                    @media screen and (max-width: 750px) {
+                                                                        @media screen and (max-width: 480px) {
+                                                                            ul.moze-gallery li {
+                                                                                margin-bottom: 5px;
+                                                                                margin-left: 15px;
+                                                                                margin-right: 0px;
+                                                                                width: 46%;
+                                                                                padding-top: 24%;
+                                                                            }
+                                                                        }
+                                                                    }
                                                         @media screen and (max-width: 1024px) {                     #menu > ul > li > a {
                                                                                 font-family : Montserrat, Arial, Helvetica, sans-serif;
                                                                                                             font-weight : 400;
@@ -305,53 +345,43 @@
 <a class="moze-banner-slide-left" href="javascript:void(0);"></a>
 <a class="moze-banner-slide-right" href="javascript:void(0);"></a>
 
-</div>
 <div id="bigbar-colorizer"></div>
 </div>
-
-                <div id="bigbar-container">
-                    <div id="bigbar-overlay">
-                        <div id="bigbar-centerpiece">
-                            <div class="bigbar-h1"><div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
-                                MANAGER RANKING
-                        </div>
-                        </div></div>
-                                  
-                        </div></div>
+<header id="top" class="frontpage over-bigbar legacy-sticky-menu">
+    
+        </div>
+    </div>
+    <div id="bigbar-container">
+        <div id="bigbar-overlay">
+            <div id="bigbar-centerpiece">
+                <div class="bigbar-h1"><div class="mz_component mz_wysiwyg mz_editable">    <div class="moze-wysiwyg-editor" >
+                            REGISTERED CLUBS
+                    </div>
+                    </div></div>
+                              
+                    </div></div>
                                         
-                        <nav class="mz_component mz_menu" id="menu">
+                    <nav class="mz_component mz_menu" id="menu">
+                        <ul>
+                            <li class="selected"><a href="/home.html">HOME</a></li>
+                            <li><a href="/auction.html">TOURNAMENT GUIDE</a></li>
+                            <li><a href="carhome.html">CAREER MODE</a>
                             <ul>
-                                <li class="selected"><a href="/home.html">HOME</a></li>
-                                <li><a href="/auction.html">TOURNAMENT GUIDE</a></li>
-                                <li><a href="carhome.html">CAREER MODE</a>
-                                <ul>
-                                    <li><a href="/career.html">REGISTERED CLUBS</a></li>
-                                    <li><a href="https://1drv.ms/x/s!Al82cgGcN1PEpnyCiAJNS9YXQpGQ?e=rI7oce">AUCTION DATA</a></li>
-                                    <li><a href="https://1drv.ms/x/s!Al82cgGcN1PEpn6612xvHz2ksboe?e=4fx0yz">MANAGER'S DATA</a></li>
-                                    <li><a href="/mode.html">CAREER TOURNAMENTS</a></li>
-                                </ul>
-                            </li>
-                                <li><a href="/trophy.html">TROPHY CABINET</a></li>
+                                <li><a href="/career.html">REGISTERED CLUBS</a></li>
+                                <li><a href="https://1drv.ms/x/s!Al82cgGcN1PEpnyCiAJNS9YXQpGQ?e=rI7oce">AUCTION DATA</a></li>
+                                <li><a href="https://1drv.ms/x/s!Al82cgGcN1PEpn6612xvHz2ksboe?e=4fx0yz">MANAGER'S DATA</a></li>
+                                <li><a href="/mode.html">CAREER TOURNAMENTS</a></li>
                             </ul>
-                        </nav>
-                        <a id="bigbar-down" href="#belowfold">&nbsp;</a>
-</div>
-</div>
-</div>
-</header>
-<div id="belowfold">
-    <div id="wrap">
-        
-
-
-
-            
-
-    
-
-            <div class="section-bigimg-colorizer section-bg-none" style="opacity: 0; display: block"></div>
-    
-</div>                                                                        
+                        </li>
+                            <li><a href="/trophy.html">TROPHY CABINET</a></li>
+                        </ul>
+                    </nav>
+                        
+                        </div>
+                    </div>
+                </div>
+            </header>
+                                                
 <div class="section section-customizable section-bg-1 section-text-color-1 section-height-s section-width-"
      data-row-id="9147359"
      data-row-slice="gallery"
@@ -361,8 +391,27 @@
     <!-- slice-gallery -->
 
     <div class="container">
-
-
+        <div class="textbox">
+            <div class="mz_component mz_wysiwyg mz_editable">
+                <div class="moze-wysiwyg-editor">
+                    <!-- Black box containing the heading -->
+                    <div class="centered-box">
+                        <div class="black-box">
+                            <h1 class="moze-center">CLUBS</h1>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="textbox season-heading">
+                <div class="mz_component mz_wysiwyg mz_editable">
+                    <div class="moze-wysiwyg-editor">
+                        <h2 class="moze-center" style="fontsize:10px ">SEASON 1</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -370,7 +419,7 @@
             <div class="column-12-12">
                 <div class="mz_component mz_gallery">
     <ul class="moze-gallery pictures">
-        <li>
+                    <li>
             <img src="m1.jpg" alt="">
             <a class="moze-gallery-overlay" href="m1.jpg" data-fancybox="gallery_77174911" data-caption="" title="">
                 <div class="title"><span></span></div>
@@ -562,7 +611,7 @@
                 <div class="title"><span></span></div>
             </a>
         </li>
-                            </ul>
+                        </ul>
                     
             
             
