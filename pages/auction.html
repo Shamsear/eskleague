@@ -9,7 +9,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+        <meta name="theme-color" content="#000000">
 
         <link href="https://dss4hwpyv4qfp.cloudfront.net/designs/_shared/fonts/?family=Roboto+Condensed:300,400,700|Open+Sans:300,regular,italic,700&subset=latin,latin-ext,cyrillic" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" href="https://dss4hwpyv4qfp.cloudfront.net/designs/_shared/css/layout-shared.css?v=2.0384" type="text/css" />
@@ -146,16 +146,8 @@
                                                                         h1{
                                                                             font-size: 60px;
                                                                             font-weight: bold; /* Make the text bold */
-                                                                            color: white; /* Main text color */
-                                                                            text-shadow: 
-                                                                                -2px -2px 0 #000,  
-                                                                                2px -2px 0 #000,  
-                                                                                -2px 2px 0 #000,  
-                                                                                2px 2px 0 #000,
-                                                                                2px 0px 0 #000,  
-                                                                                0px 2px 0 #000,  
-                                                                                -2px 0px 0 #000,  
-                                                                                0px -2px 0 #000; /* Black outline */
+                                                                            color: #333333; /* Changed from white to a dark gray */
+                                                                            text-shadow: none; /* Removed text shadow for better readability */
                                                                         }
                                                                     
                                                         @media screen and (max-width: 750px) {                     .bigbar-h2 .mz_wysiwyg {
@@ -174,7 +166,7 @@
                                                                         /* Style for the first list item */
                                                                         .custom-bullet-q::before {
                                                                             content: "Q:"; /* Use "Q" as a custom bullet */
-                                                                            color: red; /* Set the text color to red */
+                                                                            color: #333333; /* Changed from white to a dark gray */
                                                                             font-weight: bold; /* Optionally, make the letter bold */
                                                                             margin-right: 5px; /* Add some space between "Q" and text */
                                                                         }
@@ -183,13 +175,13 @@
                                                                         /* Style for the second list item */
                                                                         .custom-bullet-ans::before {
                                                                             content: "Ans:"; /* Use "Ans:" as a custom bullet */
-                                                                            color: red; /* Set the text color to red */
+                                                                            color: #333333; /* Changed from white to a dark gray */
                                                                             font-weight: bold; /* Optionally, make the text bold */
                                                                             margin-right: 5px; /* Add some space between "Ans:" and text */
                                                                         }
                                                                         .custom-bullet-q::before {
                                                                             content: "Q:"; /* Use a custom bullet character */
-                                                                            color: red;
+                                                                            color: #333333;
                                                                             font-weight: bold;
                                                                             margin-right: 5px;
                                                                         }
@@ -200,7 +192,7 @@
                                                                         }
                                                                         .custom-bullet-ag::before {
                                                                             content: "♤"; /* Use a custom bullet character */
-                                                                            color: red;
+                                                                            color: #333333;
                                                                             font-weight: bold;
                                                                             margin-right: 5px;
                                                                         }
@@ -229,7 +221,7 @@
                                                                         .mz_editable {
                                                                             font-family: 'Open Sans';
                                                                             font-size: 19px;
-                                                                            color: white;
+                                                                            color: #333333; /* Changed from white to a dark gray */
                                                                             line-height: 1.0;
                                                                         }
                                                                         #menu {
@@ -309,6 +301,479 @@
             });
 
         </script>
+
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <style>
+            :root {
+                --primary-color: #ff1744;
+                --accent-color: #d50000;
+                --text-color: #333333;
+                --bg-color: #f5f5f5;
+                --card-bg: #ffffff;
+                --header-height: 60px;
+                --transition-speed: 0.3s;
+                --border-radius: 12px;
+                --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                --card-padding: 20px;
+                --section-spacing: 30px;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Montserrat', sans-serif;
+                line-height: 1.6;
+                color: var(--text-color);
+                background-color: var(--bg-color);
+                padding-top: var(--header-height);
+            }
+
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: var(--header-height);
+                background: var(--card-bg);
+                box-shadow: var(--box-shadow);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 20px;
+                z-index: 1000;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+                font-weight: 700;
+                color: var(--primary-color);
+                text-decoration: none;
+            }
+
+            .nav-toggle {
+                border: none;
+                background: none;
+                color: var(--text-color);
+                font-size: 1.5rem;
+                cursor: pointer;
+                padding: 10px;
+            }
+
+            .nav {
+                position: fixed;
+                top: var(--header-height);
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - var(--header-height));
+                background: var(--card-bg);
+                transition: var(--transition-speed);
+                padding: 20px;
+                overflow-y: auto;
+                box-shadow: var(--box-shadow);
+            }
+
+            .nav.active {
+                left: 0;
+            }
+
+            .nav-list {
+                list-style: none;
+            }
+
+            .nav-item {
+                margin: 10px 0;
+            }
+
+            .nav-link {
+                color: var(--text-color);
+                text-decoration: none;
+                font-size: 1rem;
+                display: block;
+                padding: 12px;
+                border-radius: var(--border-radius);
+                transition: var(--transition-speed);
+            }
+
+            .nav-link:hover {
+                background: rgba(255, 23, 68, 0.1);
+                color: var(--primary-color);
+            }
+
+            .hero {
+                background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('../assets/images/guide1.jpg');
+                background-size: cover;
+                background-position: center;
+                height: 30vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                color: white;
+                margin-bottom: var(--section-spacing);
+            }
+
+            .hero-title {
+                font-size: 2rem;
+                font-weight: 700;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            }
+
+            .content-section {
+                padding: 20px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .faq-card {
+                background: var(--card-bg);
+                border-radius: var(--border-radius);
+                padding: var(--card-padding);
+                margin-bottom: 15px;
+                box-shadow: var(--box-shadow);
+            }
+
+            .question {
+                font-weight: 600;
+                color: var(--primary-color);
+                margin-bottom: 10px;
+                font-size: 1.1rem;
+            }
+
+            .answer {
+                color: var(--text-color);
+                font-size: 1rem;
+            }
+
+            .section-title {
+                text-align: center;
+                margin: var(--section-spacing) 0;
+                color: var(--primary-color);
+                font-size: 1.5rem;
+                font-weight: 700;
+            }
+
+            .image-card {
+                background: var(--card-bg);
+                border-radius: var(--border-radius);
+                padding: var(--card-padding);
+                margin-bottom: var(--section-spacing);
+                box-shadow: var(--box-shadow);
+            }
+
+            .image-card img {
+                width: 100%;
+                height: auto;
+                border-radius: calc(var(--border-radius) - 4px);
+            }
+
+            .match-guide-list {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .match-guide-item {
+                background: var(--card-bg);
+                padding: 15px;
+                margin-bottom: 10px;
+                border-radius: var(--border-radius);
+                box-shadow: var(--box-shadow);
+                display: flex;
+                align-items: center;
+            }
+
+            .match-guide-item i {
+                color: var(--primary-color);
+                margin-right: 10px;
+                font-size: 1.2rem;
+            }
+
+            @media (min-width: 768px) {
+                .hero-title {
+                    font-size: 3rem;
+                }
+
+                .nav-toggle {
+                    display: none;
+                }
+
+                .nav {
+                    position: static;
+                    width: auto;
+                    height: auto;
+                    background: none;
+                    box-shadow: none;
+                    padding: 0;
+                }
+
+                .nav-list {
+                    display: flex;
+                    gap: 20px;
+                }
+
+                .nav-item {
+                    margin: 0;
+                }
+
+                .content-grid {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 20px;
+                }
+            }
+
+            .scroll-to-top {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: var(--primary-color);
+                color: white;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                opacity: 0;
+                transition: var(--transition-speed);
+                box-shadow: var(--box-shadow);
+            }
+
+            .scroll-to-top.visible {
+                opacity: 1;
+            }
+
+            .loading-spinner {
+                width: 40px;
+                height: 40px;
+                border: 3px solid rgba(255,23,68,0.1);
+                border-radius: 50%;
+                border-top-color: var(--primary-color);
+                animation: spin 1s linear infinite;
+                margin: 20px auto;
+            }
+
+            @keyframes spin {
+                to { transform: rotate(360deg); }
+            }
+
+            /* Additional styles for enhanced mobile experience */
+            .star {
+                color: var(--primary-color);
+                font-weight: bold;
+            }
+
+            .faq-card {
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+                cursor: pointer;
+            }
+
+            .faq-card:hover, .faq-card:focus {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            .question {
+                position: relative;
+                padding-right: 30px;
+            }
+
+            .question::after {
+                content: '\f107';
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 900;
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                transition: transform 0.3s ease;
+            }
+
+            .faq-card.active .question::after {
+                transform: translateY(-50%) rotate(180deg);
+            }
+
+            .answer {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out;
+            }
+
+            .faq-card.active .answer {
+                max-height: 500px;
+                transition: max-height 0.5s ease-in;
+            }
+
+            .image-card {
+                overflow: hidden;
+                transition: transform 0.3s ease;
+            }
+
+            .image-card img {
+                transition: transform 0.3s ease;
+            }
+
+            .image-card:hover img {
+                transform: scale(1.05);
+            }
+
+            .match-guide-item {
+                transition: all 0.3s ease;
+            }
+
+            .match-guide-item:hover {
+                transform: translateX(5px);
+                background: rgba(255, 23, 68, 0.05);
+            }
+
+            .section-title {
+                position: relative;
+                padding-bottom: 10px;
+            }
+
+            .section-title::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60px;
+                height: 3px;
+                background: var(--primary-color);
+                border-radius: 3px;
+            }
+
+            /* Enhanced mobile styles */
+            @media (max-width: 768px) {
+                .content-section {
+                    padding: 15px;
+                }
+
+                .hero {
+                    height: 25vh;
+                }
+
+                .hero-title {
+                    font-size: 1.8rem;
+                    padding: 0 20px;
+                }
+
+                .section-title {
+                    font-size: 1.3rem;
+                    margin: 20px 0;
+                }
+
+                .faq-card {
+                    padding: 15px;
+                    margin-bottom: 10px;
+                }
+
+                .question {
+                    font-size: 1rem;
+                }
+
+                .answer {
+                    font-size: 0.9rem;
+                }
+
+                .image-card {
+                    margin-bottom: 15px;
+                    padding: 10px;
+                }
+
+                .match-guide-item {
+                    padding: 12px;
+                    font-size: 0.9rem;
+                }
+
+                .nav {
+                    background: rgba(255, 255, 255, 0.98);
+                    backdrop-filter: blur(10px);
+                }
+
+                .scroll-to-top {
+                    bottom: 15px;
+                    right: 15px;
+                    width: 35px;
+                    height: 35px;
+                }
+            }
+
+            /* Loading animation */
+            .loading {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: var(--bg-color);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+            }
+
+            /* Smooth scrolling */
+            html {
+                scroll-behavior: smooth;
+            }
+
+            /* Touch highlight color */
+            * {
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            /* Better form factor for mobile */
+            @media (max-width: 480px) {
+                .content-section {
+                    padding: 10px;
+                }
+
+                .faq-card, .match-guide-item {
+                    border-radius: 8px;
+                }
+
+                .hero-title {
+                    font-size: 1.5rem;
+                }
+
+                .nav {
+                    width: 90%;
+                }
+            }
+
+            /* Dark mode support */
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --bg-color: #121212;
+                    --card-bg: #1e1e1e;
+                    --text-color: #ffffff;
+                }
+
+                .header {
+                    background: rgba(30, 30, 30, 0.95);
+                }
+
+                .faq-card, .match-guide-item {
+                    background: var(--card-bg);
+                    border: 1px solid rgba(255, 255, 255, 0.1);
+                }
+            }
+
+            /* Reduced motion */
+            @media (prefers-reduced-motion: reduce) {
+                * {
+                    animation: none !important;
+                    transition: none !important;
+                }
+            }
+        </style>
 
     </head>
     <body class="design-boxed gallery-max-3 transparent-header footer-center background-image">
@@ -428,3 +893,227 @@
                         </div>
                     </div>
 </div>
+
+    <header class="header">
+        <a href="home.html" class="logo">ESKIMOS_R2G</a>
+        <button class="nav-toggle" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav class="nav">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="home.html" class="nav-link">HOME</a></li>
+                <li class="nav-item"><a href="auction.html" class="nav-link active">TOURNAMENT GUIDE</a></li>
+                <li class="nav-item"><a href="carhome.html" class="nav-link">CAREER MODE</a></li>
+                <li class="nav-item"><a href="trophy.html" class="nav-link">TROPHY CABINET</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h1 class="hero-title">TOURNAMENT GUIDE</h1>
+    </div>
+
+    <main class="content-section">
+        <section class="faq-section">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-card">
+                <div class="question">How to play career mode?</div>
+                <div class="answer">Buy players through auction and use these players only to make the squad to compete in R2G.</div>
+            </div>
+
+            <div class="faq-card">
+                <div class="question">How to buy players through auction?</div>
+                <div class="answer">Each franchise have clubs coins as their bank balance. They can use this amount to bid and buy <span class="star">5★</span>, <span class="star">4★</span> and <span class="star">3★</span> players during player auction.</div>
+            </div>
+
+            <div class="faq-card">
+                <div class="question">How do each franchise gets their R2G Coins?</div>
+                <div class="answer">Whenever a new franchise is registered they are rewarded with a total of <strong>2000</strong> R2G Coins and <strong>100</strong> R2G Tokens. Each club will also get R2G Coins by their performance in each match but this coins will only add during the season end.</div>
+            </div>
+
+            <div class="faq-card">
+                <div class="question">What are the other uses of R2G Coins?</div>
+                <div class="answer">R2G Coins can be used during the transfer market and also R2G Coins are used to pay the player salary.</div>
+            </div>
+
+            <div class="faq-card">
+                <div class="question">Do we lose players if their salary is not paid?</div>
+                <div class="answer">No, we won't lose player. The franchise will only lose player when his contract comes to an end. At that time only he will be free agent. If salary is not paid, the player <strong>can't</strong> be used for upcoming matches.</div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Road Map</h2>
+            <div class="image-card">
+                <img src="../assets/images/auction1.jpg" alt="Road Map" loading="lazy">
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Player Cards</h2>
+            <div class="content-grid">
+                <div class="image-card">
+                    <img src="../assets/images/auction2.jpg" alt="Player Card Example 1" loading="lazy">
+                </div>
+                <div class="image-card">
+                    <img src="../assets/images/auction3.jpg" alt="Player Card Example 2" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">R2G Token Exchange</h2>
+            <div class="image-card">
+                <img src="../assets/images/auction6.png" alt="Token Exchange System" loading="lazy">
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Season Awards</h2>
+            <div class="image-card">
+                <img src="../assets/images/awards.jpg" alt="Season Awards" loading="lazy">
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Transfer Market Guide</h2>
+            <div class="faq-card">
+                <div class="question">When will be the transfer window for R2G?</div>
+                <div class="answer">There will be two Transfer windows for a season. The transfer window time will be given accordingly and during that time sale, swap and loan for a player can be done.</div>
+            </div>
+
+            <div class="faq-card">
+                <div class="question">How does loan transfer work?</div>
+                <div class="answer">The loan amount is determined between the base price and auctioned price.</div>
+            </div>
+
+            <div class="faq-card">
+                <div class="question">Is free transfer allowed?</div>
+                <div class="answer">No, free transfer is not allowed, but one can sale the player for interested club coins.</div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Card Types</h2>
+            <div class="content-grid">
+                <div class="image-card">
+                    <img src="../assets/images/auction4.jpg" alt="Card Types 1" loading="lazy">
+                </div>
+                <div class="image-card">
+                    <img src="../assets/images/auction5.jpg" alt="Card Types 2" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Match Bonus</h2>
+            <div class="image-card">
+                <img src="../assets/images/bonus.jpg" alt="Match Bonus Information" loading="lazy">
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Match Guide</h2>
+            <ul class="match-guide-list">
+                <li class="match-guide-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Can only use players bought from player auction, if not available can use <span class="star">1★</span> or <span class="star">2★</span> players</span>
+                </li>
+                <li class="match-guide-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Match Time: 6 Minutes</span>
+                </li>
+                <li class="match-guide-item">
+                    <i class="fas fa-ban"></i>
+                    <span>Penalty and Extra Time should be OFF</span>
+                </li>
+                <li class="match-guide-item">
+                    <i class="fas fa-random"></i>
+                    <span>Random Condition</span>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2 class="section-title">Important Notes</h2>
+            <ul class="match-guide-list">
+                <li class="match-guide-item">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>If there are any doubts or issues contact admins directly and clear it as soon as possible.</span>
+                </li>
+                <li class="match-guide-item">
+                    <i class="fas fa-gavel"></i>
+                    <span>All decisions taken by admins will be final.</span>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <button class="scroll-to-top" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Navigation Toggle
+        const navToggle = document.querySelector('.nav-toggle');
+        const nav = document.querySelector('.nav');
+        
+        navToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            navToggle.innerHTML = nav.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+
+        // Scroll to Top Button
+        const scrollToTop = document.querySelector('.scroll-to-top');
+        
+        window.addEventListener('scroll', () => {
+            scrollToTop.classList.toggle('visible', window.scrollY > 300);
+        });
+
+        scrollToTop.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Image Loading
+        const images = document.querySelectorAll('img[loading="lazy"]');
+        const imageOptions = {
+            threshold: 0.1,
+            rootMargin: '50px'
+        };
+
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.style.opacity = '0';
+                    img.style.transition = 'opacity 0.5s ease-in-out';
+                    
+                    img.onload = () => {
+                        img.style.opacity = '1';
+                    };
+                    
+                    observer.unobserve(img);
+                }
+            });
+        }, imageOptions);
+
+        images.forEach(img => imageObserver.observe(img));
+
+        // Add touch feedback
+        document.querySelectorAll('.faq-card, .match-guide-item').forEach(element => {
+            element.addEventListener('touchstart', () => {
+                element.style.transform = 'scale(0.98)';
+            });
+
+            element.addEventListener('touchend', () => {
+                element.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
